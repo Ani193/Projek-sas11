@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basecame Outdoor</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      color: white;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background-color:transparent;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      z-index: 10;
+    }
+
+    .logo {
+      font-weight: bold;
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    .nav-links a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    .navbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search-form {
+      display: flex;
+      align-items: center;
+      background-color: white;
+      border-radius: 20px;
+      padding: 2px 8px;
+    }
+
+    .search {
+      border: none;
+      outline: none;
+      padding: 6px;
+      border-radius: 20px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .search-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      margin-left: 4px;
+    }
+
+    .icon-search {
+      color: black;
+    }
+
+    .icon-admin {
+      color: white;
+      font-size: 18px;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      background-image: url(WhatsApp\ Image\ 2025-04-08\ at\ 19.36.06.jpeg);
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 60px 2rem 2rem 2rem;
+    }
+
+    .hero-content {
+      max-width: 600px;
+      text-align: left;
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .hero-content p {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn {
+      background-color: white;
+      color: #1f2937;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #e5e7eb;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">BASECAME OUTDOOR</div>
+
+    <nav class="nav-links">
+      <a href="#">Beranda</a>
+      <a href="#">Tentang</a>
+      <a href="#">Layanan</a>
+      <a href="#">Galeri</a>
+      <a href="#">Kontak</a>
+    </nav>
+
+    <div class="navbar-right">
+      <form class="search-form" action="#" method="get">
+        <input type="text" class="search" placeholder="Cari..." name="q" />
+        <button type="submit" class="search-btn">
+          <span class="icon-search">🔍</span>
+        </button>
+      </form>
+
+      <a href="/admin" class="admin-icon" title="Login Admin">
+        <span class="icon-admin">👤</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>BASECAME OUTDOOR</h1>
+      <p>Temukan petualangan terbaikmu bersama kami di alam bebas.</p>
+      <a href="#section2" class="btn">Mulai</a>
+    </div>
+  </section>
+</body>
+</html>
+
+
