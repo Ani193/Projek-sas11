@@ -32,7 +32,7 @@ const validAdmin = [
     }
       if (isValid) {
         alert("Login berhasil!!");
-        window.location.href = "admin.html"; // untuk mengarahkan ke halaman yang di tuju
+        window.location.href = "menu.html"; // untuk mengarahkan ke halaman yang di tuju
       }else{
         pesanError.textContent = "Email atau password salah.";
       }
