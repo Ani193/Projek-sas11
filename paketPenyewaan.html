@@ -109,11 +109,10 @@
   <script>
     const tabel = document.getElementById("tabelPaket").querySelector("tbody");
   
-    // Ambil data dari localStorage saat halaman dimuat
     window.onload = function () {
       const data = JSON.parse(localStorage.getItem("paketPenyewaan")) || [];
       data.forEach(paket => {
-        tambahBarisKeTabel(paket.nama, paket.harga, paket.durasi);
+        tambahBarisKeTabel(paket.nama, paket.harga, paket.durasi, paket.status);
       });
     };
   
@@ -122,32 +121,43 @@
       const data = Array.from(rows).map(row => ({
         nama: row.cells[0].textContent,
         harga: row.cells[1].textContent,
-        durasi: row.cells[2].textContent
+        durasi: row.cells[2].textContent,
+        status: row.getAttribute("data-status") || "aktif"
       }));
       localStorage.setItem("paketPenyewaan", JSON.stringify(data));
     }
   
     function tambahPaket() {
       const nama = prompt("Masukkan nama paket:");
-      const harga = prompt("Masukkan harga paket:");
-      const durasi = prompt("Masukkan durasi:");
+      const harga = prompt("Masukkan harga paket (contoh: Rp 80.000):");
+      const durasi = prompt("Masukkan durasi (contoh: 3 hari):");
   
       if (nama && harga && durasi) {
-        tambahBarisKeTabel(nama, harga, durasi);
+        tambahBarisKeTabel(nama, harga, durasi, "aktif");
         simpanKeLocalStorage();
       }
     }
   
-    function tambahBarisKeTabel(nama, harga, durasi) {
+    function tambahBarisKeTabel(nama, harga, durasi, status = "aktif") {
       const row = tabel.insertRow();
       row.insertCell(0).textContent = nama;
       row.insertCell(1).textContent = harga;
       row.insertCell(2).textContent = durasi;
+  
       const aksi = row.insertCell(3);
       aksi.classList.add("aksi");
+  
+      row.setAttribute("data-status", status);
+  
+      if (status === "nonaktif") {
+        row.style.opacity = "0.5";
+      } else {
+        row.style.opacity = "1";
+      }
+  
       aksi.innerHTML = `
         <button onclick="editPaket(this)">Edit</button>
-        <button onclick="nonaktifkanPaket(this)">Nonaktifkan</button>
+        <button onclick="toggleStatus(this)">${status === "nonaktif" ? "Aktifkan" : "Nonaktifkan"}</button>
         <button onclick="hapusPaket(this)">Hapus</button>
       `;
     }
@@ -166,10 +176,20 @@
       }
     }
   
-    function nonaktifkanPaket(btn) {
+    function toggleStatus(btn) {
       const row = btn.closest("tr");
-      row.style.opacity = "0.5";
-      alert("Paket telah dinonaktifkan.");
+      const currentStatus = row.getAttribute("data-status");
+  
+      if (currentStatus === "aktif") {
+        row.setAttribute("data-status", "nonaktif");
+        row.style.opacity = "0.5";
+        btn.textContent = "Aktifkan";
+      } else {
+        row.setAttribute("data-status", "aktif");
+        row.style.opacity = "1";
+        btn.textContent = "Nonaktifkan";
+      }
+      simpanKeLocalStorage();
     }
   
     function hapusPaket(btn) {
