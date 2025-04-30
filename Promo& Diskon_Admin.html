@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promo dan Diskon</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            padding: 6px 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Promo dan Diskon</h2>
+    <button onclick="tambahPromo()">Tambah Promo Baru</button>
+
+    <table id="promoTable">
+        <thead>
+            <tr>
+                <th>Nama Promo</th>
+                <th>Diskon</th>
+                <th>Kode Membership</th>
+                <th>Status</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data akan di-generate disini -->
+        </tbody>
+    </table>
+
+    <script>
+        let promos = [
+            { nama: "NumberPlus", diskon: "25%", membership: "001", status: "Aktif" },
+        ];
+
+        function renderPromo() {
+            const tbody = document.querySelector("#promoTable tbody");
+            tbody.innerHTML = "";
+            promos.forEach((promo, index) => {
+                const row = `<tr>
+                    <td>${promo.nama}</td>
+                    <td>${promo.diskon}</td>
+                    <td>${promo.membership}</td>
+                    <td>${promo.status}</td>
+                    <td><button onclick="hapusPromo(${index})">Hapus</button></td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+        }
+
+        function tambahPromo() {
+            const nama = prompt("Masukkan Nama Promo:");
+            const diskon = prompt("Masukkan Diskon (%):");
+            const membership = prompt("Masukkan Kode Membership:");
+            promos.push({ nama, diskon: diskon + "%", membership, status: "Aktif" });
+            renderPromo();
+        }
+
+        function hapusPromo(index) {
+            if (confirm("Yakin ingin menghapus promo ini?")) {
+                promos.splice(index, 1);
+                renderPromo();
+            }
+        }
+
+        renderPromo();
+    </script>
+
+</body>
+</html>
