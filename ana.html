@@ -3,9 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Katalog</title>
+    <title>Form Penyewaan Alat Camping</title>
+    <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 0;
+      background-color: #f8f8f8;
+    } 
+
+    h1 {
+      text-align: center;
+    }
+
+    form {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"], input[type="email"], input[type="date"], select {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+      border-radius: 10px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 20px;
+    }
+
+    .form-row > div {
+      flex: 1;
+    }
+
+    .form-group, .checkbox-group {
+      margin-top: 10px;
+    }
+
+    .form-group label, .checkbox-group label {
+      display: flex;
+      align-items: center;
+    }
+    .form-group input, .check-group input {
+      margin-right: 10px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #2f9234;
+    }
+
+    .section-title {
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    </style>
 </head>
 <body>
-    <h1>Katalog</h1>
+    <h1>Form Penyewaan Alat Camping</h1>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form>
+        <div class="card-body">
+            <div class="form-group form-row">
+                <label for="exampleInputNama1">Nama</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Nama">
+            </div>
+            <div class="form-group form-row">
+                <label for="exampleInputNama1">Email</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputNoTelepon1">Nomor Telepon</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Nomor Telepon">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputAlamat1">Alamat</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Alamat">
+            </div>
+
+        <div class="col-sm-6">
+        <!-- radio -->
+            <div class="form-group">
+              <span>Status Membership:</span>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="radio1">
+                    <label class="form-check-label">Biasa</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="radio1" checked>
+                    <label class="form-check-label">Membership</label>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputFile">Bukti Membership</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="exampleInputFile">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                      </div>
+                      <div class="input-group-append">
+                        <span class="input-group-text">Upload</span>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">Pilih Alat Camping</div>
+        <!-- checkbox -->
+        <div class="form-group">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" id="customCheckbox1" value="option1">
+              <label for="customCheckbox1" class="custom-control-label">Tenda</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" id="customCheckbox2" checked>
+              <label for="customCheckbox2" class="custom-control-label">Matras</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" id="customCheckbox1" value="option1">
+              <label for="customCheckbox3" class="custom-control-label">Lampu</label>
+              </div>
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" id="customCheckbox2" checked>
+              <label for="customCheckbox2" class="custom-control-label">Kompor Portable</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" id="customCheckbox1" value="option1">
+              <label for="customCheckbox4" class="custom-control-label">Tas Carrier (Belum Termasuk Coverbag)</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" id="customCheckbox2" checked>
+              <label for="customCheckbox5" class="custom-control-label">Rain Coat</label>
+            </div>
+
+        <div class="section-title">Pilih Paket Penyewaan (Opsional)</div>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="paket" value="Pemula"> Paket Pemula – Rp30.000 / hari</label>
+            <label><input type="checkbox" name="paket" value="Lengkap"> Paket Lengkap – Rp100.000 / hari</label>
+        </div>
+      
+        <div class="form-row">
+            <div>
+              <label>Tanggal Mulai Sewa</label>
+              <input type="date" name="tanggalMulai" required>
+            </div>
+            <div>
+              <label>Tanggal Kembali</label>
+              <input type="date" name="tanggalKembali" required>
+            </div>
+        </div>
+
+        <div class="section-title">Pilih Metode Pembayaran</div>
+            <div class="radio-group">
+              <label><input type="radio" name="metodePembayaran" value="Transfer Bank" required> Transfer Bank</label>
+              <label><input type="radio" name="metodePembayaran" value="E-Wallet"> E-Wallet</label>
+              <label><input type="radio" name="metodePembayaran" value="Bayar di Tempat"> Bayar di Tempat</label>
+            </div>
+        <div class="checkbox-group">
+            <label><input type="checkbox" required> Saya telah membaca dan menyetujui <i>Syarat & Ketentuan</i>.</label>
+            <label><input type="checkbox"> Kirim notifikasi pengingat via WhatsApp</label>
+        </div>
+
+        <div class="form-group">
+            <button type="button" class="btn btn-block btn-outline-success">Mulai proses Pemesanan</button>
+          </div>
+        </div>
+    </form>
 </body>
 </html>
