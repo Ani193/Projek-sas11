@@ -43,6 +43,7 @@
     .nonaktif {
       background-color: #c3bbbb;
     }
+   
   </style>
 </head>
 <body>
@@ -52,7 +53,7 @@
   <input type="text" id="nama" placeholder="Nama Barang" required>
   <input type="number" id="harga" placeholder="Harga" required>
   <input type="number" id="stok" placeholder="Stok" required>
-  <input type="text" id="kategori" placeholder="Kategori" required>
+  <textarea id="deskripsi" palaceholder="Deskripsi" required></textarea>
   <input type="file" id="foto" accept="image/*" required>
   <button type="submit">Tambah Barang</button>
 </form>
@@ -65,7 +66,7 @@
       <th>Nama</th>
       <th>Harga</th>
       <th>Stok</th>
-      <th>Kategori</th>
+      <th>Deskripsi</th>
       <th>Aksi</th>
     </tr>
   </thead>
@@ -83,7 +84,7 @@ document.getElementById('formBarang').addEventListener('submit', function(e) {
   const nama = document.getElementById('nama').value;
   const harga = document.getElementById('harga').value;
   const stok = document.getElementById('stok').value;
-  const kategori = document.getElementById('kategori').value;
+  const deskripsi = document.getElementById('deskripsi').value;
   const fotoInput = document.getElementById('foto').files[0];
 
   if (!fotoInput) {
@@ -99,7 +100,7 @@ document.getElementById('formBarang').addEventListener('submit', function(e) {
       nama,
       harga,
       stok,
-      kategori,
+      deskripsi,
       foto: event.target.result, // base64 string
       aktif: true
     };
@@ -122,7 +123,7 @@ function tampilkanBarang() {
       <td>${barang.nama}</td>
       <td>Rp ${barang.harga}</td>
       <td>${barang.stok}</td>
-      <td>${barang.kategori}</td>
+      <td>${barang.deskripsi.replace(/\n/g,'<br>')}</td>
       <td class="aksi">
         <button onclick="editBarang(${barang.id})">Edit</button>
         <button onclick="toggleAktif(${barang.id})">${barang.aktif ? 'Nonaktifkan' : 'Aktifkan'}</button>
@@ -139,7 +140,7 @@ function editBarang(id) {
     document.getElementById('nama').value = barang.nama;
     document.getElementById('harga').value = barang.harga;
     document.getElementById('stok').value = barang.stok;
-    document.getElementById('kategori').value = barang.kategori;
+    document.getElementById('deskripsi').value = barang.deskripsi;
     hapusBarang(id); // Hapus data lama sebelum edit
   }
 }
