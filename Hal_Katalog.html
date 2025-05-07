@@ -1,112 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>halaman katalog</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-</head>
-<style>
-     body {
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Halaman Katalog</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <style>
+    body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
     }
+
     .container-k {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+      width: 100%;
+      padding: 20px;
+      box-sizing: border-box;
 
-    .row {
-      display:flex;
-      flex-direction: row;
-      gap: 20px;
-      text-align: center;
-      margin-top: 10px;
-    }
-
-    .image-k {
-      position: relative;
-      size: 100px;
-      border: 1px solid #ccc;
-    }
-    .judul-k {
-      padding-top: 0%;
-      font-weight: bold;
-      font-size: 20px;
-      margin-top: 15px;
-      flex-direction: column;
-      font-family: "Big Shoulders Stencil", sans-serif;
-    }
-    .harga-k {
-        font-size: 15px;
-        font-style: Bold;
-        color: red;
-        margin-top: 10px;
-        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    }
-
-    .keterangan-k {
-      font-size: 15px;
-      color: #666;
-      font-family: "Noto Sans JP", sans-serif;
-      font-optical-sizing: auto;
     }
 
     .header-k {
-       text-align: center;
-       display: flex;
-       flex-direction: column;
+      text-align: center;
+      margin-bottom: 30px;
     }
+
     .header-k h1 {
-        color: black;
-        font-size: 45px;
-        margin-top: 0px;
-        font-family: "Noto Serif Ahom", serif;
+      font-size: 40px;
+      font-family: "Noto Serif Ahom", serif;
     }
-    .header-k p {
-      font-size: 10pxpx;
-      margin-top: 0px;
-      color: black;
-    }
-    .header2-k {
-      color: black;
-      font-size: 25px;
-      margin-top: 0px;
-      font-family: "Zilla Slab", serif;
 
+    .katalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
+      gap: 20px;
+      justify-items: center;
     }
-</style>
+
+    .katalog-item {
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      max-width: 220px;
+    }
+
+    .katalog-item img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    .judul-k {
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
+    .stok-k {
+      font-size: 14px;
+      color: #333;
+    }
+
+    .keterangan-k {
+      font-size: 14px;
+      color: #666;
+      margin: 10px 0;
+    }
+
+    .harga-k {
+      font-size: 16px;
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
 <body>
-    <div class="container-k">
-        <div class="header-k">
-            <h1>Di Sewakan</h1>
-        </div>
+  <div class="container-k">
+  <div class="header-k">
+    <h1>Di Sewakan</h1>
+  </div>
 
-    </div>
-</body>
+  <div class="katalog-grid" id="katalogBarang">
+    <!-- Barang akan dimasukkan di sini -->
+  </div>
 
-<script>
+  <script>
     const barangList = JSON.parse(localStorage.getItem('barangList')) || [];
-    const container = document.querySelector('.container-k');
-  
+    const container = document.getElementById('katalogBarang');
+
     const aktifBarang = barangList.filter(barang => barang.aktif);
-  
+
     aktifBarang.forEach(barang => {
       const div = document.createElement('div');
-      div.className = 'row';
+      div.className = 'katalog-item';
       div.innerHTML = `
-        <div class="col-4">
-          <div class="image-k">
-            <img src="${barang.foto}" alt="${barang.nama}">
-          </div>
-          <div class="judul-k">${barang.nama}</div>
-          <div class="stok-k">Stok:${barang.stok}</div>
-          <div class="keterangan-k">${barang.deskripsi.replace(/\n/g,'<br>')}</div>
-          <div class="harga-k"><p>Rp ${barang.harga}</p></div>
-        </div>
+        <img src="${barang.foto}" alt="${barang.nama}">
+        <div class="judul-k">${barang.nama}</div>
+        <div class="stok-k">Stok: ${barang.stok}</div>
+        <div class="keterangan-k">${barang.deskripsi.replace(/\n/g, '<br>')}</div>
+        <div class="harga-k">Rp ${barang.harga}</div>
       `;
       container.appendChild(div);
     });
+<<<<<<< HEAD
     function sewaBarang(id) {
   const barang = barangList.find(b => b.id === id);
     if (barang && barang.stok > 0) {
@@ -123,5 +120,9 @@
         <p>Stok: <span id="stok-${barang.id}">${barang.stok}</span></p>
         <button onclick="sewaBarang(${barang.id})">Sewa</button>
          </div>
+=======
+>>>>>>> 36341117e2c6fc91879836076686f9420a197f92
   </script>
+  </div>
+</body>
 </html>
