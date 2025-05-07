@@ -137,11 +137,11 @@
     <div class="form-row-4">
       <div>
         <label>Tanggal Mulai Sewa</label>
-        <input type="date" name="tanggalMulai" required>
+        <input type="date" name="startDate" required>
       </div>
       <div>
         <label>Tanggal Kembali</label>
-        <input type="date" name="tanggalKembali" required>
+        <input type="date" name="endDate" required>
       </div>
     </div>
 
@@ -157,6 +157,8 @@
       <label><input type="checkbox"> Kirim notifikasi pengingat via WhatsApp</label>
     </div>
 
+    <div class="total" id="totalBayar">Total Bayar: Rp0</div>
+
     <div class="form-group">
       <button type="submit">Mulai Proses Pemesanan</button>
     </div>
@@ -168,6 +170,46 @@
       event.preventDefault();
       alert('Form berhasil dikirim!');
     });
+
+    const checkboxes = document.querySelectorAll('.item');
+    const quantities = document.querySelectorAll('.qty');
+    const totalDisplay = document.getElementById('totalDisplay');
+    const startDateInput = document.getElementById('startDate');
+    const endDateInput = document.getElementById('endDate');
+
+    function getDurationDays() {
+      const start = new Date(startDateInput.value);
+      const end = new Date(endDateInput.value);
+      const diffTime = end - start;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      return isNaN(diffDays) || diffDays <= 0 ? 1 : diffDays;
+    }
+
+    function updateTotal() {
+      let total = 0;
+      const days = getDurationDays();
+
+      checkboxes.forEach((item, i) => {
+        if (item.checked) {
+          const qty = parseInt(quantities[i].value);
+          const price = parseInt(item.dataset.price);
+          total += qty * price * days;
+        }
+      });
+
+      totalDisplay.textContent = 'Total Bayar: Rp' + total.toLocaleString('id-ID');
+    }
+
+    checkboxes.forEach((item, i) => {
+      item.addEventListener('change', () => {
+        quantities[i].disabled = !item.checked;
+        updateTotal();
+      });
+      quantities[i].addEventListener('change', updateTotal);
+    });
+
+    startDateInput.addEventListener('change', updateTotal);
+    endDateInput.addEventListener('change', updateTotal);
   </script>
   
 </body>
