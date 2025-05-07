@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Basecame Outdoor</title>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     body {
       margin: 0;
@@ -71,21 +73,19 @@
       cursor: pointer;
       font-size: 16px;
       margin-left: 4px;
-    }
-
-    .icon-search {
       color: black;
     }
 
     .icon-admin {
       color: white;
       font-size: 18px;
+      text-decoration: none;
     }
 
     /* Hero Section */
     .hero {
       height: 100vh;
-      background-image: url(bg.jpeg);
+      background-image: url('gunung.jpg');
       background-size: cover;
       background-position: center;
       display: flex;
@@ -142,12 +142,12 @@
       <form class="search-form" action="#" method="get">
         <input type="text" class="search" placeholder="Cari..." name="q" />
         <button type="submit" class="search-btn">
-          <span class="icon-search">🔍</span>
+          <i class="fas fa-search"></i>
         </button>
       </form>
 
-      <a href="/loginAdmin.html" class="admin-icon" title="Login Admin">
-        <span class="icon-admin">👤</span>
+      <a href="/loginAdmin.html" class="icon-admin" title="Login Admin">
+        <i class="fas fa-user"></i>
       </a>
     </div>
   </header>
@@ -162,5 +162,3 @@
   </section>
 </body>
 </html>
-
-

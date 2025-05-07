@@ -4,12 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>gabungan</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
+   
     /* Navbar */
     .navbar {
       position: fixed;
@@ -17,13 +19,12 @@
       left: 0;
       right: 0;
       height: 60px;
-      background-color: rgba(169, 211, 245, 0.986);
+      background-color:#b3d8f996;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 2rem;
       z-index: 10;
-      color: white;
     }
 
     .logo {
@@ -71,15 +72,13 @@
       cursor: pointer;
       font-size: 16px;
       margin-left: 4px;
-    }
-
-    .icon-search {
       color: black;
     }
 
     .icon-admin {
       color: white;
       font-size: 18px;
+      text-decoration: none;
     }
 
     /* Hero Section */
@@ -92,12 +91,12 @@
       align-items: center;
       justify-content: flex-start;
       padding: 60px 2rem 2rem 2rem;
-      color: white;
     }
 
     .hero-content {
       max-width: 600px;
       text-align: left;
+      color: #ffffff;
     }
 
     .hero-content h1 {
@@ -151,7 +150,7 @@
       line-height: 1.6;
     }
 
-    .bttn {
+    .bttn-2 {
       background-color: black;
       color: white;
       padding: 12px 24px;
@@ -159,7 +158,7 @@
       font-weight: bold;
     }
 
-    .bttn:hover {
+    .bttn-2:hover {
       background-color: #444;
     }
 
@@ -174,19 +173,19 @@
       border-radius: 10px;
     }
 
-    .info {
+    .info-2 {
       background-color: #000;
       color: white;
       padding: 20px;
       margin-top: 20px;
     }
 
-    .info h2 {
+    .info-2 h2 {
       font-size: 24px;
       margin-bottom: 10px;
     }
 
-    .info p {
+    .info-2 p {
       font-size: 14px;
     }
 
@@ -297,7 +296,7 @@
       color: #ffffff;
     }
 
-    .social-icons a {
+    .social-icons-4 a {
       margin-right: 10px;
       display: inline-block;
       color: #ccc;
@@ -305,7 +304,7 @@
       transition: color 0.3s;
     }
 
-    .social-icons a:hover {
+    .social-icons-4 a:hover {
       color: #f39c12;
     }
 
@@ -317,7 +316,7 @@
     }
 
     @media (max-width: 768px) {
-      .footer-container {
+      .footer-container-4 {
         flex-direction: column;
         align-items: center;
       }
@@ -328,22 +327,25 @@
   <!-- Navbar -->
   <header class="navbar">
     <div class="logo">BASECAME OUTDOOR</div>
+
     <nav class="nav-links">
       <a href="#">Beranda</a>
-      <a href="#section2">Tentang</a>
-      <a href="#section2">Layanan</a>
-      <a href="#section3">Galeri</a>
-      <a href="#section3">Kontak</a>
+      <a href="#">Tentang</a>
+      <a href="#">Layanan</a>
+      <a href="#">Galeri</a>
+      <a href="#">Kontak</a>
     </nav>
+
     <div class="navbar-right">
       <form class="search-form" action="#" method="get">
         <input type="text" class="search" placeholder="Cari..." name="q" />
         <button type="submit" class="search-btn">
-          <span class="icon-search">🔍</span>
+          <i class="fas fa-search"></i>
         </button>
       </form>
-      <a href="/loginAdmin.html" class="admin-icon" title="Login Admin">
-        <span class="icon-admin">👤</span>
+
+      <a href="/loginAdmin.html" class="icon-admin" title="Login Admin">
+        <i class="fas fa-user"></i>
       </a>
     </div>
   </header>
@@ -353,7 +355,7 @@
     <div class="hero-content">
       <h1>BASECAME OUTDOOR</h1>
       <p>Temukan petualangan terbaikmu bersama kami di alam bebas.</p>
-      <a href="#section2" class="btn">Mulai</a>
+      <a href="formulirPenyewaan.html" class="btn">sewa sekarang!</a>
     </div>
   </section>
 
@@ -363,11 +365,11 @@
       <h1>Komitmen BASECAMP Outdoor untuk Aktivitas dan Hobby Anda</h1>
       <p>Ketika anda berfikir tentang aktivitas petualangan, jangan biarkan masalah peralatan penunjang menjadi hambatan kegembiraan anda...</p>
       <p>Melalui barang yang berkualitas pada kelasnya, kami berkomitmen untuk mendukung kegiatan petualangan anda...</p>
-      <button class="bttn" onclick="chatAdmin()">CHAT ADMIN KAMI SEKARANG</button>
+      <button class="bttn-2" onclick="chatAdmin()">CHAT ADMIN KAMI SEKARANG</button>
     </div>
     <div class="image-section2">
       <img src="peta.jpeg" alt="BASECAMP outdoor" />
-      <div class="info">
+      <div class="info-2">
         <h2>BASECAMP outdoor</h2>
         <p>RENTAL PERLENGKAPAN CAMPING, Kabupaten Batang</p>
         <p>Lokasi toko penyewaan:<br>Jl. Raya Kandeman, Kabupaten Batang</p>
@@ -441,9 +443,9 @@
           <div class="footer-column-4">
             <h3>Ikuti Kami</h3>
             <div class="social-icons">
-              <img src="instagram_logo_icon_189247 (2).png">
-              <img src="facebook_social_media_icon_187125.png">
-              <img src="twitterlogoincircularblackbutton_79784.png">
+              <img src="ig.png">
+              <img src="fb.png">
+              <img src="twiter.png">
               
               <a href="#"><i class="fab fa-linkedin-in"></i></a>
             </div>
