@@ -107,6 +107,21 @@
       `;
       container.appendChild(div);
     });
-    
+    function sewaBarang(id) {
+  const barang = barangList.find(b => b.id === id);
+    if (barang && barang.stok > 0) {
+    barang.stok--;
+    localStorage.setItem('barangList', JSON.stringify(barangList));
+    document.getElementById(`stok-${id}`).textContent = barang.stok;
+    } else {
+    alert('Stok habis!');
+  }
+}
+       <!-- Dalam loop tampilan barang -->
+       <div class="item">
+        <h3>Nama Barang</h3>
+        <p>Stok: <span id="stok-${barang.id}">${barang.stok}</span></p>
+        <button onclick="sewaBarang(${barang.id})">Sewa</button>
+         </div>
   </script>
 </html>
