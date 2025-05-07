@@ -245,6 +245,83 @@
       font-size: 15px;
       color: #666;
     }
+
+    /*section 3*/
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    footer {
+      background-color: #1e1e2f;
+      color: #ffffff;
+      padding: 40px 20px;
+    }
+
+    .footer-container-4 {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .footer-column-4 {
+      flex: 1 1 250px;
+      margin: 10px;
+    }
+
+    .footer-column-4 h3 {
+      border-bottom: 2px solid #f39c12;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      color: #f39c12;
+    }
+
+    .footer-column-4 ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-column-4 ul li {
+      margin: 10px 0;
+    }
+
+    .footer-column-4 ul li a {
+      color: #ccc;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-column-4 ul li a:hover {
+      color: #ffffff;
+    }
+
+    .social-icons a {
+      margin-right: 10px;
+      display: inline-block;
+      color: #ccc;
+      font-size: 20px;
+      transition: color 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: #f39c12;
+    }
+
+    .footer-bottom-4 {
+      text-align: center;
+      margin-top: 30px;
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .footer-container {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
   </style>
 </head>
 <body>
@@ -342,6 +419,40 @@
         </div>
       </div>
     </div>
+  </section>
+
+
+  <section id="4" >
+    <footer>
+        <div class="footer-container-4">
+          <div class="footer-column-4">
+            <h3>Tentang Kami</h3>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas earum voluptate quae id sapiente in ducimus tenetur omnis ipsam aliquid. Veritatis eveniet iusto id voluptate magni saepe unde ut illo..</p>
+          </div>
+          <div class="footer-column-4">
+            <h3>Quick Link</h3>
+            <ul>
+              <li><a href="#">Beranda</a></li>
+              <li><a href="#">Katalog</a></li>
+              <li><a href="#">Panduan Umum</a></li>
+              <li><a href="#">Sewa Sekarang</a></li>
+            </ul>
+          </div>
+          <div class="footer-column-4">
+            <h3>Ikuti Kami</h3>
+            <div class="social-icons">
+              <img src="instagram_logo_icon_189247 (2).png">
+              <img src="facebook_social_media_icon_187125.png">
+              <img src="twitterlogoincircularblackbutton_79784.png">
+              
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom-4">
+          &copy; 2025 BASECAMP OUTDOOR
+        </div>
+      </footer>
   </section>
 
   <script>
