@@ -10,30 +10,20 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       padding: 20px;
     }
-
-    .container-k {
-      width: 100%;
-      padding: 20px;
-      box-sizing: border-box;
-
-    }
     .header-k {
       text-align: center;
       margin-bottom: 30px;
     }
-
     .header-k h1 {
       font-size: 40px;
       font-family: "Noto Serif Ahom", serif;
     }
-
     .katalog-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
       gap: 20px;
       justify-items: center;
     }
-
     .katalog-item {
       width: 100%;
       border: 1px solid #ccc;
@@ -42,40 +32,38 @@
       text-align: center;
       max-width: 220px;
     }
-
     .katalog-item img {
       width: 100%;
       height: 150px;
       object-fit: cover;
       border-radius: 5px;
     }
-
     .judul-k {
       font-weight: bold;
       font-size: 18px;
       margin-top: 10px;
     }
-
     .stok-k {
       font-size: 14px;
       color: #333;
     }
-
     .keterangan-k {
       font-size: 14px;
       color: #666;
       margin: 10px 0;
     }
-
     .harga-k {
       font-size: 16px;
       color: red;
       font-weight: bold;
     }
+    button {
+      margin-top: 10px;
+      padding: 6px 12px;
+    }
   </style>
 </head>
 <body>
-  <div class="container-k">
   <div class="header-k">
     <h1>Di Sewakan</h1>
   </div>
@@ -85,7 +73,7 @@
   </div>
 
   <script>
-    const barangList = JSON.parse(localStorage.getItem('barangList')) || [];
+    let barangList = JSON.parse(localStorage.getItem('barangList')) || [];
     const container = document.getElementById('katalogBarang');
 
     const aktifBarang = barangList.filter(barang => barang.aktif);
@@ -96,29 +84,24 @@
       div.innerHTML = `
         <img src="${barang.foto}" alt="${barang.nama}">
         <div class="judul-k">${barang.nama}</div>
-        <div class="stok-k">Stok: ${barang.stok}</div>
+        <div class="stok-k">Stok: <span id="stok-${barang.id}">${barang.stok}</span></div>
         <div class="keterangan-k">${barang.deskripsi.replace(/\n/g, '<br>')}</div>
         <div class="harga-k">Rp ${barang.harga}</div>
+        <button onclick="sewaBarang(${barang.id})">Sewa</button>
       `;
       container.appendChild(div);
     });
+
     function sewaBarang(id) {
-  const barang = barangList.find(b => b.id === id);
-    if (barang && barang.stok > 0) {
-    barang.stok--;
-    localStorage.setItem('barangList', JSON.stringify(barangList));
-    document.getElementById(`stok-${id}`).textContent = barang.stok;
-    } else {
-    alert('Stok habis!');
-  }
-}
-       <!-- Dalam loop tampilan barang -->
-       <div class="item">
-        <h3>Nama Barang</h3>
-        <p>Stok: <span id="stok-${barang.id}">${barang.stok}</span></p>
-        <button onclick="sewaBarang(${barang.id})">Sewa</button>
-         </div>
+      const barang = barangList.find(b => b.id === id);
+      if (barang && barang.stok > 0) {
+        barang.stok--;
+        localStorage.setItem('barangList', JSON.stringify(barangList));
+        document.getElementById(`stok-${id}`).textContent = barang.stok;
+      } else {
+        alert('Stok habis!');
+      }
+    }
   </script>
-  </div>
 </body>
 </html>
