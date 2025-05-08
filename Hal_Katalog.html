@@ -57,9 +57,21 @@
       color: red;
       font-weight: bold;
     }
+
     button {
       margin-top: 10px;
       padding: 6px 12px;
+    }
+
+    .header-k2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header-k2 h1 {
+      font-size: 40px;
+      font-family: "Noto Serif Ahom", serif;
+
     }
   </style>
 </head>
@@ -92,6 +104,7 @@
       container.appendChild(div);
     });
 
+
     function sewaBarang(id) {
       const barang = barangList.find(b => b.id === id);
       if (barang && barang.stok > 0) {
@@ -103,5 +116,12 @@
       }
     }
   </script>
+  </script>
+
+<div class="header-k2">
+  <h1>Paket Penyewaan </h1>
+</div>
+
+
 </body>
 </html>
