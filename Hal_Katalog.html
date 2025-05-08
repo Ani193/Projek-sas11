@@ -11,12 +11,6 @@
       padding: 20px;
     }
 
-    .container-k {
-      width: 100%;
-      padding: 20px;
-      box-sizing: border-box;
-
-    }
     .header-k {
       text-align: center;
       margin-bottom: 30px;
@@ -72,10 +66,19 @@
       color: red;
       font-weight: bold;
     }
+
+    .header-k2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header-k2 h1 {
+      font-size: 40px;
+      font-family: "Noto Serif Ahom", serif;
+    }
   </style>
 </head>
 <body>
-  <div class="container-k">
   <div class="header-k">
     <h1>Di Sewakan</h1>
   </div>
@@ -102,23 +105,11 @@
       `;
       container.appendChild(div);
     });
-    function sewaBarang(id) {
-  const barang = barangList.find(b => b.id === id);
-    if (barang && barang.stok > 0) {
-    barang.stok--;
-    localStorage.setItem('barangList', JSON.stringify(barangList));
-    document.getElementById(`stok-${id}`).textContent = barang.stok;
-    } else {
-    alert('Stok habis!');
-  }
-}
-       <!-- Dalam loop tampilan barang -->
-       <div class="item">
-        <h3>Nama Barang</h3>
-        <p>Stok: <span id="stok-${barang.id}">${barang.stok}</span></p>
-        <button onclick="sewaBarang(${barang.id})">Sewa</button>
-         </div>
   </script>
-  </div>
+
+<div class="header-k2">
+  <h1>Paket Penyewaan </h1>
+</div>
+
 </body>
 </html>
