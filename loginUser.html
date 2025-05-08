@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login User</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .login-container {
+            border: 1px solid #ccc;
+            padding: 30px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+            background-color: rgb(121, 176, 221);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        input[type="text"], input[type="password"] {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: rgb(158, 199, 252);
+            color: black;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.1s, box-shadow 0.1s;
+        }
+        button:hover {
+            background-color: rgb(123, 173, 240);
+        }
+        button:active {
+            transform: scale(0.95);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .remember-me {
+            text-align: left;
+            margin-left: 20px;
+        }
+        input[type="checkbox"] {
+            accent-color: blue;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <h1 id="form-title">Login</h1>
+    <input type="text" id="email" placeholder="Email"><br>
+    <input type="password" id="password" placeholder="Password"><br>
+    <div class="remember-me">
+        <input type="checkbox" id="remember"> Remember Me
+    </div>
+    <button onclick="submitForm()" id="submit-btn">Login</button>
+    <p id="message"></p>
+</div>
+
+<script>
+    function submitForm() {
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const message = document.getElementById('message');
+
+        if (!email || !password) {
+            message.style.color = "red";
+            message.innerText = "Email dan Password harus diisi!";
+            return;
+        }
+
+        // Ambil data dari localStorage
+        const storedUsers = JSON.parse(localStorage.getItem('users')) || {};
+
+        if (storedUsers[email]) {
+            // Akun sudah pernah terdaftar, cek password
+            if (storedUsers[email] === password) {
+                message.style.color = "green";
+                message.innerText = "Login Berhasil!";
+                setTimeout(() => {
+                    window.location.href = "home.html"; // halaman tujuan
+                }, 1000);
+            } else {
+                message.style.color = "red";
+                message.innerText = "Password salah!";
+            }
+        } else {
+            // Akun belum terdaftar, simpan baru
+            storedUsers[email] = password;
+            localStorage.setItem('users', JSON.stringify(storedUsers));
+            message.style.color = "green";
+            message.innerText = "Akun baru berhasil dibuat! Silakan login lagi.";
+
+            // Hapus input agar user bisa login ulang
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+        }
+    }
+</script>
+
+</body>
+</html>
