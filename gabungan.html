@@ -11,7 +11,6 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-   
     /* Navbar */
     .navbar {
       position: fixed;
@@ -19,7 +18,7 @@
       left: 0;
       right: 0;
       height: 60px;
-      background-color:#b3d8f996;
+      background-color:#a7d7f173;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -123,7 +122,6 @@
     .btn:hover {
       background-color: #e5e7eb;
     }
-
     /* Section 2 */
     .container2 {
       display: flex;
@@ -323,39 +321,59 @@
   </style>
 </head>
 <body>
-  <!-- Navbar -->
-  <header class="navbar">
-    <div class="logo">BASECAME OUTDOOR</div>
+<!-- Navbar -->
+<header class="navbar">
+  <div class="logo">BASECAME OUTDOOR</div>
 
-    <nav class="nav-links">
-      <a href="#">Beranda</a>
-      <a href="Hal_Katalog.html">katalog</a>
-      <a href="persyaratanSewa.html">persyaratan</a>
-      <a href="formulirPenyewaan.html">Penyewaan</a>
-    </nav>
+  <nav class="nav-links">
+    <a href="#">Beranda</a>
+    <a href="Hal_Katalog.html">Katalog</a>
+    <a href="persyaratanSewa.html">Persyaratan</a>
+    <a href="formulirPenyewaan.html">Penyewaan</a>
+  </nav>
 
-    <div class="navbar-right">
-      <form class="search-form" action="#" method="get">
-        <input type="text" class="search" placeholder="Cari..." name="q" />
-        <button type="submit" class="search-btn"> 
-          <i class="fas fa-search"></i>
-        </button>
-      </form>
+  <div class="navbar-right">
+    <form class="search-form" onsubmit="return handleSearch(event)">
+      <input type="text" class="search" placeholder="Cari..." id="searchInput" />
+      <button type="submit" class="search-btn">
+        <i class="fas fa-search"></i>
+      </button>
+    </form>
 
-      <a href="/loginAdmin.html" class="icon-admin" title="Login Admin">
-        <i class="fas fa-user"></i>
-      </a>
-    </div>
-  </header>
+    <a href="/loginAdmin.html" class="icon-admin" title="Login Admin">
+      <i class="fas fa-user"></i>
+    </a>
+  </div>
+</header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>BASECAME OUTDOOR</h1>
-      <p>Temukan petualangan terbaikmu bersama kami di alam bebas.</p>
-      <a href="formulirPenyewaan.html" class="btn">sewa sekarang!</a>
-    </div>
-  </section>
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>BASECAME OUTDOOR</h1>
+    <p>Temukan petualangan terbaikmu bersama kami di alam bebas.</p>
+    <a href="#section2" class="btn">Mulai</a>
+  </div>
+</section>
+
+<script>
+  function handleSearch(e) {
+    e.preventDefault();
+    const keyword = document.getElementById("searchInput").value.toLowerCase();
+
+    // Pencarian untuk "tenda", "katalog", dll.
+    if (keyword.includes("tenda") || keyword.includes("katalog")) {
+      window.location.href = "Hal_Katalog.html"; // Pindah ke halaman katalog
+    } else if (keyword.includes("penyewaan")) {
+      window.location.href = "formulirPenyewaan.html"; // Pindah ke halaman penyewaan
+    } else if (keyword.includes("syarat") || keyword.includes("persyaratan")) {
+      window.location.href = "persyaratanSewa.html"; // Pindah ke halaman persyaratan
+    } else {
+      alert("Halaman tidak ditemukan.");
+    }
+
+    return false;
+  }
+</script>
 
   <!-- Section 2 -->
   <section id="section2" class="container2">
