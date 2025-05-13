@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+//mengecek apakah user sudah login
+if (!isset($_SESSION['emial'])){
+  header("Location: loginAdmin.php");
+  exit();
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
