@@ -2,7 +2,7 @@
 session_start();
 
 //mengecek apakah user sudah login
-if (!isset($_SESSION['emial'])){
+if (!isset($_SESSION['email'])){
   header("Location: loginAdmin.php");
   exit();
 }
@@ -68,7 +68,7 @@ body {
 <body>
 <div class="container">
   <h1>Halaman Menu</h1>
-  <div class="menu-item" onclick="window.location.href='alatAdmin.html'">ALAT YANG DI SEWA</div>
+  <div class="menu-item" onclick="window.location.href='alatAdmin.php'">ALAT YANG DI SEWA</div>
   <div class="menu-item" onclick="window.location.href='daftrPemesananAdmin.html'">PESANAN</div>
   <div class="menu-item" onclick="window.location.href='Promo&Diskon_Admin.html'">PROMO DAN DISKON</div>
   <div class="menu-item" onclick="window.location.href='paketPenyewaan.html'">PAKET PENYEWAAN</div>

@@ -4,20 +4,20 @@ $error = "";
 $email_cookie = "";
 
 if (isset($_COOKIE["remember_email"])) {
-    $email_cookie = $_COOKIE["remember_email"];
+    $email_cookie = trim($_COOKIE["remember_email"]);
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST["email"];
-    $password = $_POST["password"];
+    $email = trim($_POST["email"]);
+    $password = trim($_POST["password"]);
     $remember = isset($_POST["remember"]);
 
-    $conn = new mysqli("localhost", "root", "root", "camping");
+    $conn = new mysqli("localhost", "root", "", "camping");
     if ($conn->connect_error) {
         die("Koneksi gagal: " . $conn->connect_error);
     }
 
-    $stmt = $conn->prepare("SELECT * FROM admin WHERE email = ? AND password = ?");
+    $stmt = $conn->prepare("SELECT * FROM admin WHERE BINARY TRIM(email) = ? AND BINARY TRIM(password) = ?");
     $stmt->bind_param("ss", $email, $password);
     $stmt->execute();
     $result = $stmt->get_result();
