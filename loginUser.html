@@ -77,11 +77,52 @@
 </div>
 
 <script>
+
   window.onload = () => {
     const rememberedEmail = localStorage.getItem('rememberedEmail');
     if (rememberedEmail) {
       document.getElementById('email').value = rememberedEmail;
       document.getElementById('remember').checked = true;
+
+    function submitForm() {
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const message = document.getElementById('message');
+
+        if (!email || !password) {
+            message.style.color = "red";
+            message.innerText = "Email dan Password harus diisi!";
+            return;
+        }
+      }
+
+        // Ambil data dari localStorage
+        const storedUsers = JSON.parse(localStorage.getItem('users')) || {};
+
+        if (storedUsers[email]) {
+            // Akun sudah pernah terdaftar, cek password
+            if (storedUsers[email] === password) {
+                message.style.color = "green";
+                message.innerText = "Login Berhasil!";
+                setTimeout(() => {
+                    window.location.href = "form_cb.html"; // halaman tujuan
+                }, 1000);
+            } else {
+                message.style.color = "red";
+                message.innerText = "Password salah!";
+            }
+        } else {
+            // Akun belum terdaftar, simpan baru
+            storedUsers[email] = password;
+            localStorage.setItem('users', JSON.stringify(storedUsers));
+            message.style.color = "green";
+            message.innerText = "Akun baru berhasil dibuat! Silakan login lagi.";
+
+            // Hapus input agar user bisa login ulang
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+        }
+
     }
 
     // Jika sudah login, langsung arahkan ke katalog

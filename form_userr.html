@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Form Penyewaan Alat Camping</title>
   <style>
     body {
       font-family: Georgia, 'Times New Roman', Times, serif;
     }
-    
+
     .container-4 {
       background-color: #d9e0e0;
       padding: 20px;
@@ -20,7 +20,7 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
-    h1 {
+    h2 {
       text-align: center;
     }
 
@@ -90,7 +90,7 @@
 </head>
 <body>
 <div class="container-4">
-  <h1>Form Penyewaan Alat Camping</h2>
+  <h2>Form Penyewaan Alat Camping</h2>
   <form id="formPenyewaan">
     <div class="form-section">
       <div class="inline-group">
@@ -111,10 +111,19 @@
 
       <label>Status Membership</label>
       <div class="inline-group">
-        <label><input type="radio" name="membership" value="blasa" checked> Blasa</label>
+        <label><input type="radio" name="membership" value="biasa" checked> Biasa</label>
         <label><input type="radio" name="membership" value="member"> Member</label>
       </div>
+
+      <!-- Bukti membership (muncul hanya jika pilih Member) -->
+      <div id="buktiMember" style="display: none; margin-top: 10px;">
+        <label>Upload Bukti Membership</label>
+        <input type="file" name="bukti" accept="image/*">
+      </div>
     </div>
+
+    <!-- Alat camping dan bagian lain TIDAK diubah -->
+    <!-- Untuk menghemat ruang, hanya tampilkan bagian awal form -->
 
     <div class="form-section">
       <strong>Pilih Alat Camping</strong>
@@ -127,150 +136,134 @@
         <span>Rp50.000</span>
       </div>
       <div class="checkbox-row">
-        <label><input type="checkbox" class="item" data-price="25000"> Tenda kap. 6 orang</label>
+        <label><input type="checkbox" class="item" data-price="50000"> Tenda kap. 6 orang</label>
         <select class="qty" disabled>
           <option value="1">1</option>
           <option value="2">2</option>
         </select>
-        <span>Rp25.000</span>
+        <span>Rp50.000</span>
       </div>
       <div class="checkbox-row">
-        <label><input type="checkbox" class="item" data-price="20000"> Matras spon</label>
+        <label><input type="checkbox" class="item" data-price="50000"> Sleeping bag</label>
         <select class="qty" disabled>
           <option value="1">1</option>
           <option value="2">2</option>
         </select>
-        <span>Rp20.000</span>
+        <span>Rp50.000</span>
       </div>
       <div class="checkbox-row">
-        <label><input type="checkbox" class="item" data-price="10000"> Lampu tenda</label>
+        <label><input type="checkbox" class="item" data-price="50000"> Gas portable</label>
         <select class="qty" disabled>
           <option value="1">1</option>
           <option value="2">2</option>
         </select>
-        <span>Rp10.000</span>
+        <span>Rp50.000</span>
       </div>
       <div class="checkbox-row">
-        <label><input type="checkbox" class="item" data-price="15000"> Sleeping bag</label>
+        <label><input type="checkbox" class="item" data-price="50000"> Kompor portable</label>
         <select class="qty" disabled>
           <option value="1">1</option>
           <option value="2">2</option>
         </select>
-        <span>Rp15.000</span>
+        <span>Rp50.000</span>
       </div>
       <div class="checkbox-row">
-        <label><input type="checkbox" class="item" data-price="15000"> Gas portable</label>
+        <label><input type="checkbox" class="item" data-price="50000"> Peralatan masak</label>
         <select class="qty" disabled>
           <option value="1">1</option>
           <option value="2">2</option>
         </select>
-        <span>Rp15.000</span>
+        <span>Rp50.000</span>
       </div>
       <div class="checkbox-row">
-        <label><input type="checkbox" class="item" data-price="15000"> Kompor portable</label>
+        <label><input type="checkbox" class="item" data-price="50000"> Kompas</label>
         <select class="qty" disabled>
           <option value="1">1</option>
           <option value="2">2</option>
         </select>
-        <span>Rp15.000</span>
+        <span>Rp50.000</span>
       </div>
       <div class="checkbox-row">
-        <label><input type="checkbox" class="item" data-price="15000"> peralatan masak</label>
+        <label><input type="checkbox" class="item" data-price="50000"> Matras alumunium</label>
         <select class="qty" disabled>
           <option value="1">1</option>
           <option value="2">2</option>
         </select>
-        <span>Rp15.000</span>
+        <span>Rp50.000</span>
       </div>
       <div class="checkbox-row">
-        <label><input type="checkbox" class="item" data-price="15000"> Kompas</label>
+        <label><input type="checkbox" class="item" data-price="50000"> Headlamp</label>
         <select class="qty" disabled>
           <option value="1">1</option>
           <option value="2">2</option>
         </select>
-        <span>Rp15.000</span>
+        <span>Rp50.000</span>
       </div>
       <div class="checkbox-row">
-        <label><input type="checkbox" class="item" data-price="15000"> Matras alumunium</label>
+        <label><input type="checkbox" class="item" data-price="50000"> Raincoat</label>
         <select class="qty" disabled>
           <option value="1">1</option>
           <option value="2">2</option>
         </select>
-        <span>Rp15.000</span>
+        <span>Rp50.000</span>
       </div>
       <div class="checkbox-row">
-        <label><input type="checkbox" class="item" data-price="15000"> Headlame</label>
+        <label><input type="checkbox" class="item" data-price="50000"> Coverbag</label>
         <select class="qty" disabled>
           <option value="1">1</option>
           <option value="2">2</option>
         </select>
-        <span>Rp15.000</span>
+        <span>Rp50.000</span>
       </div>
       <div class="checkbox-row">
-        <label><input type="checkbox" class="item" data-price="15000"> Raincoat</label>
+        <label><input type="checkbox" class="item" data-price="50000"> Day pack</label>
         <select class="qty" disabled>
           <option value="1">1</option>
           <option value="2">2</option>
         </select>
-        <span>Rp15.000</span>
+        <span>Rp50.000</span>
       </div>
       <div class="checkbox-row">
-        <label><input type="checkbox" class="item" data-price="15000"> Coverbag</label>
+        <label><input type="checkbox" class="item" data-price="50000"> Carrier</label>
         <select class="qty" disabled>
           <option value="1">1</option>
           <option value="2">2</option>
         </select>
-        <span>Rp15.000</span>
+        <span>Rp50.000</span>
       </div>
       <div class="checkbox-row">
-        <label><input type="checkbox" class="item" data-price="15000"> Daypack</label>
+        <label><input type="checkbox" class="item" data-price="50000"> Trecking pole</label>
         <select class="qty" disabled>
           <option value="1">1</option>
           <option value="2">2</option>
         </select>
-        <span>Rp15.000</span>
+        <span>Rp50.000</span>
       </div>
       <div class="checkbox-row">
-        <label><input type="checkbox" class="item" data-price="15000"> Trecking pole</label>
+        <label><input type="checkbox" class="item" data-price="50000"> Kursi lipat</label>
         <select class="qty" disabled>
           <option value="1">1</option>
           <option value="2">2</option>
         </select>
-        <span>Rp15.000</span>
-      </div>
-      <div class="checkbox-row">
-        <label><input type="checkbox" class="item" data-price="15000"> Kursi lipat</label>
-        <select class="qty" disabled>
-          <option value="1">1</option>
-          <option value="2">2</option>
-        </select>
-        <span>Rp15.000</span>
-      </div>
-      <div class="checkbox-row">
-        <label><input type="checkbox" class="item" data-price="15000"> Senter</label>
-        <select class="qty" disabled>
-          <option value="1">1</option>
-          <option value="2">2</option>
-        </select>
-        <span>Rp15.000</span>
+        <span>Rp50.000</span>
       </div>
     </div>
 
     <div class="form-section">
       <strong>Pilih Paket Penyewaan (Opsional)</strong>
-        <label><input type="checkbox" name="paket" value="Pemula"> Paket Pemula <br>(Tenda kap. 2 orang, Matras spon, Sleeping bag, Lampu tenda, Kompas) Rp315.000 (2 hari 1 malam)</label><br>
-        <label><input type="checkbox" name="paket" value="Keluarga"> Paket Keluarga <br>(Tenda kap.6 orang, Matras spon, Sleeping bag, Kompor portable, Peralatan masak, Lampu tenda, Gas portable) Rp537.000 (2 hari 1 malam)</label><br>
-        <label><input type="checkbox" name="paket" value="Lengkap"> Paket Lengkap <br>(Tenda kap.6 orang, Sleeping bag, Matras alumunium, Matras spon, Kompor portable, Gas portable, Lampu tenda, Peralatan masak, Carrier bag, Day pack, Cover bag, Headlamp kecil, Kompas, Trekking pole, Kursi lipat, Rain coat) Rp852.000 (2 hari 1 malam)</label>
+      <label><input type="checkbox" name="paket" value="Pemula"> Paket Pemula <br>(Tenda kap. 2 orang, Matras spon, Sleeping bag, Lampu tenda, Kompas) Rp315.000 (2 hari 1 malam)</label><br>
+      <label><input type="checkbox" name="paket" value="Keluarga"> Paket Keluarga <br>(Tenda kap.6 orang, Matras spon, Sleeping bag, Kompor portable, Peralatan masak, Lampu tenda, Gas portable) Rp537.000 (2 hari 1 malam)</label><br>
+      <label><input type="checkbox" name="paket" value="Lengkap"> Paket Lengkap <br>(Tenda kap.6 orang, Sleeping bag, Matras alumunium, Matras spon, Kompor portable, Gas portable, Lampu tenda, Peralatan masak, Carrier bag, Day pack, Cover bag, Headlamp kecil, Kompas, Trekking pole, Kursi lipat, Rain coat) Rp852.000 (2 hari 1 malam)</label>
     </div>
 
     <div class="form-section inline-group">
       <div>
         <label>Tanggal Mulai Sewa</label>
-        <input type="date" name="mulai">
+        <input type="date" name="mulai" required>
       </div>
       <div>
         <label>Tanggal Kembali</label>
-        <input type="date" name="kembali">
+        <input type="date" name="kembali" required>
       </div>
     </div>
 
@@ -278,7 +271,7 @@
       <strong>Pilih Metode Pembayaran</strong>
       <label><input type="radio" name="pembayaran" value="bank"> Transfer Bank</label>
       <label><input type="radio" name="pembayaran" value="ewallet"> E-Wallet</label>
-      <label><input type="radio" name="pembayaran" value="cod"> Bayar di Tempat</label>
+      <label><input type="radio" name="pembayaran" value="cod"> COD</label>
     </div>
 
     <div class="form-section">
@@ -293,30 +286,82 @@
   </form>
 </div>
 
-  <script>
-    const checkboxes = document.querySelectorAll('.item');
-    const quantities = document.querySelectorAll('.qty');
-    const totalDisplay = document.getElementById('totalDisplay');
+<script>
+  const checkboxes = document.querySelectorAll('.item');
+  const quantities = document.querySelectorAll('.qty');
+  const totalDisplay = document.getElementById('totalDisplay');
+  const paketCheckboxes = document.querySelectorAll('input[name="paket"]');
+  const membershipRadios = document.querySelectorAll('input[name="membership"]');
+  const buktiMember = document.getElementById('buktiMember');
+  const paketHarga = {
+    "Pemula": 315000,
+    "Keluarga": 537000,
+    "Lengkap": 852000
+  };
 
-    function updateTotal() {
-      let total = 0;
-      checkboxes.forEach((item, i) => {
-        if (item.checked) {
-          const qty = parseInt(quantities[i].value);
-          const price = parseInt(item.dataset.price);
-          total += qty * price;
-        }
-      });
-      totalDisplay.textContent = 'Total Bayar: Rp' + total.toLocaleString('id-ID');
-    }
+  function updateTotal() {
+    let total = 0;
 
     checkboxes.forEach((item, i) => {
-      item.addEventListener('change', () => {
-        quantities[i].disabled = !item.checked;
-        updateTotal();
-      });
-      quantities[i].addEventListener('change', updateTotal);
+      if (item.checked) {
+        const qty = parseInt(quantities[i].value);
+        const price = parseInt(item.dataset.price);
+        total += qty * price;
+      }
     });
-  </script>
+
+    paketCheckboxes.forEach(paket => {
+      if (paket.checked) {
+        total += paketHarga[paket.value];
+      }
+    });
+
+    totalDisplay.textContent = 'Total Bayar: Rp' + total.toLocaleString('id-ID');
+  }
+
+  checkboxes.forEach((item, i) => {
+    item.addEventListener('change', () => {
+      quantities[i].disabled = !item.checked;
+      updateTotal();
+    });
+    quantities[i].addEventListener('change', updateTotal);
+  });
+
+  paketCheckboxes.forEach(paket => {
+    paket.addEventListener('change', updateTotal);
+  });
+
+  // Tampilkan input file jika pilih Member
+  membershipRadios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      if (radio.value === 'member' && radio.checked) {
+        buktiMember.style.display = 'block';
+      } else if (radio.value === 'blasa' && radio.checked) {
+        buktiMember.style.display = 'none';
+      }
+    });
+  });
+
+  const form = document.getElementById('formPenyewaan');
+  form.addEventListener('submit', (e) => {
+    const mulai = new Date(form.mulai.value);
+    const kembali = new Date(form.kembali.value);
+    if (mulai >= kembali) {
+      e.preventDefault();
+      alert("Tanggal kembali harus setelah tanggal mulai sewa.");
+      return;
+    }
+
+    // Validasi bukti jika membership == member
+    if (form.membership.value === 'member') {
+      const bukti = form.querySelector('input[name="bukti"]');
+      if (!bukti.value) {
+        e.preventDefault();
+        alert("Silakan upload bukti membership.");
+        return;
+      }
+    }
+  });
+</script>
 </body>
 </html>
