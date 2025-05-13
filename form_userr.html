@@ -151,15 +151,22 @@
 
   <script>
 function simpanDataPenyewaan() {
+  const alatPenyewaan = [];
+  document.querySelectorAll('.alat:checked').forEach(cb => {
+    const alat = cb.dataset.id;
+    const jumlah = document.querySelector(`.jumlah[data-id="${alat}"]`).value;
+    alatPenyewaan.push({ alat, jumlah });
+  });
+
   const data = {
     nama: document.getElementById("nama").value,
     email: document.getElementById("email").value,
-    nomor_hp: document.getElementById("nomor_hp").value,
-    tanggal_mulai: document.getElementById("tanggal_mulai").value,
-    tanggal_selesai: document.getElementById("tanggal_selesai").value,
-    durasi: document.getElementById("durasi").value,
-    alat: document.getElementById("alat").value,
-    jumlah: document.getElementById("jumlah").value
+    nomor_hp: document.getElementById("telepon").value,
+    alamat: document.getElementById("alamat").value,
+    tanggal_mulai: document.getElementById("tanggalPesan").value,
+    tanggal_selesai: document.getElementById("tanggalPesan").value, // Sementara, Anda bisa mengubahnya menjadi tanggal selesai yang diinginkan
+    alat: alatPenyewaan,
+    durasi: "2 hari 1 malam" // Sesuaikan dengan durasi paket yang dipilih
   };
 
   // Ambil data sebelumnya (jika ada)
@@ -172,7 +179,7 @@ function simpanDataPenyewaan() {
   localStorage.setItem("dataPenyewaan", JSON.stringify(daftar));
 
   // Arahkan ke halaman data penyewaan
-  window.location.href = "data_penyewaan.html";
+  window.location.href = "form_admin.html"; // Pastikan halaman data penyewaan sesuai dengan nama yang digunakan
 }
 
 
@@ -244,7 +251,6 @@ function simpanDataPenyewaan() {
     document.querySelectorAll('.alat, .jumlah, #paketHemat, #paketLengkap').forEach(el => {
       el.addEventListener('change', updateTotal);
     });
-      document.addEventListener('DOMContentLoaded', loadDataPenyewaan);
   </script>
 </body>
 </html>

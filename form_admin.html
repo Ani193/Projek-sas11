@@ -25,22 +25,23 @@
 
   <script>
     const daftar = JSON.parse(localStorage.getItem("dataPenyewaan")) || [];
-    const tbody = document.querySelector("#tabelPenyewaan tbody");
+const tbody = document.querySelector("#tabelPenyewaan tbody");
 
-    daftar.forEach(data => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${data.nama}</td>
-        <td>${data.email}</td>
-        <td>${data.nomor_hp}</td>
-        <td>${data.tanggal_mulai}</td>
-        <td>${data.tanggal_selesai}</td>
-        <td>${data.durasi}</td>
-        <td>${data.alat}</td>
-        <td>${data.jumlah}</td>
-      `;
-      tbody.appendChild(row);
-    });
+daftar.forEach(data => {
+  const row = document.createElement("tr");
+  const alatList = data.alat.map(item => `${item.alat} (x${item.jumlah})`).join(", ");
+
+  row.innerHTML = `
+    <td>${data.nama}</td>
+    <td>${data.email}</td>
+    <td>${data.nomor_hp}</td>
+    <td>${data.tanggal_mulai}</td>
+    <td>${data.tanggal_selesai}</td>
+    <td>${data.durasi}</td>
+    <td>${alatList}</td>
+  `;
+  tbody.appendChild(row);
+});
   </script>
 </body>
 </html>
