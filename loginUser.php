@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
       $message = "Login berhasil! Anda akan diarahkan ke halaman katalog.";
       // Jika login sukses, arahkan ke halaman katalog
-      header("Location: Hal_Katalog.php"); // Ganti dengan halaman katalog yang sesuai
+      header("Location: from_userr.html"); // Ganti dengan halaman katalog yang sesuai
       exit();
     } else {
       $message = "Password salah!";
