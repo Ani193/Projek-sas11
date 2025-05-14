@@ -63,7 +63,7 @@
       const alatList = Array.isArray(item.alat)
         ? item.alat.map(a => `${a.nama} (x${a.jumlah})`).join(", ")
         : item.alat;
-      row.insertCell().textContent = alatList;
+      row.insertCell().textContent = item.alat.map(a => `${a.nama} (x${a.jumlah})`).join(", ");
 
       row.insertCell().textContent = item.membership || "-";
 

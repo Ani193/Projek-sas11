@@ -281,65 +281,72 @@
   });
 
  function simpanDataPenyewaan() {
+  // Ambil nilai alat tergantung apakah pakai paket atau tidak
+  let alatPenyewaan = [];
+
+  if (document.getElementById("paketPemula").checked) {
+    alatPenyewaan = [
+      { nama: "tenda", jumlah: "1" },
+      { nama: "matras", jumlah: "1" },
+      { nama: "sleeping", jumlah: "1" },
+      { nama: "lampu", jumlah: "1" },
+      { nama: "kompas", jumlah: "1" }
+    ];
+  } else if (document.getElementById("paketKeluarga").checked) {
+    alatPenyewaan = [
+      { nama: "tenda", jumlah: "1" },
+      { nama: "matras", jumlah: "1" },
+      { nama: "sleeping", jumlah: "1" },
+      { nama: "kompor", jumlah: "1" },
+      { nama: "nesting", jumlah: "1" },
+      { nama: "lampu", jumlah: "1" },
+      { nama: "gas", jumlah: "1" }
+    ];
+  } else if (document.getElementById("paketLengkap").checked) {
+    alatPenyewaan = [
+      { nama: "tenda", jumlah: "1" },
+      { nama: "matras", jumlah: "1" },
+      { nama: "sleeping", jumlah: "1" },
+      { nama: "kompor", jumlah: "1" },
+      { nama: "nesting", jumlah: "1" },
+      { nama: "lampu", jumlah: "1" },
+      { nama: "kompas", jumlah: "1" },
+      { nama: "gas", jumlah: "1" }
+    ];
+  } else {
+    // jika tidak memilih paket, ambil dari form alat
+    document.querySelectorAll('.alat:checked').forEach(cb => {
+      const alat = cb.dataset.id;
+      const jumlah = document.querySelector(`.jumlah[data-id="${alat}"]`).value;
+      alatPenyewaan.push({ nama: alat, jumlah });
+    });
+  }
+
+  // Ambil data isian form
   const nama = document.getElementById("nama").value.trim();
   const email = document.getElementById("email").value.trim();
-  const nomor_hp = document.getElementById("telepon").value.trim();
+  const telepon = document.getElementById("telepon").value.trim();
   const alamat = document.getElementById("alamat").value.trim();
   const tanggal = document.getElementById("tanggalPesan").value;
   const membership = document.querySelector('input[name="member"]:checked').value;
   const fileInput = document.getElementById("buktiMember");
-  const metode = document.querySelector('input[name="metode"]:checked');
 
-  const paketSelected = document.getElementById("paketPemula").checked ||
-                        document.getElementById("paketKeluarga").checked ||
-                        document.getElementById("paketLengkap").checked;
-
-  const alatSelected = Array.from(document.querySelectorAll('.alat:checked')).length > 0;
-
-  // Validasi field wajib
-  if (!nama || !email || !nomor_hp || !alamat || !tanggal || !metode || (!paketSelected && !alatSelected)) {
-    alert("Harap lengkapi semua data dan pilih alat atau paket penyewaan.");
+  // Validasi semua wajib diisi
+  if (!nama || !email || !telepon || !alamat || !tanggal || alatPenyewaan.length === 0) {
+    alert("Mohon lengkapi semua data termasuk memilih alat atau paket.");
     return;
   }
 
-  if (membership === "member" && fileInput.files.length === 0) {
-    alert("Silakan upload bukti member jika memilih status Member.");
-    return;
-  }
-
-  const alatPenyewaan = [];
-  document.querySelectorAll('.alat:checked').forEach(cb => {
-    const alat = cb.dataset.id;
-    const jumlah = document.querySelector(`.jumlah[data-id="${alat}"]`).value;
-    alatPenyewaan.push({ nama: alat, jumlah });
-  });
-
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const fotoMember = (membership === "member") ? e.target.result : "";
-    const data = {
-      nama, email, nomor_hp, alamat,
-      tanggal_mulai: tanggal,
-      tanggal_selesai: tanggal,
-      durasi: "2 hari 1 malam",
-      alat: alatPenyewaan,
-      membership,
-      fotoMember
-    };
-
-    let daftar = JSON.parse(localStorage.getItem("dataPenyewaan")) || [];
-    daftar.push(data);
-    localStorage.setItem("dataPenyewaan", JSON.stringify(daftar));
-
-    alert("Selamat! Penyewaan berhasil disimpan.");
-    resetForm(); // Kosongkan form
-    window.location.href = "gabungan.html";
-  };
-
+  // Proses data jika MEMBER dengan file
   if (membership === "member" && fileInput.files.length > 0) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      simpanKeLocalStorage(e.target.result, alatPenyewaan);
+    };
     reader.readAsDataURL(fileInput.files[0]);
   } else {
-    reader.onload({ target: { result: "" } }); // Panggil langsung tanpa gambar
+    // kalau biasa atau member tanpa file
+    simpanKeLocalStorage("", alatPenyewaan);
   }
 }
 
@@ -360,7 +367,31 @@
     let daftar = JSON.parse(localStorage.getItem("dataPenyewaan")) || [];
     daftar.push(data);
     localStorage.setItem("dataPenyewaan", JSON.stringify(daftar));
-     alert("selamat anda telah berhasil menyewa alat camping");
+     // Reset semua field setelah disimpan
+      document.getElementById("nama").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("telepon").value = "";
+      document.getElementById("alamat").value = "";
+      document.getElementById("tanggalPesan").value = "";
+
+      document.querySelectorAll('.alat').forEach(cb => cb.checked = false);
+      document.querySelectorAll('.jumlah').forEach(sel => sel.value = "1");
+
+      document.getElementById("paketPemula").checked = false;
+      document.getElementById("paketKeluarga").checked = false;
+      document.getElementById("paketLengkap").checked = false;
+
+      document.getElementById("buktiMember").value = "";
+      document.querySelector('input[name="member"][value="biasa"]').checked = true;
+
+      document.getElementById("diskonText").textContent = "";
+      document.getElementById("diskonText").classList.add("hidden");
+      document.getElementById("totalBayar").textContent = "Total Bayar: Rp0";
+
+      document.getElementById("barcodeImage").style.display = "none";
+ 
+    alert("selamat anda telah berhasil menyewa alat camping");
+
         window.location.href = "gabungan.html";
   }
   function isUserMember() {
@@ -428,17 +459,6 @@
 
   document.getElementById("buktiMember").addEventListener("change", updateTotalPaket);
 
-  function resetForm() {
-  document.querySelectorAll("input[type='text'], input[type='email'], input[type='date']").forEach(el => el.value = "");
-  document.querySelectorAll("input[type='radio']").forEach(el => el.checked = el.defaultChecked);
-  document.querySelectorAll("input[type='checkbox']").forEach(el => el.checked = false);
-  document.querySelectorAll(".jumlah").forEach(sel => sel.value = "1");
-  document.getElementById("buktiMember").value = "";
-  document.getElementById("diskonText").classList.add("hidden");
-  document.getElementById("diskonText").textContent = "";
-  document.getElementById("totalBayar").textContent = "Total Bayar: Rp0";
-  barcodeImage.style.display = "none";
-}
 
 
 
