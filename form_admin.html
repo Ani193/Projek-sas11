@@ -13,35 +13,59 @@
   <h1>Daftar Penyewaan Alat Camping</h1>
   <table id="tabelPenyewaan">
     <thead>
-      <tr>
-        <th>Nama</th><th>Email</th><th>No. HP</th><th>Tanggal Mulai</th>
-        <th>Tanggal Selesai</th><th>Durasi</th><th>Alat</th><th>Jumlah</th>
-      </tr>
-    </thead>
+  <tr>
+    <th>Nama</th>
+    <th>Email</th>
+    <th>Nomor HP</th>
+    <th>Tanggal Mulai</th>
+    <th>Tanggal Selesai</th>
+    <th>Durasi</th>
+    <th>Alat Disewa</th>
+    <th>Status Member</th>
+    <th>Bukti Member</th>
+  </tr>
+</thead>
+
     <tbody>
       <!-- Data akan ditambahkan via JavaScript -->
     </tbody>
   </table>
 
-  <script>
-    const daftar = JSON.parse(localStorage.getItem("dataPenyewaan")) || [];
-const tbody = document.querySelector("#tabelPenyewaan tbody");
+ <script>
+ const data = JSON.parse(localStorage.getItem("dataPenyewaan")) || [];
+const tabel = document.getElementById("tabelPenyewaan");
 
-daftar.forEach(data => {
-  const row = document.createElement("tr");
-  const alatList = data.alat.map(item => `${item.alat} (x${item.jumlah})`).join(", ");
+data.forEach(item => {
+  const row = tabel.insertRow();
+  row.insertCell().textContent = item.nama;
+  row.insertCell().textContent = item.email;
+  row.insertCell().textContent = item.nomor_hp;
+  row.insertCell().textContent = item.tanggal_mulai;
+  row.insertCell().textContent = item.tanggal_selesai;
+  row.insertCell().textContent = item.durasi;
 
-  row.innerHTML = `
-    <td>${data.nama}</td>
-    <td>${data.email}</td>
-    <td>${data.nomor_hp}</td>
-    <td>${data.tanggal_mulai}</td>
-    <td>${data.tanggal_selesai}</td>
-    <td>${data.durasi}</td>
-    <td>${alatList}</td>
-  `;
-  tbody.appendChild(row);
+  // Alat Disewa (array of object)
+  const alatList = Array.isArray(item.alat)
+    ? item.alat.map(a => `${a.nama} (x${a.jumlah})`).join(", ")
+    : item.alat;
+  row.insertCell().textContent = alatList;
+
+  // Membership
+  row.insertCell().textContent = item.membership || "-";
+
+  // Bukti Member (jika ada)
+  const buktiCell = row.insertCell();
+  if (item.membership === "member" && item.fotoMember) {
+    const img = document.createElement("img");
+    img.src = item.fotoMember;
+    img.alt = "Bukti Member";
+    img.style.maxWidth = "100px";
+    buktiCell.appendChild(img);
+  } else {
+    buktiCell.textContent = "-";
+  }
 });
-  </script>
+</script>
+
 </body>
 </html>

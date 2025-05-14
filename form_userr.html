@@ -175,12 +175,55 @@ function simpanDataPenyewaan() {
   // Tambahkan data baru ke daftar
   daftar.push(data);
 
-  // Simpan kembali ke localStorage
+  localStorage.setItem("dataPenyewaan", JSON.stringify(daftar));
+   alert("Data berhasil disimpan!");
+
+   // Ambil status member
+const membership = document.querySelector('input[name="member"]:checked').value;
+const fileInput = document.getElementById("buktiMember");
+
+if (membership === "member" && fileInput.files.length > 0) {
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    simpanKeLocalStorage(e.target.result); // kirim base64
+  };
+  reader.readAsDataURL(fileInput.files[0]);
+} else {
+  simpanKeLocalStorage(""); // non-member
+}
+
+
+}
+
+function simpanKeLocalStorage(fotoMember) {
+  const alatDipilih = [];
+  document.querySelectorAll('.alat:checked').forEach(cb => {
+    const id = cb.dataset.id;
+    const label = cb.nextElementSibling.textContent.trim();
+    const jumlah = document.querySelector(`.jumlah[data-id="${id}"]`).value;
+    alatDipilih.push(`${label} (${jumlah})`);
+  });
+
+  const data = {
+    nama: document.getElementById("nama").value,
+    email: document.getElementById("email").value,
+    nomor_hp: document.getElementById("telepon").value,
+    tanggal_mulai: document.getElementById("tanggal_mulai").value,
+    tanggal_selesai: document.getElementById("tanggal_selesai").value,
+    durasi: document.getElementById("durasi").value,
+    alat: alatDipilih.join(', '),
+    jumlah: alatDipilih.length,
+    membership: document.querySelector('input[name="member"]:checked').value,
+    fotoMember: fotoMember
+  };
+
+  let daftar = JSON.parse(localStorage.getItem("dataPenyewaan")) || [];
+  daftar.push(data);
   localStorage.setItem("dataPenyewaan", JSON.stringify(daftar));
 
-  // Arahkan ke halaman data penyewaan
-  window.location.href = "form_admin.html"; // Pastikan halaman data penyewaan sesuai dengan nama yang digunakan
+  alert("Data berhasil disimpan!");
 }
+
 
 
     let diskon = 0;
