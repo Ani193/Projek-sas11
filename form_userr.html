@@ -41,7 +41,6 @@
     }
     .section {
       margin-top: 20px;
-      padding: 5px;
       border-radius: 6px;
     }
     .total {
@@ -56,10 +55,12 @@
     .hidden {
       display: none;
     }
-    .section, button {
-        size: 50px;
-        text-align: center;
+    .totalbyr-f {
+     margin-bottom: 20px;
+     margin-top: 20px;
+     text-align: center;
     }
+   
   </style>
 </head>
 <body>
@@ -130,12 +131,14 @@
     <input type="date" id="tanggalPesan" />
   </div>
 
-  <div class="section">
-    <label>Pilih Metode Pembayaran</label>
-    <input type="radio" name="metode" /> Transfer Bank
-    <input type="radio" name="metode" /> E-Wallet
-    <input type="radio" name="metode" /> Bayar di Tempat
-  </div>
+ <label>Pilih Metode Pembayaran</label><br>
+<input type="radio" name="metode" value="E-Wallet"> E-Wallet
+<input type="radio" name="metode" value="Bayar di Tempat"> Bayar di Tempat
+
+<div id="barcodeContainer" style="margin-top: 10px;">
+  <img id="barcodeImage" src="barcode.png" alt="barcode-ewallet" style="display: none; max-width: 200px;">
+</div>
+
 
 
   <div class="section">
@@ -143,11 +146,12 @@
     <input type="checkbox" /> Saya telah membaca dan menyetujui <i>Syarat & Ketentuan</i><br/>
   </div>
 
-  <div class="section">
+  <div class="totalbyr-f">
     <div id="diskonText" class="total hidden"></div>
     <div id="totalBayar" class="total">Total Bayar: Rp0</div>
     <button onclick="simpanDataPenyewaan()">Mulai Proses Pemesanan</button>
   </div>
+
   </div>
 
   <script>
@@ -295,6 +299,26 @@ function simpanKeLocalStorage(fotoMember) {
     document.querySelectorAll('.alat, .jumlah, #paketHemat, #paketLengkap').forEach(el => {
       el.addEventListener('change', updateTotal);
     });
+
+  const barcodeImage = document.getElementById("barcodeImage");
+
+  document.querySelectorAll('input[name="metode"]').forEach(radio => {
+    radio.addEventListener("change", () => {
+      const metode = radio.value;
+
+      if (metode === "Transfer Bank") {
+        barcodeImage.src = "barcode-bank.png"; // ganti dengan path gambar barcode bank
+        barcodeImage.style.display = "block";
+        barcodeImage.alt = "Barcode Transfer Bank";
+      } else if (metode === "E-Wallet") {
+        barcodeImage.src = "barcode-ewallet.png"; // ganti dengan path gambar e-wallet
+        barcodeImage.style.display = "block";
+        barcodeImage.alt = "Barcode E-Wallet";
+      } else {
+        barcodeImage.style.display = "none";
+      }
+    });
+  });
   </script>
 </body>
 </html>
