@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+// Simpan ID barang kalau datang dari tombol Sewa
+if (isset($_GET['id'])) {
+  $_SESSION['pendingSewa'] = $_GET['id'];
+}
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -7,8 +13,6 @@ $dbname = "user";
 
 // Buat koneksi
 $conn = new mysqli($servername, $username, $password, $dbname);
-
-// Cek koneksi
 if ($conn->connect_error) {
   die("Koneksi gagal: " . $conn->connect_error);
 }
@@ -20,36 +24,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $password = $_POST['password'];
   $remember = isset($_POST['remember']) ? true : false;
 
-  // Cek apakah email ada di database 
+  // Cek apakah email sudah ada
   $sql = "SELECT * FROM users WHERE email = ?";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("s", $email);
   $stmt->execute();
   $result = $stmt->get_result();
-  $user = $result->fetch_assoc(); 
+  $user = $result->fetch_assoc();
 
   if ($user) {
-    // Cek password
     if (password_verify($password, $user['password'])) {
       $_SESSION['userLogin'] = $user['id'];
       $_SESSION['email'] = $email;
 
-      // Set cookie untuk "Ingat Saya"
       if ($remember) {
-        setcookie('rememberedEmail', $email, time() + (86400 * 30), "/"); // 30 hari
+        setcookie('rememberedEmail', $email, time() + (86400 * 30), "/");
       } else {
-        setcookie('rememberedEmail', '', time() - 3600, "/"); // Hapus cookie
+        setcookie('rememberedEmail', '', time() - 3600, "/");
       }
 
-      $message = "Login berhasil! Anda akan diarahkan ke halaman katalog.";
-      // Jika login sukses, arahkan ke halaman katalog
-      header("Location: from_userr.html"); // Ganti dengan halaman katalog yang sesuai
+      // Redirect setelah login
+      if (isset($_SESSION['pendingSewa'])) {
+        $id = $_SESSION['pendingSewa'];
+        unset($_SESSION['pendingSewa']);
+        header("Location: formulirSewa.php?id=" . $id);
+      } else {
+        header("Location: from_userr.html"); // ganti dengan halaman katalog utama jika perlu
+      }
       exit();
     } else {
       $message = "Password salah!";
     }
   } else {
-    // Jika email tidak ditemukan, buat akun baru
+    // Jika email belum terdaftar, buat akun baru
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     $sql = "INSERT INTO users (email, password) VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
@@ -68,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
   <meta charset="UTF-8">
   <title>Login User</title>
-  <meta name="viewport" content=" width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     * { box-sizing: border-box; }
     body {

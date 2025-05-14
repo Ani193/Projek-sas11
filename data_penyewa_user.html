@@ -4,12 +4,32 @@
   <meta charset="UTF-8" />
   <title>Data Penyewaan</title>
   <style>
-    table { width: 100%; border-collapse: collapse; }
-    th, td { padding: 8px; border: 1px solid #ccc; }
-    th { background-color: #f2f2f2; }
+    .container-4 {
+      width: 100%;
+      text-align: center;
+      padding: 10px;
+    }
+    table { 
+      width: 100%; 
+      border-collapse: collapse; 
+    }
+    th, td { 
+      padding: 8px; 
+      border: 1px solid #ccc; 
+    }
+    h1 {
+      font-family: 'Times New Roman', Times, serif;
+      margin-bottom: 50px;
+    }
+    th { 
+      background-color: #9ad1f7; 
+  
+      
+    }
   </style>
 </head>
 <body>
+  <div class="container-4">
   <h1>Daftar Penyewaan Alat Camping</h1>
   <table id="tabelPenyewaan">
     <thead>
@@ -26,6 +46,7 @@
     </thead>
     <tbody></tbody>
   </table>
+  </div>
 
   <script>
     const data = JSON.parse(localStorage.getItem("dataPenyewaan")) || [];
