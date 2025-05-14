@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Data Penyewaan</title>
+  <style>
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 8px; border: 1px solid #ccc; }
+    th { background-color: #f2f2f2; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Daftar Penyewaan Alat Camping</h1>
+  <table id="tabelPenyewaan">
+    <thead>
+      <tr>
+        <th>Nama</th><th>Email</th><th>No. HP</th><th>Tanggal Mulai</th>
+        <th>Tanggal Selesai</th><th>Durasi</th><th>Alat</th><th>Jumlah</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Data akan ditambahkan via JavaScript -->
+    </tbody>
+  </table>
+  </div>
+
+  <script>
+    const daftar = JSON.parse(localStorage.getItem("dataPenyewaan")) || [];
+const tbody = document.querySelector("#tabelPenyewaan tbody");
+
+daftar.forEach(data => {
+  const row = document.createElement("tr");
+  const alatList = data.alat.map(item => `${item.alat} (x${item.jumlah})`).join(", ");
+
+  row.innerHTML = `
+    <td>${data.nama}</td>
+    <td>${data.email}</td>
+    <td>${data.nomor_hp}</td>
+    <td>${data.tanggal_mulai}</td>
+    <td>${data.tanggal_selesai}</td>
+    <td>${data.durasi}</td>
+    <td>${alatList}</td>
+  `;
+  tbody.appendChild(row);
+});
+  </script>
+</body>
+</html>
