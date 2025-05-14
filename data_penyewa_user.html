@@ -18,7 +18,6 @@
         <th>Email</th>
         <th>Nomor HP</th>
         <th>Tanggal Mulai</th>
-        <th>Tanggal Selesai</th>
         <th>Durasi</th>
         <th>Alat Disewa</th>
         <th>Status Member</th>
@@ -38,7 +37,6 @@
       row.insertCell().textContent = item.email;
       row.insertCell().textContent = item.nomor_hp;
       row.insertCell().textContent = item.tanggal_mulai;
-      row.insertCell().textContent = item.tanggal_selesai;
       row.insertCell().textContent = item.durasi;
 
       const alatList = Array.isArray(item.alat)

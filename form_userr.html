@@ -57,6 +57,11 @@
     .section, button { 
         size: 50px; 
     }
+    .section-pac {
+      display: flex;
+      flex-direction: column;
+    }
+
   </style>
 </head>
 <body>
@@ -71,35 +76,89 @@
       <input type="text" id="telepon" />
       <label>Alamat</label>
       <input type="text" id="alamat" />
+
       <label>Status Membership</label>
       <input type="radio" name="member" value="biasa" checked onchange="toggleMember()"> Biasa
       <input type="radio" name="member" value="member" onchange="toggleMember()"> Member
       <div id="uploadDiv" class="hidden">
-        <label>Upload Bukti Member</label>
-        <input type="file" id="buktiMember" onchange="setDiskon()"/>
+      <label>Upload Bukti Member</label>
+      <input type="file" id="buktiMember" onchange="updateTotalPaket()" />
       </div>
+      <div id="diskonText" class="total hidden"></div>
     </div>
 
-    <div class="section">
+    <div class="section-pac">
       <label>Pilih Alat Camping</label>
       <div>
-        <input type="checkbox" class="alat" data-id="tenda" data-harga="50000" /> Tenda Dome
-        <select class="jumlah" data-id="tenda"><option>1</option></select> Rp50.000
+        <input type="checkbox" class="alat" data-id="tenda" data-harga="25000" /> Tenda Kapasitas 2 Orang
+        <select class="jumlah" data-id="tenda"><option>15</option></select> Rp25.000
       </div>
       <div>
-        <input type="checkbox" class="alat" data-id="kompor" data-harga="25000" /> Kompor Portable
-        <select class="jumlah" data-id="kompor"><option>1</option></select> Rp25.000
+        <input type="checkbox" class="alat" data-id="kompor" data-harga="55000" /> Tenda Kapasitas 6 Orang
+        <select class="jumlah" data-id="kompor"><option>1</option></select> Rp55.000
       </div>
       <div>
-        <input type="checkbox" class="alat" data-id="sleeping" data-harga="20000" /> Sleeping Bag
-        <select class="jumlah" data-id="sleeping"><option>1</option></select> Rp20.000
+        <input type="checkbox" class="alat" data-id="sleeping" data-harga="35000" /> Carrier Bag (Belum termasuk Coverbag)
+        <select class="jumlah" data-id="sleeping"><option>1</option></select> Rp35.000
       </div>
       <div>
-        <input type="checkbox" class="alat" data-id="matras" data-harga="10000" /> Matras Camping
-        <select class="jumlah" data-id="matras"><option>1</option></select> Rp10.000
+        <input type="checkbox" class="alat" data-id="matras" data-harga="25000" /> Kompor Portable (Belum termasuk gas)
+        <select class="jumlah" data-id="matras"><option>1</option></select> Rp25.000
       </div>
       <div>
-        <input type="checkbox" class="alat" data-id="nesting" data-harga="15000" /> Nesting Set
+        <input type="checkbox" class="alat" data-id="matras" data-harga="12000" /> Gas Portable (harga satuan)
+        <select class="jumlah" data-id="matras"><option>1</option></select> Rp12.000
+      </div>
+      <div>
+        <input type="checkbox" class="alat" data-id="nesting" data-harga="10000" /> Matras Alumunium
+        <select class="jumlah" data-id="nesting"><option>1</option></select> Rp10.000
+      </div>
+       <div>
+        <input type="checkbox" class="alat" data-id="nesting" data-harga="10000" /> Matras Sponge
+        <select class="jumlah" data-id="nesting"><option>1</option></select> Rp10.000
+      </div>
+       <div>
+        <input type="checkbox" class="alat" data-id="nesting" data-harga="55000" /> Sleeping Bag
+        <select class="jumlah" data-id="nesting"><option>1</option></select> Rp55.000
+      </div>
+       <div>
+        <input type="checkbox" class="alat" data-id="nesting" data-harga="40000" /> Daypack (belum termasuk coverbag)
+        <select class="jumlah" data-id="nesting"><option>1</option></select> Rp40.000
+      </div>
+       <div>
+        <input type="checkbox" class="alat" data-id="nesting" data-harga="5000" /> Coverbag Ransel
+        <select class="jumlah" data-id="nesting"><option>1</option></select> Rp5.000
+      </div>
+       <div>
+        <input type="checkbox" class="alat" data-id="nesting" data-harga="20000" /> Headlamp Kecil
+        <select class="jumlah" data-id="nesting"><option>1</option></select> Rp20.000
+      </div>
+       <div>
+        <input type="checkbox" class="alat" data-id="nesting" data-harga="30000" /> Raincoat (Jaz Hujan)
+        <select class="jumlah" data-id="nesting"><option>1</option></select> Rp30.000
+      </div>
+       <div>
+        <input type="checkbox" class="alat" data-id="nesting" data-harga="35000" /> Trekking Pole
+        <select class="jumlah" data-id="nesting"><option>1</option></select> Rp35.000
+      </div>
+       <div>
+        <input type="checkbox" class="alat" data-id="nesting" data-harga="200000" /> Kursi Lipat
+        <select class="jumlah" data-id="nesting"><option>1</option></select> Rp20.000
+      </div>
+       <div>
+        <input type="checkbox" class="alat" data-id="nesting" data-harga="650000" /> Peralatan masak
+        <select class="jumlah" data-id="nesting"><option>1</option></select> Rp65.000
+      </div>
+       <div>
+        <input type="checkbox" class="alat" data-id="nesting" data-harga="35000" /> camplamp (Lampu Tenda)
+        <select class="jumlah" data-id="nesting"><option>1</option></select> Rp35.000
+      </div>
+       <div>
+        <input type="checkbox" class="alat" data-id="nesting" data-harga="15000" /> Kompas
+        <select class="jumlah" data-id="nesting"><option>1</option></select> Rp15.000
+      </div>
+      <div>
+        <input type="checkbox" class="alat" data-id="nesting" data-harga="15000" /> Senter
         <select class="jumlah" data-id="nesting"><option>1</option></select> Rp15.000
       </div>
     </div>
@@ -107,10 +166,10 @@
     <div class="section-pkt">
       <label>Pilih Paket Penyewaan (Opsional)</label>
       <div>
-        <input type="checkbox" id="paketHemat" onchange="paketSelected('pemula')"/>  Paket Pemula <br>(Tenda kap. 2 orang, Matras spon, Sleeping bag, Lampu tenda, Kompas) Rp315.000 (2 hari 1 malam)</br>
+        <input type="checkbox" id="paketPemula" onchange="paketSelected('pemula')"/>  Paket Pemula <br>(Tenda kap. 2 orang, Matras spon, Sleeping bag, Lampu tenda, Kompas) Rp315.000 (2 hari 1 malam)</br>
       </div>
       <div>
-        <input type="checkbox" id="paketHemat" onchange="paketSelected('keluarga')"/> Paket Keluarga <br>(Tenda kap.6 orang, Matras spon, Sleeping bag, Kompor portable, Peralatan masak, Lampu tenda, Gas portable) Rp537.000 (2 hari 1 malam)</br>
+        <input type="checkbox" id="paketKeluarga" onchange="paketSelected('keluarga')"/> Paket Keluarga <br>(Tenda kap.6 orang, Matras spon, Sleeping bag, Kompor portable, Peralatan masak, Lampu tenda, Gas portable) Rp537.000 (2 hari 1 malam)</br>
       </div>
       <div>
         <input type="checkbox" id="paketLengkap" onchange="paketSelected('lengkap')"/> Paket Lengkap (Semua alat) Rp852.000 (2 hari 1 malam)
@@ -122,12 +181,15 @@
       <input type="date" id="tanggalPesan" />
     </div>
 
-    <div class="section">
-      <label>Pilih Metode Pembayaran</label>
-      <input type="radio" name="metode" /> Transfer Bank
-      <input type="radio" name="metode" /> E-Wallet
-      <input type="radio" name="metode" /> Bayar di Tempat
+    <div class="section-pmp">
+     <label>Pilih Metode Pembayaran</label><br>
+     <input type="radio" name="metode" value="Dana"> Dana
+     <input type="radio" name="metode" value="COD"> COD
+     <div id="barcodeContainer" style="margin-top: 10px;">
+       <img id="barcodeImage" src="barcode.png" alt="Barcode Pembayaran" style="display: none; max-width: 200px;">
     </div>
+    </div>
+
 
     <div class="section">
       <label>Info Tambahan</label>
@@ -142,11 +204,34 @@
   </div>
 
 <script>
+  const barcodeImage = document.getElementById("barcodeImage");
+
+  document.querySelectorAll('input[name="metode"]').forEach(radio => {
+    radio.addEventListener("change", () => {
+      if (radio.value.toLowerCase() === "dana") {
+        barcodeImage.src = "barcode-dana.png";
+        barcodeImage.style.display = "block";
+        barcodeImage.alt = "Silakan scan QR DANA";
+      } else {
+        barcodeImage.style.display = "none";
+      }
+    });
+  });
+
+
   let diskon = 0;
-  function toggleMember() {
-    const isMember = document.querySelector('input[name="member"]:checked').value === 'member';
-    document.getElementById('uploadDiv').classList.toggle('hidden', !isMember);
+ function toggleMember() {
+  const isMember = document.querySelector('input[name="member"]:checked').value === 'member';
+  const uploadDiv = document.getElementById("uploadDiv");
+  if (isMember) {
+    uploadDiv.classList.remove("hidden");
+  } else {
+    uploadDiv.classList.add("hidden");
+    document.getElementById("buktiMember").value = "";
   }
+  updateTotalPaket();
+}
+
 
   function setDiskon() {
     const file = document.getElementById('buktiMember').files[0];
@@ -195,27 +280,69 @@
     el.addEventListener('change', updateTotal);
   });
 
-  function simpanDataPenyewaan() {
-    const alatPenyewaan = [];
-    document.querySelectorAll('.alat:checked').forEach(cb => {
-      const alat = cb.dataset.id;
-      const jumlah = document.querySelector(`.jumlah[data-id="${alat}"]`).value;
-      alatPenyewaan.push({ nama: alat, jumlah });
-    });
+ function simpanDataPenyewaan() {
+  const nama = document.getElementById("nama").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const nomor_hp = document.getElementById("telepon").value.trim();
+  const alamat = document.getElementById("alamat").value.trim();
+  const tanggal = document.getElementById("tanggalPesan").value;
+  const membership = document.querySelector('input[name="member"]:checked').value;
+  const fileInput = document.getElementById("buktiMember");
+  const metode = document.querySelector('input[name="metode"]:checked');
 
-    const membership = document.querySelector('input[name="member"]:checked').value;
-    const fileInput = document.getElementById("buktiMember");
+  const paketSelected = document.getElementById("paketPemula").checked ||
+                        document.getElementById("paketKeluarga").checked ||
+                        document.getElementById("paketLengkap").checked;
 
-    if (membership === "member" && fileInput.files.length > 0) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        simpanKeLocalStorage(e.target.result, alatPenyewaan);
-      };
-      reader.readAsDataURL(fileInput.files[0]);
-    } else {
-      simpanKeLocalStorage("", alatPenyewaan);
-    }
+  const alatSelected = Array.from(document.querySelectorAll('.alat:checked')).length > 0;
+
+  // Validasi field wajib
+  if (!nama || !email || !nomor_hp || !alamat || !tanggal || !metode || (!paketSelected && !alatSelected)) {
+    alert("Harap lengkapi semua data dan pilih alat atau paket penyewaan.");
+    return;
   }
+
+  if (membership === "member" && fileInput.files.length === 0) {
+    alert("Silakan upload bukti member jika memilih status Member.");
+    return;
+  }
+
+  const alatPenyewaan = [];
+  document.querySelectorAll('.alat:checked').forEach(cb => {
+    const alat = cb.dataset.id;
+    const jumlah = document.querySelector(`.jumlah[data-id="${alat}"]`).value;
+    alatPenyewaan.push({ nama: alat, jumlah });
+  });
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const fotoMember = (membership === "member") ? e.target.result : "";
+    const data = {
+      nama, email, nomor_hp, alamat,
+      tanggal_mulai: tanggal,
+      tanggal_selesai: tanggal,
+      durasi: "2 hari 1 malam",
+      alat: alatPenyewaan,
+      membership,
+      fotoMember
+    };
+
+    let daftar = JSON.parse(localStorage.getItem("dataPenyewaan")) || [];
+    daftar.push(data);
+    localStorage.setItem("dataPenyewaan", JSON.stringify(daftar));
+
+    alert("Selamat! Penyewaan berhasil disimpan.");
+    resetForm(); // Kosongkan form
+    window.location.href = "gabungan.html";
+  };
+
+  if (membership === "member" && fileInput.files.length > 0) {
+    reader.readAsDataURL(fileInput.files[0]);
+  } else {
+    reader.onload({ target: { result: "" } }); // Panggil langsung tanpa gambar
+  }
+}
+
 
   function simpanKeLocalStorage(fotoMember, alatPenyewaan) {
     const data = {
@@ -233,8 +360,88 @@
     let daftar = JSON.parse(localStorage.getItem("dataPenyewaan")) || [];
     daftar.push(data);
     localStorage.setItem("dataPenyewaan", JSON.stringify(daftar));
-    alert("Data berhasil disimpan!");
+     alert("selamat anda telah berhasil menyewa alat camping");
+        window.location.href = "gabungan.html";
   }
+  function isUserMember() {
+    const isMember = document.querySelector('input[name="member"]:checked').value === 'member';
+    const buktiAda = document.getElementById('buktiMember').files.length > 0;
+    return isMember && buktiAda;
+  }
+
+  function getHargaPaketSetelahDiskon(harga) {
+    return isUserMember() ? harga * 0.75 : harga;
+  }
+
+  function updateTotalPaket() {
+    const paketPemula = document.getElementById('paketPemula').checked;
+    const paketKeluarga = document.getElementById('paketKeluarga').checked;
+    const paketLengkap = document.getElementById('paketLengkap').checked;
+
+    let total = 0;
+
+    if (paketPemula) total = getHargaPaketSetelahDiskon(315000);
+    if (paketKeluarga) total = getHargaPaketSetelahDiskon(537000);
+    if (paketLengkap) total = getHargaPaketSetelahDiskon(852000);
+
+    // Update tampilan total
+    document.getElementById("totalBayar").textContent = `Total Bayar: Rp${total.toLocaleString('id-ID')}`;
+
+    // Diskon label
+    if (isUserMember() && (paketPemula || paketKeluarga || paketLengkap)) {
+      document.getElementById("diskonText").classList.remove("hidden");
+      document.getElementById("diskonText").textContent = "Diskon Member (25%) Berlaku untuk Paket";
+    } else {
+      document.getElementById("diskonText").classList.add("hidden");
+      document.getElementById("diskonText").textContent = "";
+    }
+  }
+
+  function toggleAlatSaatPaketDipilih() {
+    const paketChecked = document.getElementById('paketPemula').checked ||
+                         document.getElementById('paketKeluarga').checked ||
+                         document.getElementById('paketLengkap').checked;
+
+    document.querySelectorAll('.alat').forEach(cb => {
+      cb.disabled = paketChecked;
+      if (paketChecked) cb.checked = false;
+    });
+
+    document.querySelectorAll('.jumlah').forEach(select => {
+      select.disabled = paketChecked;
+      select.value = "1";
+    });
+  }
+
+  // Event listener ketika opsi paket dipilih
+  ['paketPemula', 'paketKeluarga', 'paketLengkap'].forEach(id => {
+    document.getElementById(id).addEventListener("change", () => {
+      toggleAlatSaatPaketDipilih();
+      updateTotalPaket();
+    });
+  });
+
+  // Event listener ketika status member diubah atau bukti member diunggah
+  document.querySelectorAll('input[name="member"]').forEach(r => {
+    r.addEventListener("change", updateTotalPaket);
+  });
+
+  document.getElementById("buktiMember").addEventListener("change", updateTotalPaket);
+
+  function resetForm() {
+  document.querySelectorAll("input[type='text'], input[type='email'], input[type='date']").forEach(el => el.value = "");
+  document.querySelectorAll("input[type='radio']").forEach(el => el.checked = el.defaultChecked);
+  document.querySelectorAll("input[type='checkbox']").forEach(el => el.checked = false);
+  document.querySelectorAll(".jumlah").forEach(sel => sel.value = "1");
+  document.getElementById("buktiMember").value = "";
+  document.getElementById("diskonText").classList.add("hidden");
+  document.getElementById("diskonText").textContent = "";
+  document.getElementById("totalBayar").textContent = "Total Bayar: Rp0";
+  barcodeImage.style.display = "none";
+}
+
+
+
 </script>
 </body>
 </html>
