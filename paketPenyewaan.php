@@ -1,14 +1,16 @@
 <?php
+// Koneksi ke database
 $conn = new mysqli("localhost", "root", "", "sewa_alat");
 if ($conn->connect_error) {
   die("Koneksi gagal: " . $conn->connect_error);
 }
 
-// Tambah atau update paket
+// Tambah atau update 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $id = $_POST['id'] ?? '';
   $nama = $_POST['nama'];
   $harga = $_POST['harga'];
+  $stok = $_POST['stok'];
   $deskripsi = $_POST['deskripsi'];
   $aktif = 1;
 
@@ -25,13 +27,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
   if ($id) {
+    // Update
     if ($fotoPath) {
-      $sql = "UPDATE paket SET nama='$nama', harga='$harga', deskripsi='$deskripsi', foto='$fotoPath' WHERE id=$id";
+      $sql = "UPDATE paket SET nama='$nama', harga='$harga', stok='$stok', deskripsi='$deskripsi', foto='$fotoPath' WHERE id=$id";
     } else {
-      $sql = "UPDATE paket SET nama='$nama', harga='$harga', deskripsi='$deskripsi' WHERE id=$id";
+      $sql = "UPDATE paket SET nama='$nama', harga='$harga', stok='$stok', deskripsi='$deskripsi' WHERE id=$id";
     }
   } else {
-    $sql = "INSERT INTO paket (nama, harga, deskripsi, foto, aktif) VALUES ('$nama','$harga','$deskripsi','$fotoPath', $aktif)";
+    // Tambah
+    $sql = "INSERT INTO paket (nama, harga, stok, deskripsi, foto, aktif) VALUES ('$nama','$harga','$stok','$deskripsi','$fotoPath', $aktif)";
   }
 
   $conn->query($sql);
@@ -39,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   exit();
 }
 
-// Toggle aktif/nonaktif
+// Nonaktifkan/aktifkan
 if (isset($_GET['toggle'])) {
   $id = $_GET['toggle'];
   $result = $conn->query("SELECT aktif FROM paket WHERE id=$id");
@@ -47,7 +51,7 @@ if (isset($_GET['toggle'])) {
     $newStatus = $row['aktif'] ? 0 : 1;
     $conn->query("UPDATE paket SET aktif=$newStatus WHERE id=$id");
   }
-  header("Location: paketAdmin.php");
+  header("Location: paketPenyewaan.php");
   exit();
 }
 
@@ -55,7 +59,7 @@ if (isset($_GET['toggle'])) {
 if (isset($_GET['hapus'])) {
   $id = $_GET['hapus'];
   $conn->query("DELETE FROM paket WHERE id=$id");
-  header("Location: paketAdmin.php");
+  header("Location: paketPenyewaan.php");
   exit();
 }
 
@@ -67,8 +71,8 @@ if (isset($_GET['edit'])) {
   $editData = $result->fetch_assoc();
 }
 
-// Ambil semua paket
-$paketList = $conn->query("SELECT * FROM paket");
+// Ambil semua barang
+$barangList = $conn->query("SELECT * FROM paket");
 ?>
 
 <!DOCTYPE html>
@@ -88,7 +92,7 @@ $paketList = $conn->query("SELECT * FROM paket");
       margin-bottom: 20px;
       width: 100%;
     }
-    input, textarea, button {
+    input, select, button, textarea {
       margin: 5px 0;
       padding: 5px;
       width: 100%;
@@ -102,7 +106,6 @@ $paketList = $conn->query("SELECT * FROM paket");
       border: 1px solid #ccc;
       padding: 10px;
       text-align: center;
-      vertical-align: top;
     }
     img {
       width: 100px;
@@ -134,13 +137,14 @@ $paketList = $conn->query("SELECT * FROM paket");
 </head>
 <body>
 
-<h2><?= $editData ? 'Edit Paket' : 'Tambah Paket' ?></h2>
+<h2><?php echo $editData ? 'Edit Paket' : 'Tambah Paket'; ?></h2>
 <form method="POST" enctype="multipart/form-data">
   <?php if ($editData): ?>
     <input type="hidden" name="id" value="<?= $editData['id'] ?>">
   <?php endif; ?>
-  <input type="text" name="nama" placeholder="Nama Paket" value="<?= $editData['nama'] ?? '' ?>" required>
+  <input type="text" name="nama" placeholder="Nama Barang" value="<?= $editData['nama'] ?? '' ?>" required>
   <input type="number" name="harga" placeholder="Harga" value="<?= $editData['harga'] ?? '' ?>" required>
+  <input type="number" name="stok" placeholder="Stok" value="<?= $editData['stok'] ?? '' ?>" required>
   <textarea name="deskripsi" placeholder="Deskripsi" required><?= $editData['deskripsi'] ?? '' ?></textarea>
   <input type="file" name="foto" <?= $editData ? '' : 'required' ?>>
   <button type="submit"><?= $editData ? 'Simpan Perubahan' : 'Tambah Paket' ?></button>
@@ -153,28 +157,30 @@ $paketList = $conn->query("SELECT * FROM paket");
       <th>Foto</th>
       <th>Nama</th>
       <th>Harga</th>
+      <th>Stok</th>
       <th>Deskripsi</th>
       <th>Aksi</th>
     </tr>
   </thead>
   <tbody>
-    <?php while ($p = $paketList->fetch_assoc()): ?>
-      <tr class="<?= $p['aktif'] ? '' : 'nonaktif' ?>">
-        <td><img src="<?= $p['foto'] ?>" alt="Foto Paket"></td>
-        <td><?= $p['nama'] ?></td>
-        <td>Rp <?= number_format($p['harga'], 0, ',', '.') ?></td>
-        <td><?= nl2br($p['deskripsi']) ?></td>
+    <?php while ($b = $barangList->fetch_assoc()): ?>
+      <tr class="<?= $b['aktif'] ? '' : 'nonaktif' ?>">
+        <td><img src="<?= $b['foto'] ?>" alt="Foto"></td>
+        <td><?= $b['nama'] ?></td>
+        <td>Rp <?= number_format($b['harga'], 0, ',', '.') ?></td>
+        <td><?= $b['stok'] ?></td>
+        <td><?= nl2br($b['deskripsi']) ?></td>
         <td>
           <form method="GET" style="display:inline">
-            <input type="hidden" name="edit" value="<?= $p['id'] ?>">
+            <input type="hidden" name="edit" value="<?= $b['id'] ?>">
             <button type="submit">Edit</button>
           </form>
           <form method="GET" style="display:inline">
-            <input type="hidden" name="toggle" value="<?= $p['id'] ?>">
-            <button type="submit"><?= $p['aktif'] ? 'Nonaktifkan' : 'Aktifkan' ?></button>
+            <input type="hidden" name="toggle" value="<?= $b['id'] ?>">
+            <button type="submit"><?= $b['aktif'] ? 'Nonaktifkan' : 'Aktifkan' ?></button>
           </form>
           <form method="GET" style="display:inline" onsubmit="return confirm('Yakin ingin menghapus?')">
-            <input type="hidden" name="hapus" value="<?= $p['id'] ?>">
+            <input type="hidden" name="hapus" value="<?= $b['id'] ?>">
             <button type="submit" class="hapus">Hapus</button>
           </form>
         </td>

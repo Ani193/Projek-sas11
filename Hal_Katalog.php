@@ -114,10 +114,15 @@ $conn->close();
 <div class="katalog-grid">
   <?php foreach($paketList as $paket): ?>
     <div class="katalog-item">
+      <img src="<?= $paket['foto']; ?>" alt="<?= $paket['nama']; ?>">
       <div class="judul-k"><?= $paket['nama']; ?></div>
+      <div class="stok-k">Stok: <?= $paket['stok']; ?></div>
       <div class="keterangan-k"><?= nl2br($paket['deskripsi']); ?></div>
-      <div class="stok-k">stok: <?= $paket['stok']; ?></div>
       <div class="harga-k">Rp <?= number_format($paket['harga'], 0, ',', '.'); ?></div>
+      <form method="GET" action="<?= isset($_SESSION['userLogin']) ? 'formulirSewa.php' : 'loginUser.php'; ?>">
+        <input type="hidden" name="id" value="<?= $paket['id']; ?>">
+        <button type="submit">Sewa</button>
+      </form>
     </div>
   <?php endforeach; ?>
 </div>
