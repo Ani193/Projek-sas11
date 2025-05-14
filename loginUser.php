@@ -20,13 +20,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $password = $_POST['password'];
   $remember = isset($_POST['remember']) ? true : false;
 
-  // Cek apakah email ada di database
+  // Cek apakah email ada di database 
   $sql = "SELECT * FROM users WHERE email = ?";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("s", $email);
   $stmt->execute();
   $result = $stmt->get_result();
-  $user = $result->fetch_assoc();
+  $user = $result->fetch_assoc(); 
 
   if ($user) {
     // Cek password
@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
   <meta charset="UTF-8">
   <title>Login User</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content=" width=device-width, initial-scale=1.0">
   <style>
     * { box-sizing: border-box; }
     body {
