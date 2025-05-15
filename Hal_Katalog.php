@@ -99,7 +99,7 @@ $conn->close();
       <div class="stok-k">Stok: <?= $barang['stok']; ?></div>
       <div class="keterangan-k"><?= nl2br($barang['deskripsi']); ?></div>
       <div class="harga-k">Rp <?= number_format($barang['harga'], 0, ',', '.'); ?></div>
-      <form method="GET" action="<?= isset($_SESSION['userLogin']) ? 'formulirSewa.php' : 'loginUser.php'; ?>">
+      <form method="GET" action="<?= isset($_SESSION['userLogin']) ? 'form_userr.html' : 'loginUser.php'; ?>">
         <input type="hidden" name="id" value="<?= $barang['id']; ?>">
         <button type="submit">Sewa</button>
       </form>
@@ -119,7 +119,7 @@ $conn->close();
       <div class="stok-k">Stok: <?= $paket['stok']; ?></div>
       <div class="keterangan-k"><?= nl2br($paket['deskripsi']); ?></div>
       <div class="harga-k">Rp <?= number_format($paket['harga'], 0, ',', '.'); ?></div>
-      <form method="GET" action="<?= isset($_SESSION['userLogin']) ? 'formulirSewa.php' : 'loginUser.php'; ?>">
+      <form method="GET" action="<?= isset($_SESSION['userLogin']) ? 'form_userr.html' : 'loginUser.php'; ?>">
         <input type="hidden" name="id" value="<?= $paket['id']; ?>">
         <button type="submit">Sewa</button>
       </form>
