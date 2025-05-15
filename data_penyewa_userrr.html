@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Data Penyewaan</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container-4">
+  <h1>Daftar Penyewaan Alat Camping</h1>
+  <table id="tabelPenyewaan">
+    <thead>
+      <tr>
+        <th>Nama</th>
+        <th>Email</th>
+        <th>Nomor HP</th>
+        <th>Tanggal Mulai</th>
+        <th>Durasi</th>
+        <th>Alat Disewa</th>
+        <th>Status Member</th>
+        <th>Bukti Member</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  </div>
+
+  <script>
+    const data = JSON.parse(localStorage.getItem("dataPenyewaan")) || [];
+    const tabel = document.getElementById("tabelPenyewaan").getElementsByTagName("tbody")[0];
+
+    data.forEach(item => {
+      const row = tabel.insertRow();
+      row.insertCell().textContent = item.nama;
+      row.insertCell().textContent = item.email;
+      row.insertCell().textContent = item.nomor_hp;
+      row.insertCell().textContent = item.tanggal_mulai;
+      row.insertCell().textContent = item.durasi;
+
+      const alatList = Array.isArray(item.alat)
+        ? item.alat.map(a => `${a.nama} (x${a.jumlah})`).join(", ")
+        : item.alat;
+      row.insertCell().textContent = item.alat.map(a => `${a.nama} (x${a.jumlah})`).join(", ");
+
+      row.insertCell().textContent = item.membership || "-";
+
+      const buktiCell = row.insertCell();
+      if (item.membership === "member" && item.fotoMember) {
+        const img = document.createElement("img");
+        img.src = item.fotoMember;
+        img.alt = "Bukti Member";
+        img.style.maxWidth = "100px";
+        buktiCell.appendChild(img);
+      } else {
+        buktiCell.textContent = "-";
+      }
+    });
+  </script>
+</body>
+</html>
