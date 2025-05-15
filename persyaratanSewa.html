@@ -3,16 +3,88 @@
 <head>
   <meta charset="UTF-8">
   <title>Persyaratan sewa</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
   <style>
     body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-      background:rgb(221, 253, 238);
+      background-color:#f0f4f8;
+      color: #000;
+      margin: 50px;
       padding: 30px;
     }
+   /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background-color:rgba(0, 32, 64, 0.8);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      z-index: 10;
+    }
+
+    .logo img{
+     vertical-align: middle;
+
+    }
+    .nav-links a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    .navbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search-form {
+      display: flex;
+      align-items: center;
+      background-color: white;
+      border-radius: 20px;
+      padding: 2px 8px;
+    }
+
+    .search {
+      border: none;
+      outline: none;
+      padding: 6px;
+      border-radius: 20px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .search-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      margin-left: 4px;
+      color: black;
+    }
+
+    .icon-admin {
+      color: white;
+      font-size: 18px;
+      text-decoration: none;
+    }
     .container {
-      background:rgb(206, 248, 255);
+      background-color:#ffffff;
       border: 2px solid #000;
-      padding: 30px;
+      border-radius: 10px;
+      padding: 20px;
       max-width: 800px;
       margin: auto;
     }
@@ -40,6 +112,32 @@
   </style>
 </head>
 <body>
+  <!-- Navbar -->
+<header class="navbar">
+  <div class="logo">
+      <img src="logoo.png" alt="logo" style="height: 120px;">
+    </div>
+  <nav class="nav-links">
+    <a href="gabungan.html">Beranda</a>
+    <a href="Hal_Katalog.php">Katalog</a>
+    <a href="persyaratanSewa.html">Persyaratan</a>
+    <a href="loginUser.php">Penyewaan</a>
+  </nav>
+
+  <div class="navbar-right">
+    <form class="search-form" onsubmit="return handleSearch(event)">
+      <input type="text" class="search" placeholder="Cari..." id="searchInput" />
+      <button type="submit" class="search-btn">
+        <i class="fas fa-search"></i>
+      </button>
+    </form>
+
+    <a href="loginAdmin.php" class="icon-admin" title="Login Admin">
+      <i class="fas fa-user"></i>
+    </a>
+  </div>
+</header>
+
   <div class="container">
     <h1>Persyaratan Umum Penyewaan Alat Camping</h1>
 

@@ -18,7 +18,8 @@
       left: 0;
       right: 0;
       height: 60px;
-      background-color:#a7d7f173;
+      background-color:rgba(0, 32, 64, 0.8);
+      color: #ffffff;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -26,12 +27,9 @@
       z-index: 10;
     }
 
-    .logo {
-      font-weight: bold;
-      color: white;
-      font-size: 1.2rem;
+    .logo img{
+     vertical-align: middle;
     }
-
     .nav-links a {
       color: white;
       margin: 0 10px;
@@ -323,7 +321,9 @@
 <body>
 <!-- Navbar -->
 <header class="navbar">
-  <div class="logo">BASECAME OUTDOOR</div>
+ <div class="logo">
+      <img src="logoo.png" alt="logo" style="height: 120px;">
+  </div>
 
   <nav class="nav-links">
     <a href="#">Beranda</a>
@@ -351,7 +351,7 @@
   <div class="hero-content">
     <h1>BASECAME OUTDOOR</h1>
     <p>Temukan petualangan terbaikmu bersama kami di alam bebas.</p>
-    <a href="#section2" class="btn">Mulai</a>
+    <a href="form_userr.html" class="btn">sewa sekarang!!</a>
   </div>
 </section>
 
@@ -381,7 +381,6 @@
       <h1>Komitmen BASECAMP Outdoor untuk Aktivitas dan Hobby Anda</h1>
       <p>Ketika anda berfikir tentang aktivitas petualangan, jangan biarkan masalah peralatan penunjang menjadi hambatan kegembiraan anda...</p>
       <p>Melalui barang yang berkualitas pada kelasnya, kami berkomitmen untuk mendukung kegiatan petualangan anda...</p>
-      <button class="bttn-2" onclick="chatAdmin()">CHAT ADMIN KAMI SEKARANG</button>
     </div>
     <div class="image-section2">
       <img src="peta.jpeg" alt="BASECAMP outdoor" />
