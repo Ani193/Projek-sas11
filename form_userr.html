@@ -192,9 +192,9 @@
 
 
     <div class="section">
-      <label>Info Tambahan</label>
-      <input type="checkbox" /> Saya telah membaca dan menyetujui <i>Syarat & Ketentuan</i><br/>
-    </div>
+      <label>Upload Bukti Transfer</label>
+     <input type="file" id="buktiTransfer" accept="image/*" required />
+</div>
 
     <div class="section">
       <div id="diskonText" class="total hidden"></div>
@@ -314,7 +314,7 @@
       { nama: "gas", jumlah: "1" }
     ];
   } else {
-    // jika tidak memilih paket, ambil dari form alat
+
     document.querySelectorAll('.alat:checked').forEach(cb => {
       const alat = cb.dataset.id;
       const jumlah = document.querySelector(`.jumlah[data-id="${alat}"]`).value;
@@ -322,33 +322,111 @@
     });
   }
 
-  // Ambil data isian form
+
   const nama = document.getElementById("nama").value.trim();
   const email = document.getElementById("email").value.trim();
   const telepon = document.getElementById("telepon").value.trim();
   const alamat = document.getElementById("alamat").value.trim();
   const tanggal = document.getElementById("tanggalPesan").value;
   const membership = document.querySelector('input[name="member"]:checked').value;
-  const fileInput = document.getElementById("buktiMember");
+  const metodePembayaran = document.querySelector('input[name="metode"]:checked')?.value;
+  const fileMember = document.getElementById("buktiMember");
+  const fileTransfer = document.getElementById("buktiTransfer");
 
-  // Validasi semua wajib diisi
-  if (!nama || !email || !telepon || !alamat || !tanggal || alatPenyewaan.length === 0) {
-    alert("Mohon lengkapi semua data termasuk memilih alat atau paket.");
+  if (!nama || !email || !telepon || !alamat || !tanggal || alatPenyewaan.length === 0 || !metodePembayaran || fileTransfer.files.length === 0) {
+    alert("Mohon lengkapi semua data termasuk bukti transfer.");
     return;
   }
 
-  // Proses data jika MEMBER dengan file
-  if (membership === "member" && fileInput.files.length > 0) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      simpanKeLocalStorage(e.target.result, alatPenyewaan);
-    };
-    reader.readAsDataURL(fileInput.files[0]);
-  } else {
-    // kalau biasa atau member tanpa file
-    simpanKeLocalStorage("", alatPenyewaan);
-  }
+  const readerMember = new FileReader();
+  const readerTransfer = new FileReader();
+
+  let fotoMember = "";
+  let fotoTransfer = "";
+
+  readerTransfer.onload = function (eTransfer) {
+    fotoTransfer = eTransfer.target.result;
+
+    if (membership === "member" && fileMember.files.length > 0) {
+      readerMember.onload = function (eMember) {
+        fotoMember = eMember.target.result;
+        simpanSemuaData(fotoMember, fotoTransfer, alatPenyewaan, nama, email, telepon, tanggal, membership, metodePembayaran);
+      };
+      readerMember.readAsDataURL(fileMember.files[0]);
+    } else {
+      simpanSemuaData("", fotoTransfer, alatPenyewaan, nama, email, telepon, tanggal, membership, metodePembayaran);
+    }
+  };
+
+  readerTransfer.readAsDataURL(fileTransfer.files[0]);
 }
+
+function simpanSemuaData(fotoMember, fotoTransfer, alatPenyewaan, nama, email, telepon, tanggal, membership, metodePembayaran) {
+  const dataPenyewaan = {
+    nama,
+    email,
+    nomor_hp: telepon,
+    tanggal_mulai: tanggal,
+    tanggal_selesai: tanggal,
+    durasi: "2 hari 1 malam",
+    alat: alatPenyewaan,
+    membership,
+    fotoMember
+  };
+
+  const verifikasi = {
+    nama,
+    totalBayar: document.getElementById("totalBayar").textContent.replace("Total Bayar: ", ""),
+    metodePembayaran,
+    buktiTransfer: fotoTransfer,
+    status: "menunggu",
+    verifikasi: "-"
+  };
+
+  let listPenyewaan = JSON.parse(localStorage.getItem("dataPenyewaan")) || [];
+  let listVerifikasi = JSON.parse(localStorage.getItem("verifikasiPembayaran")) || [];
+
+  listPenyewaan.push(dataPenyewaan);
+  listVerifikasi.push(verifikasi);
+
+  localStorage.setItem("dataPenyewaan", JSON.stringify(listPenyewaan));
+  // Data untuk verifikasi pembayaran
+const totalBayarText = document.getElementById("totalBayar").textContent.replace(/[^\d]/g, "");
+const metode = document.querySelector('input[name="metode"]:checked')?.value || "";
+
+const buktiTransferInput = document.getElementById("buktiTransfer");
+if (!buktiTransferInput || buktiTransferInput.files.length === 0) {
+  alert("Mohon unggah bukti transfer.");
+  return;
+}
+const reader = new FileReader();
+reader.onload = function (e) {
+ const verifikasi = {
+  nama,
+  totalBayar: document.getElementById("totalBayar").textContent.replace("Total Bayar: ", ""),
+  metodePembayaran,
+  buktiTransfer: fotoTransfer,
+  status: "menunggu",
+  verifikasi: "-"
+};
+
+
+  let daftarVerifikasi = JSON.parse(localStorage.getItem("dataVerifikasi")) || [];
+  daftarVerifikasi.push({
+  nama,
+  total: document.getElementById("totalBayar").textContent.replace("Total Bayar: ", ""),
+  metode: metodePembayaran,
+  bukti: fotoTransfer,
+  status: "Menunggu",
+  verifikasi: "-"
+});
+localStorage.setItem("dataVerifikasi", JSON.stringify(daftarVerifikasi));
+};
+  alert("Pesanan anda berhasil dibuat. Mohon tunggu untuk diverifikasi.");
+  window.location.href = "gabungan.html";
+
+};
+
 
 
   function simpanKeLocalStorage(fotoMember, alatPenyewaan) {
@@ -367,6 +445,26 @@
     let daftar = JSON.parse(localStorage.getItem("dataPenyewaan")) || [];
     daftar.push(data);
     localStorage.setItem("dataPenyewaan", JSON.stringify(daftar));
+    const pembayaran = {
+     nama: data.nama,
+     total: document.getElementById("totalBayar").textContent.replace("Total Bayar: ", ""),
+     metode: document.querySelector('input[name="metode"]:checked')?.value || "",
+     buktiTransfer: document.getElementById("buktiTransfer")?.files[0] || null,
+     status: "Menunggu"
+    };
+
+    if (pembayaran.buktiTransfer) {
+    const reader = new FileReader();
+      reader.onload = function(e) {
+      pembayaran.buktiTransfer = e.target.result;
+
+     let verifikasiList = JSON.parse(localStorage.getItem("dataVerifikasi")) || [];
+     verifikasiList.push(pembayaran);
+     localStorage.setItem("dataVerifikasi", JSON.stringify(verifikasiList));
+    };
+     reader.readAsDataURL(pembayaran.buktiTransfer);
+     }
+
      // Reset semua field setelah disimpan
       document.getElementById("nama").value = "";
       document.getElementById("email").value = "";
@@ -393,6 +491,24 @@
     alert("selamat anda telah berhasil menyewa alat camping");
 
         window.location.href = "gabungan.html";
+        
+        const metode = document.querySelector('input[name="metode"]:checked');
+        const buktiTransferInput = document.getElementById("buktiTransfer"); // tambahkan input ini di form
+
+    if (metode && buktiTransferInput && buktiTransferInput.files.length > 0) {
+        const reader = new FileReader();
+         reader.onload = function(e) {
+
+    alert("Pesanan Anda berhasil dibuat, mohon tunggu untuk di verifikasi.");
+    // Kosongkan form
+    document.querySelector("form").reset();
+    window.location.href = "gabungan.html";
+  };
+     reader.readAsDataURL(buktiTransferInput.files[0]);
+     } else {
+     alert("Mohon upload bukti transfer.");
+   }
+
   }
   function isUserMember() {
     const isMember = document.querySelector('input[name="member"]:checked').value === 'member';
@@ -458,6 +574,8 @@
   });
 
   document.getElementById("buktiMember").addEventListener("change", updateTotalPaket);
+  document.getElementById("form").reset();
+
 
 
 
