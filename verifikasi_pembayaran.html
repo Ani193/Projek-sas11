@@ -54,39 +54,22 @@
 <body>
 <div class="container-5">
   <h2>Halaman Verifikasi Pembayaran</h2>
-  <table>
+ <table>
   <thead>
     <tr>
       <th>No</th>
-      <th>Nama Penyewa</th>
+      <th>Nama</th>
       <th>Total Bayar</th>
       <th>Metode Pembayaran</th>
       <th>Bukti Transfer</th>
       <th>Status</th>
-      <th>Verifikasi</th>
+
     </tr>
   </thead>
-  <tbody id="tabelVerifikasi">
-     <!-- <tr>
-      <td>1</td>
-      <td>Elsa</td>
-      <td>Rp 90.000</td>
-      <td>Dana</td>
-      <td><button onclick="showProof('bukti1.jpg')">Lihat File</button></td>
-      <td>Menunggu</td>
-      <td><button onclick="openModal('bukti1.jpg')">Verifikasi</button></td>
-    </tr>
-     <tr>
-      <td>2</td>
-      <td>Fajar</td>
-      <td>Rp 90.000</td>
-      <td>Dana</td>
-      <td><button onclick="showProof('bukti1.jpg')">Lihat File</button></td>
-      <td>Menunggu</td>
-      <td><button onclick="openModal('bukti1.jpg')">Verifikasi</button></td>
-    </tr> -->
-</tbody>
-  </table>
+  <tbody id="tbody-verifikasi">
+    <!-- Data akan dimasukkan lewat JavaScript -->
+  </tbody>
+</table>
 </div>
 
 <div id="myModal" class="modal">
@@ -102,42 +85,37 @@
 </div>
 
 <script>
-const data = JSON.parse(localStorage.getItem("dataVerifikasi")) || [];
-const tbody = document.getElementById("tabelVerifikasi");
+  document.addEventListener("DOMContentLoaded", function () {
+    const data = JSON.parse(localStorage.getItem("verifikasiPembayaran")) || [];
+    const tbody = document.getElementById("tbody-verifikasi");
 
-data.forEach((item, index) => {
-  const row = document.createElement("tr");
-  row.innerHTML = `
-    <td>${index + 1}</td>
-    <td>${item.nama}</td>
-    <td>${item.total}</td>
-    <td>${item.metode}</td>
-    <td><button onclick="showProof('${item.bukti}')">Lihat File</button></td>
-    <td class="status">${item.status}</td>
-    <td class="aksi">
-      <button onclick="verifikasi(${index}, true)">Setujui</button>
-      <button onclick="verifikasi(${index}, false)">Tolak</button>
-    </td>
-  `;
-  tbody.appendChild(row);
-});
+    if (!tbody) {
+      console.error("Element tbody-verifikasi tidak ditemukan.");
+      return;
+    }
 
-function showProof(imageData) {
-  const win = window.open();
-  win.document.write(`<img src="${imageData}" style="width:100%;max-width:600px;" />`);
-}
-
-function verifikasi(index, disetujui) {
-  const data = JSON.parse(localStorage.getItem("dataVerifikasi")) || [];
-  data[index].status = disetujui ? "Disetujui" : "Ditolak";
-  localStorage.setItem("dataVerifikasi", JSON.stringify(data));
-
-  // Set notifikasi ke halaman gabungan sebelum reload
-  localStorage.setItem("notifUser", disetujui ? "Pesanan anda telah disetujui!" : "Pesanan anda ditolak, silakan pesan ulang.");
-
-  alert(`Pesanan ${disetujui ? 'disetujui' : 'ditolak'}!`);
-  location.reload();
-}
+    if (data.length === 0) {
+      const row = document.createElement("tr");
+      row.innerHTML = `<td colspan="6">Belum ada data verifikasi.</td>`;
+      tbody.appendChild(row);
+    } else {
+      data.forEach((item, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${item.nama}</td>
+          <td>${item.totalBayar}</td>
+          <td>${item.metodePembayaran}</td>
+          <td>
+            ${item.buktiTransfer
+              ? `<img src="${item.buktiTransfer}" style="width: 80px;">`
+              : "-"}
+          </td>
+          <td>${item.status || "menunggu"}</td>
+        `;
+      });
+    }
+  });
 </script>
 
 </body>
