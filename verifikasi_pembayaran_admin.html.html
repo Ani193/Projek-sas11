@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - Verifikasi Pembayaran</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+      color: #2e8b57;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #2e8b57;
+      color: white;
+    }
+    img {
+      width: 100px;
+      max-height: 80px;
+      object-fit: contain;
+    }
+    button {
+      padding: 6px 12px;
+      margin: 2px;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .approve { background-color: #4CAF50; }
+    .reject { background-color: #f44336; }
+    .member-preview {
+      max-width: 100px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Halaman Admin - Verifikasi Pembayaran</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Nama</th>
+        <th>Total Bayar</th>
+        <th>Metode Pembayaran</th>
+        <th>Bukti Transfer</th>
+        <th>File Member</th>
+        <th>Status</th>
+        <th>Verifikasi</th>
+      </tr>
+    </thead>
+    <tbody id="tbody-verifikasi">
+      <!-- Data akan ditambahkan dengan JavaScript -->
+    </tbody>
+  </table>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const dataVerifikasi = JSON.parse(localStorage.getItem("dataVerifikasi")) || [];
+      const dataPenyewaan = JSON.parse(localStorage.getItem("dataPenyewaan")) || [];
+      const tbody = document.getElementById("tbody-verifikasi");
+
+      tbody.innerHTML = "";
+
+      dataVerifikasi.forEach((item, index) => {
+        const memberData = dataPenyewaan.find(p => p.nama === item.nama);
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${item.nama}</td>
+          <td>${item.total}</td>
+          <td>${item.metode}</td>
+          <td>${item.bukti ? `<img src="${item.bukti}" alt="Bukti">` : '-'}</td>
+          <td>${memberData?.fotoMember ? `<img src="${memberData.fotoMember}" class="member-preview">` : '-'}</td>
+          <td id="status-${index}">${item.status || "Menunggu"}</td>
+          <td>
+            <button class="approve" onclick="verifikasi(${index}, 'disetujui')">Setujui</button>
+            <button class="reject" onclick="verifikasi(${index}, 'ditolak')">Tolak</button>
+          </td>
+        `;
+
+        tbody.appendChild(row);
+      });
+
+      // Tambahkan listener tombol submit jika ada (untuk form_userr.html)
+      const tombol = document.querySelector('button[onclick="simpanDataPenyewaan()"]');
+      if (tombol) {
+        tombol.addEventListener('click', (e) => {
+          e.preventDefault();
+          simpanDataPenyewaan();
+        });
+      }
+    });
+
+    function verifikasi(index, status) {
+      const dataVerifikasi = JSON.parse(localStorage.getItem("dataVerifikasi")) || [];
+      dataVerifikasi[index].status = status;
+      localStorage.setItem("dataVerifikasi", JSON.stringify(dataVerifikasi));
+      document.getElementById(`status-${index}`).innerText = status;
+
+      const notif = status === "disetujui" ? "Pesanan kamu telah disetujui!" : "Maaf, pesanan kamu ditolak.";
+      localStorage.setItem("notifUser", notif);
+    }
+  </script>
+</body>
+</html>

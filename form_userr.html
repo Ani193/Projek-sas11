@@ -197,7 +197,7 @@
     <div class="section">
       <div id="totalBayar" class="total">Total Bayar: Rp0</div>
       <div class="button-right">
-        <button onclick="simpanDataPenyewaan()">Mulai Proses Pemesanan</button>
+       <button id="submitBtn" type="button">Mulai Proses Pemesanan</button>
       </div>
     </div>
   </div>
@@ -319,8 +319,8 @@
     semuaVerifikasi.push(verifikasi);
     localStorage.setItem("dataVerifikasi", JSON.stringify(semuaVerifikasi));
 
-    alert("Pemesanan berhasil!\n" + document.getElementById("totalBayar").textContent);
-    window.location.href = "verifikasi_pembayaran.html";
+    alert("Pesanan anda berhasil dibuat. Mohon tunggu untuk diverifikasi.");
+    window.location.href = "gabungan.html";
   }
 
 
@@ -349,6 +349,11 @@
   document.querySelectorAll(".alat, .jumlah").forEach(el => el.addEventListener("change", updateTotal));
   document.querySelectorAll('input[name="member"]').forEach(rb => rb.addEventListener("change", toggleMember));
   document.getElementById("buktiMember").addEventListener("change", updateTotal);
+
+  document.getElementById("submitBtn").addEventListener("click", function () {
+  simpanDataPenyewaan();
+});
+
   </script>
 </body>
 </html>
