@@ -54,37 +54,22 @@
 <body>
 <div class="container-5">
   <h2>Halaman Verifikasi Pembayaran</h2>
-  <table>
+ <table>
   <thead>
     <tr>
       <th>No</th>
-      <th>Nama Penyewa</th>
+      <th>Nama</th>
       <th>Total Bayar</th>
       <th>Metode Pembayaran</th>
       <th>Bukti Transfer</th>
       <th>Status</th>
-      <th>Verifikasi</th>
+
     </tr>
   </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>Elsa</td>
-      <td>Rp 90.000</td>
-      <td><button onclick="showProof('bukti1.jpg')">Lihat File</button></td>
-      <td>Menunggu</td>
-      <td><button onclick="openModal('bukti1.jpg')">Verifikasi</button></td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Rico</td>
-      <td>Rp 120.000</td>
-      <td><button onclick="showProof('bukti2.jpg')">Lihat File</button></td>
-      <td>Menunggu</td>
-      <td><button onclick="openModal('bukti2.jpg')">Verifikasi</button></td>
-    </tr>
+  <tbody id="tbody-verifikasi">
+    <!-- Data akan dimasukkan lewat JavaScript -->
   </tbody>
-  </table>
+</table>
 </div>
 
 <div id="myModal" class="modal">
@@ -93,34 +78,44 @@
     <h3>Verifikasi Pembayaran</h3>
     <img id="proofImage" src="" alt="Bukti Transfer">
     <br>
-    <button class="button approve" onclick="approve()">Setujui</button>
-    <button class="button reject" onclick="reject()">Tolak</button>
+   <button id="approveBtn" class="button approve" onclick="approve()">Setujui</button>
+   <button id="rejectBtn" class="button reject" onclick="reject()">Tolak</button>
+
   </div>
 </div>
 
 <script>
-  function openModal(imageSrc) {
-    document.getElementById('proofImage').src = imageSrc;
-    document.getElementById('myModal').style.display = 'block';
-  }
+  document.addEventListener("DOMContentLoaded", function () {
+    const data = JSON.parse(localStorage.getItem("verifikasiPembayaran")) || [];
+    const tbody = document.getElementById("tbody-verifikasi");
 
-  function closeModal() {
-    document.getElementById('myModal').style.display = 'none';
-  }
+    if (!tbody) {
+      console.error("Element tbody-verifikasi tidak ditemukan.");
+      return;
+    }
 
-  function approve() {
-    alert("Pembayaran disetujui!");
-    closeModal();
-  }
-
-  function reject() {
-    alert("Pembayaran ditolak!");
-    closeModal();
-  }
-
-  function showProof(imageSrc) {
-    window.open(imageSrc, '_blank');
-  }
+    if (data.length === 0) {
+      const row = document.createElement("tr");
+      row.innerHTML = `<td colspan="6">Belum ada data verifikasi.</td>`;
+      tbody.appendChild(row);
+    } else {
+      data.forEach((item, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${item.nama}</td>
+          <td>${item.totalBayar}</td>
+          <td>${item.metodePembayaran}</td>
+          <td>
+            ${item.buktiTransfer
+              ? `<img src="${item.buktiTransfer}" style="width: 80px;">`
+              : "-"}
+          </td>
+          <td>${item.status || "menunggu"}</td>
+        `;
+      });
+    }
+  });
 </script>
 
 </body>

@@ -69,7 +69,7 @@ body {
 <div class="container">
   <h1>Halaman Menu</h1>
   <div class="menu-item" onclick="window.location.href='alatAdmin.php'">ALAT YANG DI SEWA</div>
-  <div class="menu-item" onclick="window.location.href='daftrPemesananAdmin.html'">PESANAN</div>
+  <div class="menu-item" onclick="window.location.href='data_penyewa_user.html'">PESANAN</div>
   <div class="menu-item" onclick="window.location.href='Promo&Diskon_Admin.html'">PROMO DAN DISKON</div>
   <div class="menu-item" onclick="window.location.href='paketPenyewaan.php'">PAKET PENYEWAAN</div>
   <div class="menu-item" onclick="window.location.href='verifikasi_pembayaran.html'">MEMVERIFIKASI PEMBAYARAN</div>
