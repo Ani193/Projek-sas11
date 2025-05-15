@@ -319,6 +319,21 @@
   </style>
 </head>
 <body>
+
+  <div id="notifBox" style="padding: 20px; text-align: center; background: #fffae6; color: #444; font-weight: bold; display: none;"></div>
+
+   <script>
+    window.addEventListener("DOMContentLoaded", () => {
+     const notif = localStorage.getItem("notifUser");
+     if (notif) {
+    const box = document.getElementById("notifBox");
+     box.textContent = notif;
+     box.style.display = "block";
+     localStorage.removeItem("notifUser");
+    }
+  });
+</script>
+
 <!-- Navbar -->
 <header class="navbar">
  <div class="logo">
@@ -452,7 +467,7 @@
               <li><a href="#">Beranda</a></li>
               <li><a href="Hal_Katalog.html">Katalog</a></li>
               <li><a href="persyaratanSewa.html">Persyaratan Penyewaan</a></li>
-              <li><a href="loginUser.html">Sewa Sekarang</a></li>
+              <li><a href="loginUser.php">Sewa Sekarang</a></li>
             </ul>
           </div>
           <div class="footer-column-4">
@@ -474,6 +489,30 @@
     function chatAdmin() {
       alert("Fitur chat admin belum tersedia.");
     }
+    // Reset semua input di form setelah submit berhasil
+document.getElementById("nama").value = "";
+document.getElementById("email").value = "";
+document.getElementById("telepon").value = "";
+document.getElementById("alamat").value = "";
+document.getElementById("tanggalPesan").value = "";
+
+document.querySelectorAll('.alat').forEach(cb => cb.checked = false);
+document.querySelectorAll('.jumlah').forEach(sel => sel.value = "1");
+
+document.getElementById("paketPemula").checked = false;
+document.getElementById("paketKeluarga").checked = false;
+document.getElementById("paketLengkap").checked = false;
+
+document.getElementById("buktiMember").value = "";
+document.getElementById("buktiTransfer").value = "";
+document.querySelector('input[name="member"][value="biasa"]').checked = true;
+document.querySelector('input[name="metode"]:checked')?.checked = false;
+
+document.getElementById("diskonText").classList.add("hidden");
+document.getElementById("diskonText").textContent = "";
+document.getElementById("totalBayar").textContent = "Total Bayar: Rp0";
+document.getElementById("barcodeImage").style.display = "none";
+
   </script>
 </body>
 </html>

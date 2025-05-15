@@ -66,24 +66,26 @@
       <th>Verifikasi</th>
     </tr>
   </thead>
-  <tbody>
-    <tr>
+  <tbody id="tabelVerifikasi">
+     <!-- <tr>
       <td>1</td>
       <td>Elsa</td>
       <td>Rp 90.000</td>
+      <td>Dana</td>
       <td><button onclick="showProof('bukti1.jpg')">Lihat File</button></td>
       <td>Menunggu</td>
       <td><button onclick="openModal('bukti1.jpg')">Verifikasi</button></td>
     </tr>
-    <tr>
+     <tr>
       <td>2</td>
-      <td>Rico</td>
-      <td>Rp 120.000</td>
-      <td><button onclick="showProof('bukti2.jpg')">Lihat File</button></td>
+      <td>Fajar</td>
+      <td>Rp 90.000</td>
+      <td>Dana</td>
+      <td><button onclick="showProof('bukti1.jpg')">Lihat File</button></td>
       <td>Menunggu</td>
-      <td><button onclick="openModal('bukti2.jpg')">Verifikasi</button></td>
-    </tr>
-  </tbody>
+      <td><button onclick="openModal('bukti1.jpg')">Verifikasi</button></td>
+    </tr> -->
+</tbody>
   </table>
 </div>
 
@@ -93,34 +95,49 @@
     <h3>Verifikasi Pembayaran</h3>
     <img id="proofImage" src="" alt="Bukti Transfer">
     <br>
-    <button class="button approve" onclick="approve()">Setujui</button>
-    <button class="button reject" onclick="reject()">Tolak</button>
+   <button id="approveBtn" class="button approve" onclick="approve()">Setujui</button>
+   <button id="rejectBtn" class="button reject" onclick="reject()">Tolak</button>
+
   </div>
 </div>
 
 <script>
-  function openModal(imageSrc) {
-    document.getElementById('proofImage').src = imageSrc;
-    document.getElementById('myModal').style.display = 'block';
-  }
+const data = JSON.parse(localStorage.getItem("dataVerifikasi")) || [];
+const tbody = document.getElementById("tabelVerifikasi");
 
-  function closeModal() {
-    document.getElementById('myModal').style.display = 'none';
-  }
+data.forEach((item, index) => {
+  const row = document.createElement("tr");
+  row.innerHTML = `
+    <td>${index + 1}</td>
+    <td>${item.nama}</td>
+    <td>${item.total}</td>
+    <td>${item.metode}</td>
+    <td><button onclick="showProof('${item.bukti}')">Lihat File</button></td>
+    <td class="status">${item.status}</td>
+    <td class="aksi">
+      <button onclick="verifikasi(${index}, true)">Setujui</button>
+      <button onclick="verifikasi(${index}, false)">Tolak</button>
+    </td>
+  `;
+  tbody.appendChild(row);
+});
 
-  function approve() {
-    alert("Pembayaran disetujui!");
-    closeModal();
-  }
+function showProof(imageData) {
+  const win = window.open();
+  win.document.write(`<img src="${imageData}" style="width:100%;max-width:600px;" />`);
+}
 
-  function reject() {
-    alert("Pembayaran ditolak!");
-    closeModal();
-  }
+function verifikasi(index, disetujui) {
+  const data = JSON.parse(localStorage.getItem("dataVerifikasi")) || [];
+  data[index].status = disetujui ? "Disetujui" : "Ditolak";
+  localStorage.setItem("dataVerifikasi", JSON.stringify(data));
 
-  function showProof(imageSrc) {
-    window.open(imageSrc, '_blank');
-  }
+  // Set notifikasi ke halaman gabungan sebelum reload
+  localStorage.setItem("notifUser", disetujui ? "Pesanan anda telah disetujui!" : "Pesanan anda ditolak, silakan pesan ulang.");
+
+  alert(`Pesanan ${disetujui ? 'disetujui' : 'ditolak'}!`);
+  location.reload();
+}
 </script>
 
 </body>
