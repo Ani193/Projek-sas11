@@ -33,15 +33,84 @@ $conn->close();
 <head>
   <meta charset="UTF-8">
   <title>Halaman Katalog</title>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
+ 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       padding: 20px;
     }
+  /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background-color:rgba(0, 32, 64, 0.8);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      z-index: 10;
+    }
+
+    .logo img{
+     vertical-align: middle;
+    }
+    .nav-links a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    .navbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search-form {
+      display: flex;
+      align-items: center;
+      background-color: white;
+      border-radius: 20px;
+      padding: 2px 4px;
+      height: 28px;
+    }
+
+    .search {
+      border: none;
+      outline: none;
+      padding: 2px 4px;
+      border-radius: 20px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .search-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      margin-left: 4px;
+      color: black;
+    }
+
+    .icon-admin {
+      color: white;
+      font-size: 18px;
+      text-decoration: none;
+    }
     .header-k, .header-k2 {
       text-align: center;
-      margin-bottom: 30px;
+      margin-top: 80px;
     }
     .header-k h1, .header-k2 h1 {
       font-size: 40px;
@@ -86,7 +155,32 @@ $conn->close();
   </style>
 </head>
 <body>
+<!-- Navbar -->
+<header class="navbar">
+ <div class="logo">
+      <img src="logoo.png" alt="logo" style="height: 120px;">
+  </div>
 
+  <nav class="nav-links">
+    <a href="gabungan.html">Beranda</a>
+    <a href="Hal_Katalog.php">Katalog</a>
+    <a href="persyaratanSewa.html">Persyaratan</a>
+    <a href="loginUser.php">Penyewaan</a>
+  </nav>
+
+  <div class="navbar-right">
+    <form class="search-form" onsubmit="return handleSearch(event)">
+      <input type="text" class="search" placeholder="Cari..." id="searchInput" />
+      <button type="submit" class="search-btn">
+        <i class="fas fa-search"></i>
+      </button>
+    </form>
+
+    <a href="loginAdmin.php" class="icon-admin" title="Login Admin">
+      <i class="fas fa-user"></i>
+    </a>
+  </div>
+</header>
 <div class="header-k">
   <h1>Di Sewakan</h1>
 </div>
