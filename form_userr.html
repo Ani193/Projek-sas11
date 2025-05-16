@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form Penyewaan Alat Camping</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom right, #ffe4e1, #fff7e6);
+      margin: 0;
+      padding: 0;
+    }
+    .container-pr {
+      max-width: 960px;
+      margin: 50px auto;
+      background: #fffaf0;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+    }
+    h2 {
+      text-align: center;
+      color: #d17878;
+      margin-bottom: 30px;
+      font-size: 28px;
+    }
+    label {
+      display: block;
+      margin-top: 14px;
+      font-weight: 600;
+      color: #5c5c5c;
+    }
+    input[type="text"], input[type="email"], input[type="date"], select, input[type="file"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border-radius: 8px;
+      border: 1px solid #e4c1c1;
+      box-sizing: border-box;
+      transition: border 0.3s ease, box-shadow 0.3s ease;
+      background-color: #fff0f0;
+    }
+    input:focus, select:focus, input[type="file"]:focus {
+      border-color: #d17878;
+      box-shadow: 0 0 6px rgba(209, 120, 120, 0.4);
+      outline: none;
+    }
+    .section, .section-pac, .section-pkt, .section-pmp {
+      margin-top: 30px;
+      background-color: #fff0f5;
+      padding: 24px;
+      border-radius: 12px;
+      border: 1px solid #f8d2dc;
+    }
+    .section-pac > div, .section-pkt > div {
+      margin-bottom: 14px;
+    }
+    input[type="radio"], input[type="checkbox"] {
+      margin-right: 10px;
+      transform: scale(1.2);
+      vertical-align: middle;
+    }
+    select {
+      margin-left: 10px;
+      width: auto;
+    }
+    .total {
+      font-size: 20px;
+      font-weight: bold;
+      color: #b25353;
+      margin-top: 18px;
+    }
+    .hidden {
+      display: none;
+    }
+    .button-right {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 25px;
+    }
+    button {
+      background: linear-gradient(to right, #ffb6b9, #f8a5c2);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    button:hover {
+      background: linear-gradient(to right, #f38181, #f97f9b);
+      transform: translateY(-2px);
+    }
+    #barcodeContainer img {
+      margin-top: 10px;
+      border: 1px solid #f3c6c6;
+      border-radius: 10px;
+      max-width: 200px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .section label,
+    .section-pac label,
+    .section-pkt label,
+    .section-pmp label {
+      font-weight: 700;
+    }
+    .section-pac > div,
+    .section-pkt > div,
+    .section-pmp > div {
+      background: #fff8f8;
+      padding: 12px;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-pr">
+    <h2>Form Penyewaan Alat Camping</h2>
+    <div class="section">
+      <label>Nama Lengkap</label>
+      <input type="text" id="nama" />
+      <label>Email</label>
+      <input type="email" id="email" />
+      <label>Nomor HP</label>
+      <input type="text" id="telepon" />
+      <label>Alamat</label>
+      <input type="text" id="alamat" />
+
+      <label>Status Membership</label>
+      <input type="radio" name="member" value="biasa" checked onchange="toggleMember()"> Biasa
+      <input type="radio" name="member" value="member" onchange="toggleMember()"> Member
+      <div id="uploadDiv" class="hidden">
+        <label>Upload Bukti Member</label>
+        <input type="file" id="buktiMember" onchange="updateTotal()" />
+      </div>
+      <div id="diskonText" class="total hidden"></div>
+    </div>
+
+    <div class="section-pac">
+      <label>Pilih Alat Camping</label>
+      <div>
+        <input type="checkbox" class="alat" data-id="alat1" data-harga="25000" /> Tenda Kapasitas 2 Orang
+        <select class="jumlah" data-id="alat1"><option>1</option></select> Rp25.000
+      </div>
+      <div>
+        <input type="checkbox" class="alat" data-id="alat2" data-harga="55000" /> Tenda Kapasitas 6 Orang
+        <select class="jumlah" data-id="alat2"><option>1</option></select> Rp55.000
+      </div>
+      <div>
+        <input type="checkbox" class="alat" data-id="alat3" data-harga="35000" /> Carrier Bag
+        <select class="jumlah" data-id="alat3"><option>1</option></select> Rp35.000
+      </div>
+      <div>
+        <input type="checkbox" class="alat" data-id="alat4" data-harga="25000" /> Kompor Portable
+        <select class="jumlah" data-id="alat4"><option>1</option></select> Rp25.000
+      </div>
+    </div>
+
+    <div class="section">
+      <label>Pilih Paket Penyewaan (Opsional)</label>
+      <div>
+        <input type="checkbox" id="paketPemula" onchange="paketSelected('pemula')"/> Paket Pemula<br>(Tenda kap. 2 orang, Matras spon, Sleeping bag, Lampu tenda, Kompas) Rp315.000 (2 hari 1 malam)
+      </div>
+      <div>
+        <input type="checkbox" id="paketKeluarga" onchange="paketSelected('keluarga')"/> Paket Keluarga<br>(Tenda kap.6 orang, Matras spon, Sleeping bag, Kompor portable, Peralatan masak, Lampu tenda, Gas portable) Rp537.000 (2 hari 1 malam)
+      </div>
+      <div>
+        <input type="checkbox" id="paketLengkap" onchange="paketSelected('lengkap')"/> Paket Lengkap (Semua alat) Rp852.000 (2 hari 1 malam)
+      </div>
+    </div>
+
+    <div class="section">
+      <label>Tanggal Pemesanan</label>
+      <input type="date" id="tanggalPesan" />
+    </div>
+
+    <div class="section-pmp">
+      <label>Pilih Metode Pembayaran</label><br>
+      <input type="radio" name="metode" value="Dana"> Dana
+      <input type="radio" name="metode" value="COD"> COD
+      <div id="barcodeContainer" style="margin-top: 10px;">
+        <img id="barcodeImage" src="barcode-2.png" alt="Barcode Pembayaran" style="display: none; max-width: 200px;">
+      </div>
+    </div>
+
+    <div class="section">
+      <label>Upload Bukti Transfer</label>
+      <input type="file" id="buktiTransfer" accept="image/*" required />
+    </div>
+
+    <div class="section">
+      <div id="totalBayar" class="total">Total Bayar: Rp0</div>
+      <div class="button-right">
+       <button id="submitBtn" type="button">Mulai Proses Pemesanan</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  function toggleMember() {
+    const isMember = document.querySelector('input[name="member"]:checked').value === "member";
+    document.getElementById("uploadDiv").classList.toggle("hidden", !isMember);
+    if (!isMember) document.getElementById("buktiMember").value = "";
+    updateTotal();
+  }
+
+  function paketSelected(paket) {
+    ["paketPemula", "paketKeluarga", "paketLengkap"].forEach(id => {
+      if (id !== `paket${paket.charAt(0).toUpperCase() + paket.slice(1)}`) document.getElementById(id).checked = false;
+    });
+    const isChecked = document.getElementById(`paket${paket.charAt(0).toUpperCase() + paket.slice(1)}`).checked;
+    document.querySelectorAll(".alat").forEach(cb => { cb.disabled = isChecked; if (isChecked) cb.checked = false; });
+    document.querySelectorAll(".jumlah").forEach(sel => { sel.disabled = isChecked; if (isChecked) sel.value = "1"; });
+    updateTotal();
+  }
+
+  function updateTotal() {
+    let total = 0;
+    if (document.getElementById("paketPemula").checked) total = 315000;
+    else if (document.getElementById("paketKeluarga").checked) total = 537000;
+    else if (document.getElementById("paketLengkap").checked) total = 852000;
+    else {
+      document.querySelectorAll(".alat:checked").forEach(cb => {
+        const id = cb.dataset.id;
+        const harga = parseInt(cb.dataset.harga);
+        const jumlah = parseInt(document.querySelector(`.jumlah[data-id='${id}']`).value);
+        total += harga * jumlah;
+      });
+    }
+    const isMember = document.querySelector('input[name="member"]:checked').value === "member";
+    const hasProof = document.getElementById("buktiMember").files.length > 0;
+    const diskon = isMember && hasProof ? 0.25 : 0;
+    const potongan = total * diskon;
+    document.getElementById("diskonText").textContent = diskon ? `Diskon Member: -Rp${potongan.toLocaleString('id-ID')}` : "";
+    document.getElementById("diskonText").classList.toggle("hidden", !diskon);
+    document.getElementById("totalBayar").textContent = `Total Bayar: Rp${(total - potongan).toLocaleString('id-ID')}`;
+  }
+
+  function simpanDataPenyewaan() {
+    const required = ["nama", "email", "telepon", "alamat", "tanggalPesan"];
+    if (required.some(id => !document.getElementById(id).value.trim()) ||
+        !document.querySelector("input[name='metode']:checked") ||
+        document.getElementById("buktiTransfer").files.length === 0) {
+      alert("Mohon lengkapi semua data termasuk bukti transfer.");
+      return;
+    }
+
+    const alatDipilih = [];
+    if (document.getElementById("paketPemula").checked) {
+      alatDipilih.push({ nama: "paketPemula", jumlah: "1" });
+    } else if (document.getElementById("paketKeluarga").checked) {
+      alatDipilih.push({ nama: "paketKeluarga", jumlah: "1" });
+    } else if (document.getElementById("paketLengkap").checked) {
+      alatDipilih.push({ nama: "paketLengkap", jumlah: "1" });
+    } else {
+      document.querySelectorAll(".alat:checked").forEach(cb => {
+        const id = cb.dataset.id;
+        const jumlah = document.querySelector(`.jumlah[data-id='${id}']`).value;
+        alatDipilih.push({ nama: id, jumlah });
+      });
+    }
+
+    const metodePembayaran = document.querySelector("input[name='metode']:checked").value;
+    const totalBayar = document.getElementById("totalBayar").textContent;
+
+    const dataPenyewaan = {
+      nama: document.getElementById("nama").value,
+      email: document.getElementById("email").value,
+      nomor_hp: document.getElementById("telepon").value,
+      tanggal_mulai: document.getElementById("tanggalPesan").value,
+      durasi: "2 hari 1 malam",
+      alat: alatDipilih,
+      membership: document.querySelector('input[name="member"]:checked').value,
+      fotoMember: null
+    };
+
+    const dataVerifikasi = {
+      nama: document.getElementById("nama").value,
+      total: totalBayar,
+      metode: metodePembayaran,
+      bukti: null,
+      status: "Menunggu"
+    };
+
+    const fileMember = document.getElementById("buktiMember").files[0];
+    const fileTransfer = document.getElementById("buktiTransfer").files[0];
+
+    const reader1 = fileMember ? new FileReader() : null;
+    const reader2 = new FileReader();
+
+    reader2.onload = function(e) {
+      dataVerifikasi.bukti = e.target.result;
+
+      if (reader1) {
+        reader1.onload = function(ev) {
+          dataPenyewaan.fotoMember = ev.target.result;
+          simpanSemuaData(dataPenyewaan, dataVerifikasi);
+        };
+        reader1.readAsDataURL(fileMember);
+      } else {
+        simpanSemuaData(dataPenyewaan, dataVerifikasi);
+      }
+    };
+    reader2.readAsDataURL(fileTransfer);
+  }
+
+  function simpanSemuaData(penyewaan, verifikasi) {
+    let semuaData = JSON.parse(localStorage.getItem("dataPenyewaan")) || [];
+    semuaData.push(penyewaan);
+    localStorage.setItem("dataPenyewaan", JSON.stringify(semuaData));
+
+    let semuaVerifikasi = JSON.parse(localStorage.getItem("dataVerifikasi")) || [];
+    semuaVerifikasi.push(verifikasi);
+    localStorage.setItem("dataVerifikasi", JSON.stringify(semuaVerifikasi));
+
+    alert("Pesanan anda berhasil dibuat. Mohon tunggu untuk diverifikasi.");
+    window.location.href = "gabungan.html";
+  }
+
+
+  function simpanKeLocalStorage(data) {
+    let semuaData = JSON.parse(localStorage.getItem("dataPenyewaan")) || [];
+    semuaData.push(data);
+    localStorage.setItem("dataPenyewaan", JSON.stringify(semuaData));
+    alert("Pemesanan berhasil!\n" + document.getElementById("totalBayar").textContent);
+    window.location.href = "gabungan.html";
+  }
+
+  const barcodeImage = document.getElementById("barcodeImage");
+  document.querySelectorAll('input[name="metode"]').forEach(radio => {
+    radio.addEventListener("change", () => {
+      if (radio.value.toLowerCase() === "dana") {
+        barcodeImage.src = "barcode-dana.png";
+        barcodeImage.style.display = "block";
+        barcodeImage.alt = "Silakan scan QR DANA";
+      } else {
+        barcodeImage.style.display = "none";
+      }
+    });
+  });
+
+  ["nama", "email", "telepon", "alamat", "tanggalPesan"].forEach(id => document.getElementById(id).addEventListener("input", updateTotal));
+  document.querySelectorAll(".alat, .jumlah").forEach(el => el.addEventListener("change", updateTotal));
+  document.querySelectorAll('input[name="member"]').forEach(rb => rb.addEventListener("change", toggleMember));
+  document.getElementById("buktiMember").addEventListener("change", updateTotal);
+
+  document.getElementById("submitBtn").addEventListener("click", function () {
+  simpanDataPenyewaan();
+});
+
+  </script>
+</body>
+</html>

@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+//mengecek apakah user sudah login
+if (!isset($_SESSION['email'])){
+  header("Location: loginAdmin.php");
+  exit();
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,11 +68,11 @@ body {
 <body>
 <div class="container">
   <h1>Halaman Menu</h1>
-  <div class="menu-item" onclick="window.location.href='alatAdmin.html'">ALAT YANG DI SEWA</div>
-  <div class="menu-item" onclick="window.location.href='daftrPemesananAdmin.html'">PESANAN</div>
+  <div class="menu-item" onclick="window.location.href='alatAdmin.php'">ALAT YANG DI SEWA</div>
+  <div class="menu-item" onclick="window.location.href='data_penyewa_userrr.html'">PESANAN</div>
   <div class="menu-item" onclick="window.location.href='Promo&Diskon_Admin.html'">PROMO DAN DISKON</div>
-  <div class="menu-item" onclick="window.location.href='paketPenyewaan.html'">PAKET PENYEWAAN</div>
-  <div class="menu-item" onclick="window.location.href='pembayaran.html'">MEMVERIFIKASI PEMBAYARAN</div>
+  <div class="menu-item" onclick="window.location.href='paketPenyewaan.php'">PAKET PENYEWAAN</div>
+  <div class="menu-item" onclick="window.location.href='verifikasi_pembayaran_admin.html.html'">MEMVERIFIKASI PEMBAYARAN</div>
 </div>
 
 </body>

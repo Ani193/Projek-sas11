@@ -20,7 +20,7 @@
       left: 0;
       right: 0;
       height: 60px;
-      background-color:transparent;
+      background-color:rgba(29, 87, 96, 0.995);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -28,10 +28,8 @@
       z-index: 10;
     }
 
-    .logo {
-      font-weight: bold;
-      color: white;
-      font-size: 1.2rem;
+    .logo img{
+     vertical-align: middle;
     }
 
     .nav-links a {
@@ -128,19 +126,20 @@
 <body>
   <!-- Navbar -->
   <header class="navbar">
-    <div class="logo">BASECAME OUTDOOR</div>
+    <div class="logo">
+      <img src="logo.png" alt="logo" style="height: 40px;">
+    </div>
 
     <nav class="nav-links">
       <a href="#">Beranda</a>
-      <a href="#">Tentang</a>
-      <a href="#">Layanan</a>
-      <a href="#">Galeri</a>
-      <a href="#">Kontak</a>
+      <a href="Hal_Katalog.html">Katalog</a>
+      <a href="persyaratanSewa.html">Persyaratan</a>
+      <a href="formulirPenyewaan.html">Penyewaan</a>
     </nav>
 
     <div class="navbar-right">
-      <form class="search-form" action="#" method="get">
-        <input type="text" class="search" placeholder="Cari..." name="q" />
+      <form class="search-form" onsubmit="return handleSearch(event)">
+        <input type="text" class="search" placeholder="Cari..." id="searchInput" />
         <button type="submit" class="search-btn">
           <i class="fas fa-search"></i>
         </button>
@@ -160,5 +159,25 @@
       <a href="#section2" class="btn">Mulai</a>
     </div>
   </section>
+
+  <script>
+    function handleSearch(e) {
+      e.preventDefault();
+      const keyword = document.getElementById("searchInput").value.toLowerCase();
+
+      // Pencarian untuk "tenda", "katalog", dll.
+      if (keyword.includes("tenda") || keyword.includes("katalog")) {
+        window.location.href = "Hal_Katalog.html"; // Pindah ke halaman katalog
+      } else if (keyword.includes("penyewaan")) {
+        window.location.href = "formulirPenyewaan.html"; // Pindah ke halaman penyewaan
+      } else if (keyword.includes("syarat") || keyword.includes("persyaratan")) {
+        window.location.href = "persyaratanSewa.html"; // Pindah ke halaman persyaratan
+      } else {
+        alert("Halaman tidak ditemukan.");
+      }
+
+      return false;
+    }
+  </script>
 </body>
 </html>

@@ -11,7 +11,6 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-   
     /* Navbar */
     .navbar {
       position: fixed;
@@ -19,7 +18,8 @@
       left: 0;
       right: 0;
       height: 60px;
-      background-color:#b3d8f996;
+      background-color:rgba(0, 32, 64, 0.8);
+      color: #ffffff;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -27,12 +27,9 @@
       z-index: 10;
     }
 
-    .logo {
-      font-weight: bold;
-      color: white;
-      font-size: 1.2rem;
+    .logo img{
+     vertical-align: middle;
     }
-
     .nav-links a {
       color: white;
       margin: 0 10px;
@@ -123,7 +120,6 @@
     .btn:hover {
       background-color: #e5e7eb;
     }
-
     /* Section 2 */
     .container2 {
       display: flex;
@@ -217,7 +213,7 @@
     .row {
       display: flex;
       flex-direction: row;
-      gap: 75px;
+      gap: 70px;
       text-align: center;
       padding: 50px;
       flex-wrap: wrap;
@@ -323,40 +319,76 @@
   </style>
 </head>
 <body>
-  <!-- Navbar -->
-  <header class="navbar">
-    <div class="logo">BASECAME OUTDOOR</div>
 
-    <nav class="nav-links">
-      <a href="#">Beranda</a>
-      <a href="#">Tentang</a>
-      <a href="#">Layanan</a>
-      <a href="#">Galeri</a>
-      <a href="#">Kontak</a>
-    </nav>
+  <div id="notifBox" style="padding: 20px; text-align: center; background: #fffae6; color: #444; font-weight: bold; display: none;"></div>
 
-    <div class="navbar-right">
-      <form class="search-form" action="#" method="get">
-        <input type="text" class="search" placeholder="Cari..." name="q" />
-        <button type="submit" class="search-btn"> 
-          <i class="fas fa-search"></i>
-        </button>
-      </form>
+   <script>
+    window.addEventListener("DOMContentLoaded", () => {
+     const notif = localStorage.getItem("notifUser");
+     if (notif) {
+    const box = document.getElementById("notifBox");
+     box.textContent = notif;
+     box.style.display = "block";
+     localStorage.removeItem("notifUser");
+    }
+  });
+</script>
 
-      <a href="/loginAdmin.html" class="icon-admin" title="Login Admin">
-        <i class="fas fa-user"></i>
-      </a>
-    </div>
-  </header>
+<!-- Navbar -->
+<header class="navbar">
+ <div class="logo">
+      <img src="logoo.png" alt="logo" style="height: 120px;">
+  </div>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>BASECAME OUTDOOR</h1>
-      <p>Temukan petualangan terbaikmu bersama kami di alam bebas.</p>
-      <a href="formulirPenyewaan.html" class="btn">sewa sekarang!</a>
-    </div>
-  </section>
+  <nav class="nav-links">
+    <a href="gabungan.html">Beranda</a>
+    <a href="Hal_Katalog.php">Katalog</a>
+    <a href="persyaratanSewa.html">Persyaratan</a>
+    <a href="loginUser.php">Penyewaan</a>
+  </nav>
+
+  <div class="navbar-right">
+    <form class="search-form" onsubmit="return handleSearch(event)">
+      <input type="text" class="search" placeholder="Cari..." id="searchInput" />
+      <button type="submit" class="search-btn">
+        <i class="fas fa-search"></i>
+      </button>
+    </form>
+
+    <a href="loginAdmin.php" class="icon-admin" title="Login Admin">
+      <i class="fas fa-user"></i>
+    </a>
+  </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>BASECAME OUTDOOR</h1>
+    <p>Temukan petualangan terbaikmu bersama kami di alam bebas.</p>
+    <a href="form_userr.html" class="btn">sewa sekarang!!</a>
+  </div>
+</section>
+
+<script>
+  function handleSearch(e) {
+    e.preventDefault();
+    const keyword = document.getElementById("searchInput").value.toLowerCase();
+
+    // Pencarian untuk "tenda", "katalog", dll.
+    if (keyword.includes("tenda") || keyword.includes("katalog")) {
+      window.location.href = "Hal_Katalog.php"; // Pindah ke halaman katalog
+    } else if (keyword.includes("penyewaan")) {
+      window.location.href = "formulirPenyewaan.html"; // Pindah ke halaman penyewaan
+    } else if (keyword.includes("syarat") || keyword.includes("persyaratan")) {
+      window.location.href = "persyaratanSewa.html"; // Pindah ke halaman persyaratan
+    } else {
+      alert("Halaman tidak ditemukan.");
+    }
+
+    return false;
+  }
+</script>
 
   <!-- Section 2 -->
   <section id="section2" class="container2">
@@ -364,7 +396,6 @@
       <h1>Komitmen BASECAMP Outdoor untuk Aktivitas dan Hobby Anda</h1>
       <p>Ketika anda berfikir tentang aktivitas petualangan, jangan biarkan masalah peralatan penunjang menjadi hambatan kegembiraan anda...</p>
       <p>Melalui barang yang berkualitas pada kelasnya, kami berkomitmen untuk mendukung kegiatan petualangan anda...</p>
-      <button class="bttn-2" onclick="chatAdmin()">CHAT ADMIN KAMI SEKARANG</button>
     </div>
     <div class="image-section2">
       <img src="peta.jpeg" alt="BASECAMP outdoor" />
@@ -382,7 +413,7 @@
       <h1>Katalog Produk</h1>
       <p>Untuk melihat keseluruhan produk yang kami sediakan, silahkan mengunjungi halaman Katalog produk dibawah ini.</p>
     </div>
-    <a href="Hal_Katalog.html" class="btn">Katalog Selengkapnya</a>
+    <a href="Hal_Katalog.php" class="btn">Katalog Selengkapnya</a>
     <div class="row">
       <div class="col-4">
         <div class="image-3">
@@ -428,15 +459,15 @@
         <div class="footer-container-4">
           <div class="footer-column-4">
             <h3>Tentang Kami</h3>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas earum voluptate quae id sapiente in ducimus tenetur omnis ipsam aliquid. Veritatis eveniet iusto id voluptate magni saepe unde ut illo..</p>
+            <p>Basecamp Outdoor - Solusi Sewa Alat Camping Terpercaya untuk Petualangan Anda. Temukan berbagai peralatan berkualitas untuk mendukung kegiatan outdoor Anda. Terhubung dengan alam, nikmati petualangan, dan buat kenangan tak terlupakan.</p>
           </div>
           <div class="footer-column-4">
             <h3>Quick Link</h3>
             <ul>
               <li><a href="#">Beranda</a></li>
-              <li><a href="#">Katalog</a></li>
-              <li><a href="#">Panduan Umum</a></li>
-              <li><a href="#">Sewa Sekarang</a></li>
+              <li><a href="Hal_Katalog.html">Katalog</a></li>
+              <li><a href="persyaratanSewa.html">Persyaratan Penyewaan</a></li>
+              <li><a href="loginUser.php">Sewa Sekarang</a></li>
             </ul>
           </div>
           <div class="footer-column-4">
@@ -444,9 +475,7 @@
             <div class="social-icons">
               <img src="ig.png">
               <img src="fb.png">
-              <img src="twiter.png">
-              
-              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+              <img src="twitt.png">
             </div>
           </div>
         </div>
@@ -460,6 +489,30 @@
     function chatAdmin() {
       alert("Fitur chat admin belum tersedia.");
     }
+    // Reset semua input di form setelah submit berhasil
+document.getElementById("nama").value = "";
+document.getElementById("email").value = "";
+document.getElementById("telepon").value = "";
+document.getElementById("alamat").value = "";
+document.getElementById("tanggalPesan").value = "";
+
+document.querySelectorAll('.alat').forEach(cb => cb.checked = false);
+document.querySelectorAll('.jumlah').forEach(sel => sel.value = "1");
+
+document.getElementById("paketPemula").checked = false;
+document.getElementById("paketKeluarga").checked = false;
+document.getElementById("paketLengkap").checked = false;
+
+document.getElementById("buktiMember").value = "";
+document.getElementById("buktiTransfer").value = "";
+document.querySelector('input[name="member"][value="biasa"]').checked = true;
+document.querySelector('input[name="metode"]:checked')?.checked = false;
+
+document.getElementById("diskonText").classList.add("hidden");
+document.getElementById("diskonText").textContent = "";
+document.getElementById("totalBayar").textContent = "Total Bayar: Rp0";
+document.getElementById("barcodeImage").style.display = "none";
+
   </script>
 </body>
 </html>
