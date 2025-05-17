@@ -2,7 +2,6 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Grafik Data Penyewaan</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
@@ -16,7 +15,7 @@
     h2 {
       text-align: center;
       color: #0d47a1;
-      font-size: 28px;
+      font-size: 36px;
     }
     .chart-container {
       max-width: 1100px;
@@ -50,19 +49,39 @@
     const tanggalCount = {};
     let member = 0, biasa = 0;
 
+    const namaAlatMap = {
+      "alat1": "Tenda Kapasitas 4 Orang",
+      "alat2": "Tenda Kapasitas 6 Orang",
+      "alat3": "Kompor Portable",
+      "alat4": "Matras Alumunium",
+      "alat5": "Matras Spon",
+      "alat6": "Sleeping Bag",
+      "alat7": "Gas Portable",
+      "alat8": "Day Pack",
+      "alat9": "Coverbag Ransel",
+      "alat10": "Headlamp Kecil",
+      "alat11": "Raincoat",
+      "alat12": "Trecking Pole",
+      "alat13": "Kursi Lipat",
+      "alat14": "Peralatan Masak",
+      "alat15": "Carrier Bag",
+      "alat16": "Lampu Tenda",
+      "alat17": "Kompas",
+      "alat18": "Senter",
+      "paketPemula": "Paket Pemula",
+      "paketKeluarga": "Paket Keluarga",
+      "paketLengkap": "Paket Lengkap"
+    };
+
     dataPenyewaan.forEach(entry => {
       if (entry.membership === 'member') member++;
       else biasa++;
 
-      // ✅ PERBAIKAN di sini: Format tanggal lebih informatif & unik
-      const tanggal = new Date(entry.tanggal_mulai);
-      const tglFormatted = tanggal.toLocaleDateString('id-ID', {
-        day: '2-digit', month: 'long', year: 'numeric'
-      });
-      tanggalCount[tglFormatted] = (tanggalCount[tglFormatted] || 0) + 1;
+      const tgl = entry.tanggal_mulai;
+      tanggalCount[tgl] = (tanggalCount[tgl] || 0) + 1;
 
       entry.alat.forEach(a => {
-        const nama = a.nama;
+        const nama = namaAlatMap[a.nama] || a.nama;
         alatCount[nama] = (alatCount[nama] || 0) + parseInt(a.jumlah);
       });
     });
@@ -78,18 +97,25 @@
         }]
       },
       options: {
-        plugins: { 
-          title: { 
-            display: true, 
-            text: 'Penyewaan per Alat', 
-            font: { size: 24 } 
+        plugins: {
+          title: {
+            display: true,
+            text: 'Penyewaan per Alat',
+            font: { size: 26 }
           },
-          legend: { labels: { font: { size: 16 } } }
+          legend: {
+            labels: { font: { size: 16 } }
+          }
         },
         responsive: true,
         scales: {
-          y: { beginAtZero: true, ticks: { font: { size: 14 } } },
-          x: { ticks: { font: { size: 14 } } }
+          y: {
+            beginAtZero: true,
+            ticks: { font: { size: 16 } }
+          },
+          x: {
+            ticks: { font: { size: 14 } }
+          }
         }
       }
     });
@@ -104,13 +130,15 @@
         }]
       },
       options: {
-        plugins: { 
-          title: { 
-            display: true, 
-            text: 'Status Membership Pengguna', 
-            font: { size: 24 } 
+        plugins: {
+          title: {
+            display: true,
+            text: 'Status Membership Pengguna',
+            font: { size: 26 }
           },
-          legend: { labels: { font: { size: 16 } } }
+          legend: {
+            labels: { font: { size: 16 } }
+          }
         },
         responsive: true
       }
@@ -130,18 +158,25 @@
         }]
       },
       options: {
-        plugins: { 
-          title: { 
-            display: true, 
-            text: 'Penyewaan per Tanggal', 
-            font: { size: 24 } 
+        plugins: {
+          title: {
+            display: true,
+            text: 'Penyewaan per Tanggal',
+            font: { size: 26 }
           },
-          legend: { labels: { font: { size: 16 } } }
+          legend: {
+            labels: { font: { size: 16 } }
+          }
         },
         responsive: true,
         scales: {
-          y: { beginAtZero: true, ticks: { font: { size: 14 } } },
-          x: { ticks: { font: { size: 14 } } }
+          y: {
+            beginAtZero: true,
+            ticks: { font: { size: 16 } }
+          },
+          x: {
+            ticks: { font: { size: 14 } }
+          }
         }
       }
     });
