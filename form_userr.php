@@ -197,12 +197,12 @@
     <div class="section-pac">
       <label>Pilih Alat Camping</label>
       <div>
-        <input type="checkbox" class="alat" data-id="alat1" data-harga="25000" /> Tenda Kapasitas 4 Orang
-        <select class="jumlah" data-id="alat1"><option>1</option></select> Rp25.000
+        <input type="checkbox" class="alat" data-id="alat1" data-harga="25000" /> Tenda Kapasitas 2 Orang
+        <select class="jumlah" data-id="alat1"><option>1</option></select> Rp30.000
       </div>
       <div>
-        <input type="checkbox" class="alat" data-id="alat2" data-harga="55000" /> Tenda Kapasitas 6 Orang
-        <select class="jumlah" data-id="alat2"><option>1</option></select> Rp55.000
+        <input type="checkbox" class="alat" data-id="alat2" data-harga="55000" /> Tenda Kapasitas 5 Orang
+        <select class="jumlah" data-id="alat2"><option>1</option></select> Rp50.000
       </div>
       <div>
         <input type="checkbox" class="alat" data-id="alat3" data-harga="35000" /> Kompor Portable

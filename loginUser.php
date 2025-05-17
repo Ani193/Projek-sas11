@@ -47,9 +47,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       if (isset($_SESSION['pendingSewa'])) {
         $id = $_SESSION['pendingSewa'];
         unset($_SESSION['pendingSewa']);
-        header("Location: form_userr.html?id=" . $id);
+        header("Location: form_userr.php?id=" . $id);
       } else {
-        header("Location: form_userr.html"); // ganti dengan halaman katalog utama jika perlu
+        header("Location: form_userr.php"); // ganti dengan halaman katalog utama jika perlu
       }
       exit();
     } else {
