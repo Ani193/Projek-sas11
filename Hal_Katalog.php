@@ -178,7 +178,7 @@ $conn->close();
   <nav class="nav-links">
     <a href="gabungan.php">Beranda</a>
     <a href="Hal_Katalog.php">Katalog</a>
-    <a href="persyaratanSewa.html">Persyaratan</a>
+    <a href="persyaratanSewa.php">Persyaratan</a>
     <a href="loginUser.php">Penyewaan</a>
   </nav>
 
@@ -204,7 +204,7 @@ $conn->close();
       <div class="stok-k">Stok: <?= $barang['stok']; ?></div>
       <div class="keterangan-k"><?= nl2br($barang['deskripsi']); ?></div>
       <div class="harga-k">Rp <?= number_format($barang['harga'], 0, ',', '.'); ?></div>
-      <form method="GET" action="<?= isset($_SESSION['userLogin']) ? 'form_userr.php' : 'loginUser.php'; ?>">
+  <form method="GET" action="<?= isset($_SESSION['userLogin']) ? 'form_userr.php' : 'loginUser.php'; ?>">
   <input type="hidden" name="id" value="<?= $barang['id']; ?>">
   <input type="hidden" name="tipe" value="barang">
   <button type="submit">Sewa</button>
@@ -225,7 +225,7 @@ $conn->close();
       <div class="stok-k">Stok: <?= $paket['stok']; ?></div>
       <div class="keterangan-k"><?= nl2br($paket['deskripsi']); ?></div>
       <div class="harga-k">Rp <?= number_format($paket['harga'], 0, ',', '.'); ?></div>
-      <form method="GET" action="<?= isset($_SESSION['userLogin']) ? 'form_userr.php' : 'loginUser.php'; ?>">
+<form method="GET" action="<?= isset($_SESSION['userLogin']) ? 'form_userr.php' : 'loginUser.php'; ?>">
   <input type="hidden" name="id" value="<?= $paket['id']; ?>">
   <input type="hidden" name="tipe" value="paket">
   <button type="submit">Sewa</button>

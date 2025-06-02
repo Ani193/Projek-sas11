@@ -1,3 +1,38 @@
+<?php
+session_start();
+// Koneksi ke database
+$conn = new mysqli("localhost", "root", "", "sewa_alat");
+if ($conn->connect_error) {
+  die("Koneksi gagal: " . $conn->connect_error);
+}
+
+// Ambil data alat aktif
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+
+// Ambil data alat aktif 
+$sql = "SELECT * FROM barang WHERE aktif = 1";
+if ($search !== '') {
+  $sql .= " AND nama LIKE '%" . $conn->real_escape_string($search) . "%'";
+}
+
+// Ambil data paket aktif
+$paketList = [];
+$sqlPaket = "SELECT * FROM paket WHERE aktif = 1";
+if ($search !== '') {
+  $sqlPaket .= " AND nama LIKE '%" . $conn->real_escape_string($search) . "%'";
+}
+$resultPaket = $conn->query($sqlPaket);
+
+if ($resultPaket && $resultPaket->num_rows > 0) {
+  while($paket = $resultPaket->fetch_assoc()) {
+    $paketList[] = $paket;
+  }
+}
+
+$conn->close();
+
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -120,17 +155,14 @@
   <nav class="nav-links">
     <a href="gabungan.php">Beranda</a>
     <a href="Hal_Katalog.php">Katalog</a>
-    <a href="persyaratanSewa.html">Persyaratan</a>
+    <a href="persyaratanSewa.php">Persyaratan</a>
     <a href="loginUser.php">Penyewaan</a>
   </nav>
 
   <div class="navbar-right">
-    <form class="search-form" onsubmit="return handleSearch(event)">
-      <input type="text" class="search" placeholder="Cari..." id="searchInput" />
-      <button type="submit" class="search-btn">
-        <i class="fas fa-search"></i>
-      </button>
-    </form>
+  <form class="search-form" method="GET" action="Hal_Katalog.php">
+  <input type="text" class="search" name="search" placeholder="Cari..." value="<?= htmlspecialchars($search); ?>" />
+  </form>
 
     <a href="loginAdmin.php" class="icon-admin" title="Login Admin">
       <i class="fas fa-user"></i>

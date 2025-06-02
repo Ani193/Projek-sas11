@@ -403,7 +403,7 @@ $conn->close();
     <nav class="nav-links">
       <a href="gabungan.php">Beranda</a>
       <a href="Hal_Katalog.php">Katalog</a>
-      <a href="persyaratanSewa.html">Persyaratan</a>
+      <a href="persyaratanSewa.php">Persyaratan</a>
       <a href="loginUser.php">Penyewaan</a>
     </nav>
 
@@ -501,7 +501,7 @@ $conn->close();
       <div class="footer-column-4">
         <h3>Quick Link</h3>
         <ul>
-          <li><a href="gabungan.html">Beranda</a></li>
+          <li><a href="gabungan.php">Beranda</a></li>
           <li><a href="Hal_Katalog.php">Katalog</a></li>
           <li><a href="persyaratanSewa.html">Persyaratan Penyewaan</a></li>
           <li><a href="loginUser.php">Sewa Sekarang</a></li>

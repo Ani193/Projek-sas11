@@ -47,9 +47,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       if (isset($_SESSION['pendingSewa'])) {
         $id = $_SESSION['pendingSewa'];
         unset($_SESSION['pendingSewa']);
-        header("Location: form_userr.php?id=" . $id);
+        header("Location: form_userr.html?id=" . $id);
       } else {
-        header("Location: form_userr.php"); // ganti dengan halaman katalog utama jika perlu
+        header("Location: form_userr.html"); // ganti dengan halaman katalog utama jika perlu
       }
       exit();
     } else {
@@ -137,12 +137,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 
 <div class="login-container">
-  <h1>Login Pengguna</h1>
+  <h1>Login User</h1>
   <form method="POST" action="">
     <input type="text" name="email" placeholder="Email" required>
     <input type="password" name="password" placeholder="Password" required>
     <div class="remember-me">
-      <input type="checkbox" name="remember" id="remember"> Ingat saya
+      <input type="checkbox" name="remember" id="remember"> Remember me
     </div>
     <button type="submit">Login</button>
   </form>

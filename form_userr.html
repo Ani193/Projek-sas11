@@ -1,34 +1,3 @@
-<?php
-session_start();
-$conn = new mysqli("localhost", "root", "", "sewa_alat");
-if ($conn->connect_error) die("Koneksi gagal: " . $conn->connect_error);
-
-$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-$tipe = isset($_GET['tipe']) ? $_GET['tipe'] : '';
-
-$data = null;
-
-if ($tipe === 'barang') {
-  $stmt = $conn->prepare("SELECT * FROM barang WHERE id=? AND aktif=1");
-} elseif ($tipe === 'paket') {
-  $stmt = $conn->prepare("SELECT * FROM paket WHERE id=? AND aktif=1");
-} else {
-  $stmt = null;
-}
-
-if ($stmt) {
-  $stmt->bind_param("i", $id);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  if ($result->num_rows === 1) {
-    $data = $result->fetch_assoc();
-  }
-  $stmt->close();
-}
-
-$conn->close();
-?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -204,16 +173,17 @@ $conn->close();
 </head>
 <body>
   <div class="container-pr">
+    <form method="POST" action="proses_sewa.php" enctype="multipart/form-data">
     <h2>Form Penyewaan Alat Camping</h2>
     <div class="section">
       <label>Nama Lengkap</label>
-      <input type="text" id="nama" />
+      <input type="text" name="nama" id="nama" />
       <label>Email</label>
-      <input type="email" id="email" />
+      <input type="email" name="email" id="email" />
       <label>Nomor HP</label>
-      <input type="text" id="telepon" />
+      <input type="text" name="telepon" id="telepon" />
       <label>Alamat</label>
-      <input type="text" id="alamat" />
+      <input type="text" name="alamat" id="alamat" />
 
       <label>Status Membership</label>
       <input type="radio" name="member" value="biasa" checked onchange="toggleMember()"> Biasa
@@ -228,192 +198,117 @@ $conn->close();
     <div class="section-pac">
       <label>Pilih Alat Camping</label>
       <div>
-        <input type="checkbox" class="alat" data-id="Tenda Kapasitas 2 Orang" data-harga="30000" /> Tenda Kapasitas 2 Orang
-        <select class="jumlah" data-id="Tenda Kapasitas 2 Orang">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>   
-          <option>5</option>             
-        </select> Rp30.000
-      </div>
-      <div>
-        <input type="checkbox" class="alat" data-id="Tenda Kapasitas 5 Orang" data-harga="50000" /> Tenda Kapasitas 5 Orang
-        <select class="jumlah" data-id="Tenda Kapasitas 5 Orang">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>   
-          <option>5</option>  
-        </select> Rp50.000
-      </div>
-      <div>
-        <input type="checkbox" class="alat" data-id="Kompor Portable" data-harga="15000" /> Kompor Portable
-        <select class="jumlah" data-id="Kompor Portable">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>   
-          <option>5</option>      
-        </select> Rp15.000
-      </div>
-      <div>
-        <input type="checkbox" class="alat" data-id="Matras Alumunium" data-harga="13000" />Matras Alumunium
-        <select class="jumlah" data-id="Matras Alumunium">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>   
-          <option>5</option>  
-        </select> Rp13.000
-      </div>
-      <div>
-        <input type="checkbox" class="alat" data-id="Matras Spon" data-harga="13000" /> Matras Spon
-        <select class="jumlah" data-id="Matras Spon">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>   
-          <option>5</option>  
-        </select> Rp13.000
-      </div>
-      <div>
-        <input type="checkbox" class="alat" data-id="Sleeping Bag" data-harga="15000" /> Sleeping Bag
-        <select class="jumlah" data-id="Sleeping Bag">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>   
-          <option>5</option>  
-        </select> Rp15.000
-      </div>
-      <div>
-        <input type="checkbox" class="alat" data-id="Gas Portable" data-harga="10000" /> Gas Portable
-        <select class="jumlah" data-id="Gas Portable"><option>1</option></select> Rp10.000
-      </div>
-      <div>
-        <input type="checkbox" class="alat" data-id="Day Pack" data-harga="12000" /> Day Pack (belum termasuk coverbag)
+        <input type="checkbox" class="alat" data-id="Tenda Kapasitas 2 Orang" data-harga="30000" /> Tenda Kapasitas 2 Orang = Rp30.000
+        <input type="number" class="jumlah" data-id="Tenda Kapasitas 2 Orang" min="1" max="15" value="1" style="margin-left: 10px;">
+        <span class="stokInfo" data-id="Tenda Kapasitas 2 Orang"></span>
 
-        <select class="jumlah" data-id="Day Pack">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>   
-          <option>5</option>  
-        </select> Rp12.000
       </div>
       <div>
-        <input type="checkbox" class="alat" data-id="Coverbag Ransel" data-harga="18000" /> Coverbag Ransel
-        <select class="jumlah" data-id="Coverbag Ransel">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>   
-          <option>5</option>  
-        </select> Rp18.000
+        <input type="checkbox" class="alat" data-id="Tenda Kapasitas 5 Orang" data-harga="50000" /> Tenda Kapasitas 5 Orang = Rp50.000
+        <input type="number" class="jumlah" data-id="Tenda Kapasitas 2 Orang" min="1" max="15" value="1" style="margin-left: 10px;">
+        <span class="stokInfo" data-id="Tenda Kapasitas 5 Orang"></span>
       </div>
       <div>
-        <input type="checkbox" class="alat" data-id="Headlamp Kecil" data-harga="10000" /> Headlamp Kecil
-        <select class="jumlah" data-id="Headlamp Kecil">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>   
-          <option>5</option>  
-        </select> Rp10.000
+        <input type="checkbox" class="alat" data-id="Kompor Portable" data-harga="15000" /> Kompor Portable = Rp15.000
+        <input type="number" class="jumlah" data-id="Kompor Portable" min="1" max="15" value="1" style="margin-left: 10px;">
+        <span class="stokInfo" data-id="Kompor Portable"></span>
       </div>
       <div>
-        <input type="checkbox" class="alat" data-id="Raincoat" data-harga="20000" /> Raincoat
-        <select class="jumlah" data-id="Raincoat">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>   
-          <option>5</option>  
-        </select> Rp20.000
+        <input type="checkbox" class="alat" data-id="Matras Alumunium" data-harga="13000" /> Matras Alumunium = Rp13.000
+        <input type="number" class="jumlah" data-id="Matras Alumunium" min="1" max="15" value="1" style="margin-left: 10px;">
+        <span class="stokInfo" data-id="Matras Alumunium"></span>
       </div>
       <div>
-        <input type="checkbox" class="alat" data-id="Trecking Pole" data-harga="8000" /> Trecking Pole
-        <select class="jumlah" data-id="Trecking Pole">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>   
-          <option>5</option>  
-        </select> Rp8.000
+        <input type="checkbox" class="alat" data-id="Matras Spon" data-harga="13000" /> Matras Spon = Rp13.000
+        <input type="number" class="jumlah" data-id="Matras Spon" min="1" max="15" value="1" style="margin-left: 10px;">
+        <span class="stokInfo" data-id="Matras Spon"></span>
       </div>
       <div>
-        <input type="checkbox" class="alat" data-id="Kursi Lipat" data-harga="12000" /> Kursi Lipat
-        <select class="jumlah" data-id="Kursi Lipat">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>   
-          <option>5</option>  
-        </select> Rp12.000
+        <input type="checkbox" class="alat" data-id="Sleeping Bag" data-harga="15000" /> Sleeping Bag = Rp15.000
+        <input type="number" class="jumlah" data-id="Sleeping Bag" min="1" max="15" value="1" style="margin-left: 10px;">
+        <span class="stokInfo" data-id="Sleeping Bag"></span>
       </div>
       <div>
-        <input type="checkbox" class="alat" data-id="Peralatan Masak" data-harga="20000" /> Peralatan Masak
-        <select class="jumlah" data-id="Peralatan Masak">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>   
-          <option>5</option>  
-        </select> Rp20.000
+        <input type="checkbox" class="alat" data-id="Gas Portable" data-harga="10000" /> Gas Portable = Rp10.000
+        <input type="number" class="jumlah" data-id="Gas Portable" min="1" max="15" value="1" style="margin-left: 10px;">
+        <span class="stokInfo" data-id="Gas portable"></span>
       </div>
       <div>
-        <input type="checkbox" class="alat" data-id="Carrier Bag" data-harga="12000" /> Carrier Bag
-        <select class="jumlah" data-id="Carrier Bag">
-           <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>   
-          <option>5</option>  
-        </select> Rp12.000
+        <input type="checkbox" class="alat" data-id="Day Pack" data-harga="12000" /> Day Pack (belum termasuk coverbag) = Rp12.000
+        <input type="number" class="jumlah" data-id="Day Pack" min="1" max="15" value="1" style="margin-left: 10px;">
+        <span class="stokInfo" data-id="Day Pack"></span>
       </div>
       <div>
-        <input type="checkbox" class="alat" data-id="Lampu Tenda" data-harga="10000" /> Lampu Tenda
-        <select class="jumlah" data-id="Lampu Tenda">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>   
-          <option>5</option>  
-        </select> Rp10.000
+        <input type="checkbox" class="alat" data-id="Coverbag Ransel" data-harga="18000" /> Coverbag Ransel = Rp18.000
+        <input type="number" class="jumlah" data-id="Coverbag Ransel" min="1" max="15" value="1" style="margin-left: 10px;">
+        <span class="stokInfo" data-id="Coverbag Ransel"></span>
       </div>
       <div>
-        <input type="checkbox" class="alat" data-id="Kompas" data-harga="8000" /> Kompas
-        <select class="jumlah" data-id="Kompas">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>   
-          <option>5</option>  
-        </select> Rp8.000
+        <input type="checkbox" class="alat" data-id="Headlamp Kecil" data-harga="10000" /> Headlamp Kecil = Rp10.000
+        <input type="number" class="jumlah" data-id="Headlamp Kecil" min="1" max="15" value="1" style="margin-left: 10px;">
+        <span class="stokInfo" data-id="Headlamp Kecil"></span>
       </div>
       <div>
-        <input type="checkbox" class="alat" data-id="Senter" data-harga="7000" /> Senter
-        <select class="jumlah" data-id="Senter">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>   
-          <option>5</option>  
-        </select> Rp7.000
+        <input type="checkbox" class="alat" data-id="Raincoat" data-harga="20000" /> Raincoat = Rp20.000
+        <input type="number" class="jumlah" data-id="Raincoat" min="1" max="15" value="1" style="margin-left: 10px;">
+        <span class="stokInfo" data-id="Raincoat"></span>
+      </div>
+      <div>
+        <input type="checkbox" class="alat" data-id="Trecking Pole" data-harga="8000" /> Trecking Pole = Rp8.000
+        <input type="number" class="jumlah" data-id="Trecking Pole" min="1" max="15" value="1" style="margin-left: 10px;">
+        <span class="stokInfo" data-id="Trecking Pole"></span>
+      </div>
+      <div>
+        <input type="checkbox" class="alat" data-id="Kursi Lipat" data-harga="12000" /> Kursi Lipat = Rp12.000
+        <input type="number" class="jumlah" data-id="Kursi Lipat" min="1" max="15" value="1" style="margin-left: 10px;">
+        <span class="stokInfo" data-id="Kursi Lipat"></span>
+      </div>
+      <div>
+        <input type="checkbox" class="alat" data-id="Peralatan Masak" data-harga="20000" /> Peralatan Masak = Rp20.000
+        <input type="number" class="jumlah" data-id="Peralatan Masak" min="1" max="15" value="1" style="margin-left: 10px;">
+        <span class="stokInfo" data-id="Peralatan Masak"></span>
+      </div>
+      <div>
+        <input type="checkbox" class="alat" data-id="Carrier Bag" data-harga="12000" /> Carrier Bag = Rp12.000
+        <input type="number" class="jumlah" data-id="Carrier Bag" min="1" max="15" value="1" style="margin-left: 10px;">
+        <span class="stokInfo" data-id="Carrier Bag"></span>
+      </div>
+      <div>
+        <input type="checkbox" class="alat" data-id="Lampu Tenda" data-harga="10000" /> Lampu Tenda = Rp10.000
+        <input type="number" class="jumlah" data-id="Lampu Tenda" min="1" max="15" value="1" style="margin-left: 10px;">
+        <span class="stokInfo" data-id="Lampu Tenda"></span>
+      </div>
+      <div>
+        <input type="checkbox" class="alat" data-id="Kompas" data-harga="8000" /> Kompas = Rp8.000
+        <input type="number" class="jumlah" data-id="Kompas" min="1" max="15" value="1" style="margin-left: 10px;">
+        <span class="stokInfo" data-id="Kompas">Rp8.000</span>
+      </div>
+      <div>
+        <input type="checkbox" class="alat" data-id="Senter" data-harga="7000" /> Senter = Rp7.000
+        <input type="number" class="jumlah" data-id="Kompor Portable" min="1" max="15" value="1" style="margin-left: 10px;">
+        <span class="stokInfo" data-id="Kompor Portable"></span>
       </div>
     </div>
 
     <div class="section">
-    <label>Pilih Paket Penyewaan (Opsional)</label>
+    <label>Pilih Paket Penyewaan </label>
     <div>
       <input type="checkbox" id="paketPemula" onchange="paketSelected('pemula')"/>  Paket Pemula<br>(Tenda kap. 2 orang, Matras spon, Sleeping bag, Lampu tenda, Kompas) = Rp75.000
+      <input type="number" id="jumlahPaketPemula" value="1" min="1" max="8" style="width: 60px; margin-left: 10px;"/>
+      <span id="stokPaketPemula"></span>
+
     </div>
     <div>
       <input type="checkbox" id="paketKeluarga" onchange="paketSelected('keluarga')"/> Paket Keluarga<br>(Tenda kap.5 orang, Matras spon, Sleeping bag, Kompor portable, Peralatan masak, Lampu tenda, Gas portable)<br> = Rp130.000
+      <input type="number" id="jumlahPaketKeluarga" value="1" min="1" max="6" style="width: 60px; margin-left: 10px;"/>
+      <span id="stokPaketKeluarga"></span>
+
     </div>
     <div>
       <input type="checkbox" id="paketLengkap" onchange="paketSelected('lengkap')"/> Paket Lengkap (Semua alat) = Rp215.000
+      <input type="number" id="jumlahPaketLengkap" value="1" min="1" max="5" style="width: 60px; margin-left: 10px;"/>
+      <span id="stokPaketLengkap"></span>
+
     </div>
     </div>
 
@@ -426,6 +321,8 @@ $conn->close();
       <label>Pilih Metode Pembayaran</label><br>
       <input type="radio" name="metode" value="Dana"> Dana
       <input type="radio" name="metode" value="Gopay"> Gopay
+      <input type="radio" name="metode" value="Bank"> Bank
+
       <div id="barcodeContainer" style="margin-top: 10px;">
         <img id="barcodeImage" src="barcode-2.png" alt="Barcode Pembayaran" style="display: none; max-width: 200px;">
       </div>
@@ -433,7 +330,7 @@ $conn->close();
 
     <div class="section">
       <label>Upload Bukti Transfer</label>
-      <input type="file" id="buktiTransfer" accept="image/*" required />
+      <input type="file" name="buktiTransfer" id="buktiTransfer" accept="image/*" required />
     </div>
 
     <div class="section">
@@ -442,9 +339,40 @@ $conn->close();
        <button id="submitBtn" type="button">Mulai Proses Pemesanan</button>
       </div>
     </div>
+  </form>
   </div>
 
   <script>
+
+    const stokAlat = {
+    "Tenda Kapasitas 2 Orang": 15,
+    "Tenda Kapasitas 5 Orang": 15,
+    "Kompor Portable": 15,
+    "Matras Alumunium": 15,
+    "Matras Spon": 15,
+    "Sleeping Bag": 15,
+    "Gas Portable": 15,
+    "Day Pack": 15,
+    "Coverbag Ransel": 15,
+    "Headlamp Kecil": 15,
+    "Raincoat": 15,
+    "Trecking Pole": 15,
+    "Kursi Lipat": 15,
+    "Peralatan Masak": 15,
+    "Carrier Bag": 15,
+    "Lampu Tenda": 15,
+    "Kompas": 15,
+    "Senter": 15
+  };
+
+  const stokPaket = {
+    pemula: 8,
+    keluarga: 6,
+    lengkap: 5
+  };
+
+
+
   function toggleMember() {
     const isMember = document.querySelector('input[name="member"]:checked').value === "member";
     document.getElementById("uploadDiv").classList.toggle("hidden", !isMember);
@@ -464,9 +392,17 @@ $conn->close();
 
   function updateTotal() {
     let total = 0;
-    if (document.getElementById("paketPemula").checked) total = 75000;
-    else if (document.getElementById("paketKeluarga").checked) total = 130000;
-    else if (document.getElementById("paketLengkap").checked) total = 215000;
+    if (document.getElementById("paketPemula").checked) {
+      const jumlah = parseInt(document.getElementById("jumlahPaketPemula").value) || 1;
+      total = 75000 * jumlah;
+    } else if (document.getElementById("paketKeluarga").checked) {
+      const jumlah = parseInt(document.getElementById("jumlahPaketKeluarga").value) || 1;
+      total = 130000 * jumlah;
+    } else if (document.getElementById("paketLengkap").checked) {
+      const jumlah = parseInt(document.getElementById("jumlahPaketLengkap").value) || 1;
+      total = 215000 * jumlah;
+    }
+
     else {
       document.querySelectorAll(".alat:checked").forEach(cb => {
         const id = cb.dataset.id.trim();
@@ -592,6 +528,11 @@ $conn->close();
         barcodeImage.src = "barcode-gopay.png";
         barcodeImage.style.display = "block";
         barcodeImage.alt = "Silakan scan QR GOPAY";
+      }else if (radio.value.toLowerCase() === "bank") {
+        barcodeImage.src = "barcode-bank.png";
+        barcodeImage.style.display = "block";
+        barcodeImage.alt = "Silakan scan QR BANK";
+
       } else {
         barcodeImage.style.display = "none";
       }
@@ -606,6 +547,10 @@ $conn->close();
   document.getElementById("submitBtn").addEventListener("click", function () {
   simpanDataPenyewaan();
 });
+
+    document.getElementById("jumlahPaketPemula").addEventListener("input", updateTotal);
+    document.getElementById("jumlahPaketKeluarga").addEventListener("input", updateTotal);
+    document.getElementById("jumlahPaketLengkap").addEventListener("input", updateTotal);
 
   </script>
 </body>
