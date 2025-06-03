@@ -80,13 +80,59 @@ $barangList = $conn->query("SELECT * FROM barang");
 <head>
   <meta charset="UTF-8">
   <title>Admin - Data Barang</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
     }
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background-color: rgba(0, 32, 64, 0.8);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      z-index: 1000;
+    }
+
+    .logo img {
+      vertical-align: middle;
+      height:100px;
+    }
+
+    .nav-links a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    .navbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .icon-admin {
+      color: white;
+      font-size: 18px;
+      text-decoration: none;
+    }
+    
     h2 {
       margin-bottom: 10px;
+      margin-top:70px;
     }
     form, table {
       margin-bottom: 20px;
@@ -136,6 +182,24 @@ $barangList = $conn->query("SELECT * FROM barang");
   </style>
 </head>
 <body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">
+      <img src="logoo.png" alt="logo" />
+    </div>
+
+    <nav class="nav-links">
+      <a href="gabungan.php">Beranda</a>
+      <a href="menu.php">Menu</a>
+    </nav>       
+
+
+      <a href="loginAdmin.php" class="icon-admin" title="Login Admin">
+        <i class="fas fa-user"></i>
+      </a>
+    </div>
+  </header>
+
 
 <h2><?php echo $editData ? 'Edit Barang' : 'Tambah Barang'; ?></h2>
 <form method="POST" enctype="multipart/form-data">

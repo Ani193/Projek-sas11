@@ -12,6 +12,7 @@ if (!isset($_SESSION['email'])){
 <html>
 <head>
 <title>Menu Halaman</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 <style>
 body {
   font-family: sans-serif;
@@ -22,6 +23,50 @@ body {
   min-height: 100vh;
   margin: 0;
 }
+
+ /* Navbar */
+ .navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: rgba(0, 32, 64, 0.8);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  z-index: 1000;
+ }
+
+ .logo img {
+  vertical-align: middle;
+  height:120px;
+ }
+
+ .nav-links a {
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
+  font-weight: 600;
+ }
+
+ .nav-links a:hover {
+  text-decoration: underline;
+ }
+
+ .navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+ }
+
+ .icon-admin {
+  color: white;
+  font-size: 18px;
+  text-decoration: none;
+ }
 
 .container {
   background-color: #fff;
@@ -66,6 +111,23 @@ body {
 </style>
 </head>
 <body>
+   <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">
+      <img src="logoo.png" alt="logo" />
+    </div>
+
+    <nav class="nav-links">
+      <a href="gabungan.php">Beranda</a>
+      <a href="menu.php">Menu</a>
+    </nav>       
+
+
+      <a href="loginAdmin.php" class="icon-admin" title="Login Admin">
+        <i class="fas fa-user"></i>
+      </a>
+    </div>
+  </header>
 <div class="container">
   <h1>Halaman Menu</h1>
   <div class="menu-item" onclick="window.location.href='alatAdmin.php'">ALAT YANG DI SEWA</div>
