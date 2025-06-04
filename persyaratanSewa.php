@@ -193,7 +193,6 @@ $conn->close();
         - Pembayaran langsung full payment<br>
         - Pembayaran bisa dilakukan secara online melalui transfer e-wallet (seperti OVO, DANA, GoPay)
           Konfirmasi pembayaran ke admin setelah melakukan transaksi.<br>
-        - Admin juga menerima pembayaran secara tunai atau langsung pada saat pengambilan barang
       </div>
     </div>
 

@@ -134,7 +134,7 @@ body {
   <div class="menu-item" onclick="window.location.href='data_penyewa_userrr.html'">PESANAN</div>
   <div class="menu-item" onclick="window.location.href='Promo&Diskon_Admin.html'">PROMO DAN DISKON</div>
   <div class="menu-item" onclick="window.location.href='paketPenyewaan.php'">PAKET PENYEWAAN</div>
-  <div class="menu-item" onclick="window.location.href='verifikasi_pembayaran_admin.html.html'">MEMVERIFIKASI PEMBAYARAN</div>
+  <div class="menu-item" onclick="window.location.href='verifikasi_pembayaran_admin.html'">MEMVERIFIKASI PEMBAYARAN</div>
   <div class="menu-item" onclick="window.location.href='grafik_mtk.html'">GRAFIK PENYEWAAN</div>
 </div>
 
